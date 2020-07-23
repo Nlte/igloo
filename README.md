@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/arcticicestudio/igloo/master/assets/igloo-logo-banner.svg?sanitize=true"/></p>
+
 Based on https://github.com/arcticicestudio/igloo
 
 ### Install
