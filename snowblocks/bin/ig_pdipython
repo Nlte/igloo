@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+if [ $# -eq 0 ]
+then
+        echo "usage: ig_pdipython <csvfile>"
+        exit 1
+fi
+ipython -i "$DIR"/_pdipython_startup.py "${1}"
