@@ -1,0 +1,24 @@
+[
+    {
+        "clean": ["$IGLOO_PATH_USER_CONFIG/htop"]
+    },
+    {
+        "link": {
+            "$IGLOO_PATH_USER_CONFIG/htop/htoprc": {
+                "create": true,
+                "path": "htoprc"
+            }
+        }
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v htop >/dev/null 2>&1 || echo 'htop not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    }
+
+]

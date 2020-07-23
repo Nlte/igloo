@@ -1,0 +1,96 @@
+# Class
+snippet cclass "class .. (class)"
+class ${1:`!p snip.rv = snip.basename or "name"`} {
+public:
+	${1/(\w+).*/$1/}(${2:arguments});
+	virtual ~${1/(\w+).*/$1/}();
+
+private:
+};
+endsnippet
+
+
+# Guard
+snippet cguard "header guard" b
+#ifndef ${1:GUARD}_H_
+#define $1_H_
+
+
+#endif
+endsnippet
+
+
+# Gtest
+snippet gtest "googletest"
+TEST(${1:test}, ${2:name})
+{
+}
+endsnippet
+
+
+# Arithmetic operators
+snippet cclassarithmeticheader "class arthmetic operators"
+${1:MyClass} operator+(const $1& i) const;
+$1 operator-(const $1& i) const;
+$1 operator*(const $1& i) const;
+$1 operator+=(const $1& i);
+$1 operator-=(const $1& i);
+$1 operator*=(const $1& i);
+endsnippet
+
+
+snippet cclassarithmeticimpl "class arthmetic operators"
+${1:MyClass} operator+(const $1& i) const
+{
+}
+
+$1 operator-(const $1& i) const
+{
+}
+
+$1 operator*(const $1& i) const
+{
+}
+
+$1 operator+=(const $1& i)
+{
+}
+
+$1 operator-=(const $1& i)
+{
+}
+
+$1 operator*=(const $1& i)
+{
+}
+endsnippet
+
+# rule of five
+snippet cruleoffive "cpp rule of five"
+${1:MyClass}(const $1&) = default;
+$1($1&&) = default;
+$1& operator=(const $1&) = default;
+$1& operator=($1&&) = default;
+virtual ~$1() = default;
+endsnippet
+
+# namespace
+snippet cnamespace "cpp namespace"
+namespace ${1:space} {
+
+}
+endsnippet
+
+
+# template class
+snippet ctemplateclass "cpp template class"
+template <typename ${1:T}>
+class ${2:MyClass} {
+
+public:
+	// TODO
+
+private:
+	// TODO
+};
+endsnippet

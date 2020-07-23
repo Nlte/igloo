@@ -1,0 +1,26 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v broot >/dev/null 2>&1 || echo 'broot not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "clean": [
+            "$IGLOO_PATH_USER_CONFIG/broot"
+        ]
+    },
+    {
+        "link": {
+            "$IGLOO_PATH_USER_CONFIG/broot/conf.toml": {
+                "create": true,
+                "force": true,
+		"path": "conf.toml"
+            }
+        }
+    }
+]

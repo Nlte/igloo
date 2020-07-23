@@ -1,0 +1,23 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v rg >/dev/null 2>&1 || echo 'ripgrep not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "clean": ["$RIPGREP_CONFIG_PATH"]
+    },
+    {
+        "link": {
+            "$RIPGREP_CONFIG_PATH": {
+                "create": true,
+                "path": "config"
+            }
+        }
+    }
+]

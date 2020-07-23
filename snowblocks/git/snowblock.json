@@ -1,0 +1,12 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v lazygit >/dev/null 2>&1 || echo 'lazygit not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    }
+]

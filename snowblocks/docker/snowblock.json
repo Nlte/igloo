@@ -1,0 +1,36 @@
+[
+    {
+        "clean": [
+            "$HOME/Library/Application Support/jesseduffield/lazydocker",
+            "$IGLOO_PATH_USER_CONFIG/jesseduffield/lazydocker"
+        ]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v lazydocker >/dev/null 2>&1 || echo 'lazydocker not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "link": {
+            "$HOME/Library/Application Support/jesseduffield/lazydocker/config.yml": {
+                "create": true,
+                "force": true,
+                "platforms": {
+                    "Darwin": "config.yml"
+                }
+            },
+            "$IGLOO_PATH_USER_CONFIG/jesseduffield/lazydocker/config.yml": {
+                "create": true,
+                "force": true,
+                "platforms": {
+                    "Linux": "config.yml"
+                }
+            }
+        }
+    }
+]

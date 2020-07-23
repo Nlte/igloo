@@ -1,0 +1,13 @@
+[
+    {
+        "clean": ["$HOME/.sqliterc"]
+    },
+    {
+        "link": {
+            "$HOME/.sqliterc": {
+                "create": true,
+                "path": "sqliterc"
+            }
+        }
+    }
+]
