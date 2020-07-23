@@ -1,0 +1,4 @@
+settings set stop-line-count-before 10
+settings set stop-line-count-after 10
+
+command script import ~/.config/lldb/lldbinit.py

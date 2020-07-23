@@ -1,0 +1,26 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v lldb >/dev/null 2>&1 || echo 'lldb not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "clean": ["$IGLOO_PATH_USER_CONFIG/lldb", "~"]
+    },
+    {
+        "link": {
+            "$IGLOO_PATH_USER_CONFIG/lldb/lldbinit.py": {
+                "create": true,
+                "path": "lldbinit.py"
+            },
+            "$HOME/.lldbinit": {
+                "path": "lldbinit"
+            }
+        }
+    }
+]
