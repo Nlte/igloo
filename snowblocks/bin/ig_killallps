@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]
+then
+    echo "usage: ig_killallps <string>"
+    echo "kill all processes that match the string (grep)"
+    echo "example: ig_killallps celeryd"
+    echo "command: ps auxww | grep $1 | awk '{print $2}' | xargs kill -9"
+    exit 1
+fi
+
+STRING=$1
+ps auxww | grep $STRING | awk '{print $2}' | xargs kill -9
