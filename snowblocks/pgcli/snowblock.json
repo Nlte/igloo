@@ -1,0 +1,23 @@
+[
+    {
+        "clean": ["$HOME/.pgclirc"]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v pgcli >/dev/null 2>&1 || echo 'pgcli not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "link": {
+            "$HOME/.pgclirc": {
+                "create": true,
+                "path": "pgclirc"
+            }
+        }
+    }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "clean": ["$HOME/.myclirc"]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v mycli >/dev/null 2>&1 || echo 'mycli not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "link": {
+            "$HOME/.myclirc": {
+                "create": true,
+                "path": "myclirc"
+            }
+        }
+    }
+]
