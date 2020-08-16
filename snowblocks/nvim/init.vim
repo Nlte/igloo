@@ -69,7 +69,7 @@
     set incsearch
     set hlsearch
     set inccommand=nosplit
-    let mapleader=" "
+    let mapleader="\<Space>"
     autocmd BufRead,BufNewFile * setlocal signcolumn=no
 
 
