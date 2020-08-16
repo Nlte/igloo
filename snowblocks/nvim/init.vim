@@ -3,14 +3,11 @@
     call plug#begin('~/.local/share/nvim/plugged')
 
     Plug 'arcticicestudio/nord-vim'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
     Plug 'scrooloose/nerdtree'
     Plug 'SirVer/ultisnips'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
-    Plug 'mhinz/vim-startify'
     Plug 'kassio/neoterm'
     Plug 'jreybert/vimagit'
     Plug 'dunstontc/projectile.nvim'
@@ -23,6 +20,8 @@
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'editorconfig/editorconfig-vim'
     Plug 'lervag/vimtex'
+    Plug 'hardcoreplayers/dashboard-nvim'
+    Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
 
     call plug#end()
 
@@ -72,6 +71,8 @@
     set inccommand=nosplit
     let mapleader=" "
     autocmd BufRead,BufNewFile * setlocal signcolumn=no
+
+
 " Theme
     " nord theme overrides (must be called before colorscheme command)
     let home = expand('~')
@@ -101,59 +102,6 @@
 
 " UltiSnips
     let g:UltiSnipsSnippetsDir='~/.config/nvim/UltiSnips/'
-
-
-" Deoplete
-    let g:deoplete#enable_at_startup = 1
-    "inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " C/C++
-    let g:deoplete#sources#clang#libclang_path='/usr/local/Cellar/llvm/9.0.1/lib/libclang.dylib'
-    let g:deoplete#sources#clang#clang_header='/usr/local/Cellar/llvm/9.0.1/include/clang'
-
-
-" Startify
-    let g:startify_custom_header = ['']
-    noremap <leader>fp :Startify<CR>
-
-
-" FzF
-"
-    cabbrev W w
-    noremap <leader>ff :GFiles<CR>
-    noremap <leader><space> :Buffers<CR>
-    noremap <leader>ft :Tags<CR>
-    noremap <leader>fhf :History<CR>
-    noremap <leader>fhc :History:<CR>
-    noremap <leader>fl :Lines<CR>
-
-    let g:fzf_tags_command = 'ctags -R'
-
-    function! s:fzf_statusline()
-      " Override statusline as you like
-      highlight fzf1 ctermfg=161 ctermbg=251
-      highlight fzf2 ctermfg=23 ctermbg=251
-      highlight fzf3 ctermfg=237 ctermbg=251
-      setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-    endfunction
-
-    autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-    let g:fzf_colors =
-    \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
-
-    let g:fzf_layout = { 'down': '~30%' }
 
 
 " vimux
@@ -186,3 +134,47 @@
     else
         let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
     endif
+
+
+" TeX
+    let g:tex_flavor='latex'
+
+
+" Dashboard
+    let g:dashboard_default_executive = 'clap'
+
+    let g:dashboard_custom_shortcut_icon = {}
+    let g:dashboard_custom_shortcut_icon['last_session'] = '> '
+    let g:dashboard_custom_shortcut_icon['find_history'] = '> '
+    let g:dashboard_custom_shortcut_icon['find_file'] = '> '
+    let g:dashboard_custom_shortcut_icon['new_file'] = '> '
+    let g:dashboard_custom_shortcut_icon['change_colorscheme'] = '> '
+    let g:dashboard_custom_shortcut_icon['find_word'] = '> '
+    let g:dashboard_custom_shortcut_icon['book_marks'] = '> '
+
+     let g:dashboard_custom_header = [
+         \ '',
+         \ ' ███╗  ██╗███████╗ █████╗ ██╗   ██╗██╗███╗   ███╗ ',
+         \ ' ████╗ ██║██╔════╝██╔══██╗██║   ██║██║████╗ ████║ ',
+         \ ' ██╔██╗██║█████╗  ██║  ██║╚██╗ ██╔╝██║██╔████╔██║ ',
+         \ ' ██║╚████║██╔══╝  ██║  ██║ ╚████╔╝ ██║██║╚██╔╝██║ ',
+         \ ' ██║ ╚███║███████╗╚█████╔╝  ╚██╔╝  ██║██║ ╚═╝ ██║ ',
+         \ ' ╚═╝  ╚══╝╚══════╝ ╚════╝    ╚═╝   ╚═╝╚═╝     ╚═╝ ',
+         \ '',
+         \ ]
+     
+    nmap <Leader>ss :<C-u>SessionSave<CR>
+    nmap <Leader>sl :<C-u>SessionLoad<CR>
+    nmap <Leader>cn :<C-u>DashboardNewFile<CR>
+
+" Vim-clap
+
+    let g:clap_layout = { 'relative': 'editor' }
+    nnoremap <silent> <Leader>fh :<C-u>Clap history<CR>
+    nnoremap <silent> <Leader>ff :<C-u>Clap files ++finder=rg --ignore --hidden --files<cr>
+    nnoremap <silent> <Leader><space> :<C-u>Clap buffers<CR>
+    nnoremap <silent> <Leader>tc :<C-u>Clap colors<CR>
+    nnoremap <silent> <Leader>fa :<C-u>Clap grep2<CR>
+    nnoremap <silent> <Leader>fb :<C-u>Clap marks<CR>
+    nnoremap <silent> <Leader>yy :<C-u>Clap yanks<CR>
+
