@@ -1,12 +1,33 @@
 [
     {
-        "clean": ["$HOME/.sqliterc"]
+        "clean": [
+            "$HOME/.sqliterc",
+            "$IGLOO_PATH_USER_CONFIG/litecli/"
+        ]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v litecli >/dev/null 2>&1 || echo 'litecli not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
     },
     {
         "link": {
             "$HOME/.sqliterc": {
                 "create": true,
                 "path": "sqliterc"
+            }
+        }
+    },
+    {
+        "link": {
+            "$IGLOO_PATH_USER_CONFIG/litecli/config": {
+                "create": true,
+                "path": "liteclirc"
             }
         }
     }
