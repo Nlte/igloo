@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 2 ]
+then
+    echo "usage: ig_man <command> <args>"
+    echo "example: ig_man ls -l"
+    echo "man with arg search"
+    exit 1
+fi
+
+man_search() {
+    man $1 | less -p "^ +$2"
+}
+
+man_search $@
