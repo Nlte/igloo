@@ -174,7 +174,7 @@
     nnoremap <silent> <Leader>ff :<C-u>Clap files ++finder=rg --ignore --hidden --files<cr>
     nnoremap <silent> <Leader><space> :<C-u>Clap buffers<CR>
     nnoremap <silent> <Leader>tc :<C-u>Clap colors<CR>
-    nnoremap <silent> <Leader>fa :<C-u>Clap grep2<CR>
+    nnoremap <silent> <Leader>fg :<C-u>Clap grep2<CR>
     nnoremap <silent> <Leader>fb :<C-u>Clap marks<CR>
     nnoremap <silent> <Leader>yy :<C-u>Clap yanks<CR>
 
