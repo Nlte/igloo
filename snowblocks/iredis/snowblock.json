@@ -1,0 +1,23 @@
+[
+    {
+        "clean": ["$HOME/.iredisrc"]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v iredis >/dev/null 2>&1 || echo 'iredis not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "link": {
+            "$HOME/.iredisrc": {
+                "create": true,
+                "path": "iredisrc"
+            }
+        }
+    }
+]
