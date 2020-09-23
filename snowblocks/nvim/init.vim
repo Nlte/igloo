@@ -22,6 +22,7 @@
     Plug 'lervag/vimtex'
     Plug 'hardcoreplayers/dashboard-nvim'
     Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
+    Plug 'liuchengxu/vista.vim'
 
     call plug#end()
 
@@ -175,6 +176,10 @@
     nnoremap <silent> <Leader><space> :<C-u>Clap buffers<CR>
     nnoremap <silent> <Leader>tc :<C-u>Clap colors<CR>
     nnoremap <silent> <Leader>fg :<C-u>Clap grep2<CR>
+    nnoremap <silent> <Leader>ft :<C-u>Clap tags<CR>
     nnoremap <silent> <Leader>fb :<C-u>Clap marks<CR>
     nnoremap <silent> <Leader>yy :<C-u>Clap yanks<CR>
 
+" Vista
+    nnoremap <silent> <Leader>ot :<C-u>Vista!!<CR>
+    let g:vista#renderer#enable_icon = 0
