@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+    ehco "usage: curl-resp-header.sh <url>"
+    exit 1
+fi
+
+curl -sSL -D - $1 -o /dev/null
