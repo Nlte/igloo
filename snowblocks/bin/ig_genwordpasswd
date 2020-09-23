@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo "Generate memorable passwords"
+    echo "usage: ig_genwordpassword <n_words>"
+    exit 1
+fi
+
+shuf -n $1 /usr/share/dict/words | xargs
