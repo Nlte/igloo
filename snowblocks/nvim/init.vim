@@ -23,6 +23,8 @@
     Plug 'hardcoreplayers/dashboard-nvim'
     Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
     Plug 'liuchengxu/vista.vim'
+    Plug 'skywind3000/asynctasks.vim'
+    Plug 'skywind3000/asyncrun.vim'
 
     call plug#end()
 
@@ -183,3 +185,14 @@
 " Vista
     nnoremap <silent> <Leader>ot :<C-u>Vista!!<CR>
     let g:vista#renderer#enable_icon = 0
+    let g:vista_default_executive = 'ctags'
+
+" Asynctask
+    let g:asyncrun_open = 6
+    let g:asynctasks_term_pos = 'tab'
+    let g:asynctasks_extra_config = [
+        \ '~/.config/nvim/.tasks'
+        \ ]
+    nnoremap <silent> <Leader>cc :<C-u>AsyncTask file-build<CR>
+    nnoremap <silent> <Leader>cr :<C-u>AsyncTask file-run<CR>
+    nnoremap <silent> <Leader>ct :<C-u>AsyncTask file-test<CR>
