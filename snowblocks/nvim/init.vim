@@ -2,6 +2,7 @@
 " Plugins
     call plug#begin('~/.local/share/nvim/plugged')
 
+    Plug 'itchyny/lightline.vim'
     Plug 'arcticicestudio/nord-vim'
     Plug 'scrooloose/nerdtree'
     Plug 'SirVer/ultisnips'
@@ -105,6 +106,11 @@
 
 " UltiSnips
     let g:UltiSnipsSnippetsDir='~/.config/nvim/UltiSnips/'
+
+" Lightline
+    let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ }
 
 
 " vimux
