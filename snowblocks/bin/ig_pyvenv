@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+
+if [ -z "$1" ]
+then
+    echo "usage: ig_pyvenv <path/to/venv/location>"
+    echo "Creates a python virtualenv with certain packages"
+    exit 1
+fi
+
+virtualenv -p python3 "$1"
+
+activate="$1/bin/activate"
+if [ ! -f "$activate" ]
+then
+    echo "$1 not found"
+    exit 1
+fi
+source "$activate"
+pip install pynvim jedi pylint ipython ipdb

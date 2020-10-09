@@ -33,6 +33,10 @@
 		"$IGLOO_PATH_USER_CONFIG/nvim/coc-settings.json": {
 			"path": "coc-settings.json",
 			"create": true
+		},
+		"$IGLOO_PATH_USER_CONFIG/nvim/.tasks": {
+			"path": "tasks",
+			"create": true
 		}
 	}
 }
