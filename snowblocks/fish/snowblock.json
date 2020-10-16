@@ -6,6 +6,12 @@
                 "stderr": true,
                 "stdin": true,
                 "stdout": true
+            },
+            {
+                "command": "command -v direnv >/dev/null 2>&1 || echo 'direnv not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
             }
         ]
     },
