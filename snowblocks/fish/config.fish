@@ -22,3 +22,5 @@ set PATH /usr/local/opt/qt/bin $PATH
 
 # alias
 alias vim=nvim
+# direnv
+eval (direnv hook fish)
