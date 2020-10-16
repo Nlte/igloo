@@ -16,7 +16,8 @@ set -gx RIPGREP_CONFIG_PATH $IGLOO_PATH_USER_CONFIG/ripgrep/config
 # path
 set PATH $HOME/Library/Python/3.7/bin $PATH
 set PATH $HOME/igloo/snowblocks/bin $PATH
-set PATH /usr/local/opt/llvm/bin/ $PATH
+set PATH /usr/local/opt/llvm/bin $PATH
+set PATH /usr/local/opt/qt/bin $PATH
 
 
 # alias
