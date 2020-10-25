@@ -32,7 +32,6 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_exceltocsv
 │   │   ├── ig_genshapasswd
 │   │   ├── ig_genwordpasswd
-│   │   ├── ig_getcert
 │   │   ├── ig_imgcat
 │   │   ├── ig_k8s_coredns_config
 │   │   ├── ig_k8s_coredns_delete
@@ -40,10 +39,10 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_k8s_coredns_pods
 │   │   ├── ig_killallps
 │   │   ├── ig_man
-│   │   ├── ig_openssl_getcert
 │   │   ├── ig_pdipython
 │   │   ├── ig_pyvenv
-│   │   └── ig_showtermcolors
+│   │   ├── ig_showtermcolors
+│   │   └── ig_ssl_getcert
 │   ├── broot
 │   │   ├── conf.toml
 │   │   └── snowblock.json
