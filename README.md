@@ -14,25 +14,90 @@ git clone --recursive git@github.com:Nlte/igloo.git
 
 ```
 .
+├── README.md
+├── bootstrap
 ├── colors
 │   └── iterm
+│       └── doom.itermcolors
 ├── snowblocks
 │   ├── bat
+│   │   ├── config
+│   │   └── snowblock.json
 │   ├── bin
+│   │   ├── _pdipython_startup.py
+│   │   ├── ig_csvtoexcel
+│   │   ├── ig_curl_respheaders
+│   │   ├── ig_decrypt
+│   │   ├── ig_encrypt
+│   │   ├── ig_exceltocsv
+│   │   ├── ig_genshapasswd
+│   │   ├── ig_genwordpasswd
+│   │   ├── ig_getcert
+│   │   ├── ig_imgcat
+│   │   ├── ig_k8s_coredns_config
+│   │   ├── ig_k8s_coredns_delete
+│   │   ├── ig_k8s_coredns_logs
+│   │   ├── ig_k8s_coredns_pods
+│   │   ├── ig_killallps
+│   │   ├── ig_man
+│   │   ├── ig_openssl_getcert
+│   │   ├── ig_pdipython
+│   │   ├── ig_pyvenv
+│   │   └── ig_showtermcolors
 │   ├── broot
+│   │   ├── conf.toml
+│   │   └── snowblock.json
 │   ├── docker
+│   │   ├── config.yml
+│   │   └── snowblock.json
 │   ├── fish
+│   │   ├── config.fish
+│   │   ├── fishfile
+│   │   └── snowblock.json
 │   ├── git
+│   │   └── snowblock.json
 │   ├── htop
+│   │   ├── htoprc
+│   │   └── snowblock.json
 │   ├── iredis
+│   │   ├── iredisrc
+│   │   └── snowblock.json
 │   ├── lldb
+│   │   ├── cpython_lldb.py
+│   │   ├── lldbinit
+│   │   ├── lldbinit.py
+│   │   └── snowblock.json
 │   ├── mycli
+│   │   ├── myclirc
+│   │   └── snowblock.json
 │   ├── nvim
-│   │   └── UltiSnips
+│   │   ├── UltiSnips
+│   │   │   ├── cpp.snippets
+│   │   │   └── python.snippets
+│   │   ├── coc-settings.json
+│   │   ├── coc.vim
+│   │   ├── init.vim
+│   │   ├── install.sh
+│   │   ├── nord_additional_syntax.vim
+│   │   ├── snowblock.json
+│   │   └── tasks
 │   ├── pgcli
+│   │   ├── pgclirc
+│   │   └── snowblock.json
 │   ├── ripgrep
+│   │   ├── config
+│   │   └── snowblock.json
 │   ├── sqlite
+│   │   ├── liteclirc
+│   │   ├── snowblock.json
+│   │   └── sqliterc
 │   ├── tmux
+│   │   ├── snowblock.json
+│   │   └── tmux.conf
 │   └── wget
+│       ├── snowblock.json
+│       └── wgetrc
 └── wallpapers
+    ├── wallpaper-nord-1.jpg
+    └── wallpaper-nord-2.jpg
 ```
