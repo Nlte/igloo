@@ -49,6 +49,13 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── docker
 │   │   ├── config.yml
 │   │   └── snowblock.json
+│   ├── doom
+│   │   ├── doomd
+│   │   │   ├── config.el
+│   │   │   ├── custom.el
+│   │   │   ├── init.el
+│   │   │   └── packages.el
+│   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish
 │   │   ├── fishfile

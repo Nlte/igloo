@@ -1,0 +1,23 @@
+[
+    {
+        "clean": ["$HOME/.doom.d"]
+    },
+    {
+        "link": {
+            "$HOME/.doom.d": {
+                "path": "doomd"
+            }
+        }
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v emacs >/dev/null 2>&1 || echo 'emacs not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    }
+
+]
