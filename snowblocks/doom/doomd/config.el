@@ -85,7 +85,8 @@
   :init
   (setq ein:notebook-autosave-frequency 10)
   (setq ein:notebook-create-checkpoint-on-save t))
-(map! (:when (featurep! :tools ein)
+  :config
+  (map! (:when (featurep! :tools ein)
        (:map ein:notebook-mode-map
         :leader
         (:prefix-map ("j" . "jupyter")
