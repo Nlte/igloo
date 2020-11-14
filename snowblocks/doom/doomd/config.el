@@ -66,9 +66,10 @@
 
 ;; Global config
 
-;; Org-mode
+;; Org
 ;;
 (setq org-src-tab-acts-natively t)
+(setq org-startup-folded t)
 
 ;; Python
 (setq python-shell-interpreter "python")
