@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! command-log-mode)
+(package! org-sidebar)
