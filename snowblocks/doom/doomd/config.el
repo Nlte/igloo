@@ -100,7 +100,7 @@
         :desc "Yank cell"               "y" #'ein:worksheet-yank-cell-km
         :desc "Rename notbook"          "w" #'ein:notebook-rename-command-km
         ))))
-(add-hook 'kill-emacs-hook 'ein:stop)
+;; (add-hook 'kill-emacs-hook 'ein:stop)
 
 ;; Neotree
 (setq neo-theme 'ascii)
