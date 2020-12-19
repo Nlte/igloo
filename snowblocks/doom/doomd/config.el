@@ -160,4 +160,20 @@
   (setq ledger-clear-whole-transactions t)
   :config
   (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
-  :mode "\\.dat\\'")
+  :mode "\\.dat\\'"
+  :preface
+  (defun my/ledger-save ()
+    "Automatically clean the ledger buffer at each save."
+    (interactive)
+    (save-excursion
+      (when (buffer-modified-p)
+        (with-demoted-errors (ledger-mode-clean-buffer))
+        (save-buffer)))))
+
+(defun std::ledger::save ()
+  "First `ledger-mode-clean-buffer', then `save-buffer'."
+  (interactive)
+  (save-excursion
+    (when (buffer-modified-p)
+      (with-demoted-errors (ledger-mode-clean-buffer))
+      (save-buffer))))
