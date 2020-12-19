@@ -137,3 +137,13 @@
 ;;
 ;; disable auto save (causes emacs to freeze on exit)
 (setq persp-auto-save-opt 0)
+
+
+;; Ledger
+(use-package ledger-mode
+  :ensure t
+  :init
+  (setq ledger-clear-whole-transactions t)
+  :config
+  (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
+  :mode "\\.dat\\'")
