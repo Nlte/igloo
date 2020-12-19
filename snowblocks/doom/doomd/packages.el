@@ -51,3 +51,4 @@
 
 (package! command-log-mode)
 (package! org-sidebar)
+(package! git-auto-commit-mode)
