@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [ $# -lt 2 ]
+then
+    echo "usage: ig_grep_files <search-string> <extension>"
+    echo "example: ig_grep_files mystring el"
+    echo "grep string for specific files"
+    exit 1
+fi
+
+echo "*.$2"
+echo "$1"
+
+find . -iname "*.${2}" -exec grep "${1}" --color {} +
