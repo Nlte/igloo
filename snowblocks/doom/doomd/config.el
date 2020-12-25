@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Nathanaël Leaute"
+      user-mail-address "n.leaute@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -111,6 +111,20 @@
        :desc "ivy-project-grep"         "g" #'+ivy:project-search
        )))
 
+;; mu4e
+(setq +mu4e-mu4e-mail-path "~/.local/share/mail")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+;; Each path is relative to `+mu4e-mu4e-mail-path', which is ~/.mail by default
+(set-email-account! "n.leaute@gmail.com"
+  '((mu4e-sent-folder       . "/gmail/sent")
+    (mu4e-drafts-folder     . "/gmail/drafts")
+    (mu4e-trash-folder      . "/gmail/trash")
+    (mu4e-refile-folder     . "/gmail/all")
+    (smtpmail-smtp-user     . "n.leaute@gmail.com")
+    (user-mail-address      . "n.leaute@gmail.com")    ;; only needed for mu < 1.4
+    (mu4e-compose-signature . "---\nNathanaël Leaute"))
+  t)
+
 
 ;; Magit
 (defun kill-magit-diff-buffer-in-current-repo (&rest _)
@@ -146,4 +160,20 @@
   (setq ledger-clear-whole-transactions t)
   :config
   (add-to-list 'evil-emacs-state-modes 'ledger-report-mode)
-  :mode "\\.dat\\'")
+  :mode "\\.dat\\'"
+  :preface
+  (defun my/ledger-save ()
+    "Automatically clean the ledger buffer at each save."
+    (interactive)
+    (save-excursion
+      (when (buffer-modified-p)
+        (with-demoted-errors (ledger-mode-clean-buffer))
+        (save-buffer)))))
+
+(defun std::ledger::save ()
+  "First `ledger-mode-clean-buffer', then `save-buffer'."
+  (interactive)
+  (save-excursion
+    (when (buffer-modified-p)
+      (with-demoted-errors (ledger-mode-clean-buffer))
+      (save-buffer))))
