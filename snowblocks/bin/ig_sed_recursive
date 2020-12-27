@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [ $# -lt 2 ]
+then
+    echo "usage: ig_sed_recursive <oldstring> <newstring>"
+    echo "example: ig_sed_recursive old.domain.com new.domain.com"
+    echo "replace all occurences of an old string with a new string"
+    exit 1
+fi
+
+OLD=$(echo $1 | sed "s/\./\\\./g")
+NEW=$(echo $2 | sed "s/\./\\\./g")
+
+unamestr=$(uname)
+if [[ "$unamestr" == 'Darwin' ]]; then
+    if ! command -v gsed &> /dev/null; then
+        echo "gsed does not exist. Install gnu-sed."
+        exit 1
+    fi
+    find . \( -type d -name .git -prune \) -o -type f \
+        -exec gsed -i "s/${OLD}/${NEW}/g" {} +
+    exit 0
+fi
+
+find . \( -type d -name .git -prune \) -o -type f \
+    -exec sed -i "s/${OLD}/${NEW}/g" {} +
+

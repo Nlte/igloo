@@ -10,7 +10,4 @@ then
     exit 1
 fi
 
-echo "*.$2"
-echo "$1"
-
 find . -iname "*.${2}" -exec grep "${1}" --color {} +
