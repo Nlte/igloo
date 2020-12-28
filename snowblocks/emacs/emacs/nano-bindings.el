@@ -21,6 +21,8 @@
 
 ;; Utils
 
+(use-package general)
+
 (general-create-definer global-definer
   :keymaps 'override
   :states '(insert emacs normal hybrid motion visual operator)
@@ -40,7 +42,7 @@ The prefix map is named 'my-DEF-map'."
      (,(intern (concat "general-global-" def))
       ,@body)))
 
-(use-package general)
+
 
 (global-unset-key (kbd "C-SPC"))
 

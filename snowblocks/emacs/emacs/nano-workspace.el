@@ -60,7 +60,7 @@
       ;; ...and create a *real* main workspace to fill this role.
       (if (and (not (gethash +workspace-main *persp-hash*))
                     (< (hash-table-count *persp-hash*) 2))
-          (persp-add-new +workspace-main))
+          (+workspace-new +workspace-main))
       ;; HACK Fix #319: the warnings buffer gets swallowed when creating
       ;;      `+workspace-main', so display it ourselves, if it exists.
       ; (when-let (warnings (get-buffer "*Warnings*"))
@@ -127,7 +127,13 @@ Otherwise return t on success, nil otherwise."
     (error "Can't create a new '%s' workspace" name))
   (when (+workspace-exists-p name)
     (error "A workspace named '%s' already exists" name))
-  (and (persp-add-new name) t))
+  (let ((persp (persp-add-new name)))
+    (save-window-excursion
+      (let ((ignore-window-parameters t))
+        (persp-delete-other-windows)))
+    (persp-switch name)
+    (switch-to-buffer (nano-fallback-buffer))
+    persp))
 
 (defun +workspace--tabline (&optional names)
   "Returns a string with all the workpaces."
@@ -147,6 +153,7 @@ Otherwise return t on success, nil otherwise."
 ;;;###autoload
 (defun +workspace-switch (name &optional auto-create-p)
   "Switch to another workspace."
+  (message "wk switch %s %s" name auto-create-p)
   (unless (+workspace-exists-p name)
     (if auto-create-p
         (+workspace-new name)
@@ -184,11 +191,14 @@ buffers."
 end of the workspace list."
   (interactive
    (list (or current-prefix-arg
-             (completing-read "Switch to workspace: " (+workspace-list-names)))))
+                 (ivy-read "Switch to workspace: "
+                           (+workspace-list-names)
+                           :caller #'+workspace/switch-to
+                           :preselect (+workspace-current-name)))))
   (when (and (stringp index)
              (string-match-p "^[0-9]+$" index))
     (setq index (string-to-number index)))
-  (condition-case ex
+  (condition-case-unless-debug ex
       (let ((names (+workspace-list-names))
             (old-name (+workspace-current-name)))
         (cond ((numberp index)
@@ -197,9 +207,7 @@ end of the workspace list."
                    (error "No workspace at #%s" (1+ index)))
                  (+workspace-switch dest)))
               ((stringp index)
-               (unless (member index names)
-                 (error "No workspace named %s" index))
-               (+workspace-switch index))
+               (+workspace-switch index t))
               (t
                (error "Not a valid index: %s" index)))
         (unless (called-interactively-p 'interactive)
@@ -236,23 +244,21 @@ end of the workspace list."
 
 ;;;###autoload
 (defun +workspace/new (&optional name clone-p)
-  "Create a new workspace named NAME. If OVERWRITE-P is non-nil, clear any
-pre-existing workspace."
-  (interactive "iP")
+  "Create a new workspace named NAME. If CLONE-P is non-nil, clone the current
+workspace, otherwise the new workspace is blank."
+  (interactive (list nil current-prefix-arg))
+  (message "name: %s clone-p %s" name clone-p)
   (unless name
     (setq name (format "#%s" (+workspace--generate-id))))
-  (condition-case ex
-      (let ((exists-p (+workspace-exists-p name)))
-        (if exists-p
-            (error "%s already exists" name)
-          (+workspace-switch name t)
-          (if clone-p
-              (dolist (window (window-list))
-                (persp-add-buffer (window-buffer window) persp nil))
-            (delete-other-windows-internal)
-            (switch-to-buffer (get-buffer-create "*splash*")))
-          (+workspace/display)))
-    ('error (+workspace-error (cadr ex) t))))
+  (condition-case e
+      (cond ((+workspace-exists-p name)
+             (error "%s already exists" name))
+            (clone-p
+              (persp-copy name t))
+            (t
+              (+workspace-switch name t)
+              (+workspace/display)))
+    ((debug error) (+workspace-error (cadr e) t))))
 
 ;;;###autoload
 (defun +workspace/delete (name)

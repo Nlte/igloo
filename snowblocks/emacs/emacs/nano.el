@@ -75,6 +75,10 @@
 (require 'nano-theme)
 (nano-theme)
 
+;; Nano dashboard
+(require 'nano-dashboard)
+(+nano-dashboard-init-h)
+
 ;; Nano default settings (optional)
 (require 'nano-defaults)
 
@@ -109,9 +113,9 @@
   (message (format "Initialization time: %s" (emacs-init-time))))
 
 ;; Splash (optional)
-(add-to-list 'command-switch-alist '("-no-splash" . (lambda (args))))
-(unless (member "-no-splash" command-line-args)
-  (require 'nano-splash))
+; (add-to-list 'command-switch-alist '("-no-splash" . (lambda (args))))
+; (unless (member "-no-splash" command-line-args)
+;   (require 'nano-splash))
 
 ;; Help (optional)
 (add-to-list 'command-switch-alist '("-no-help" . (lambda (args))))
