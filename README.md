@@ -1,4 +1,4 @@
-![](img/igloo-logo-banner.jpg)
+![ ](img/igloo-logo-banner.jpg)
 
 Based on https://github.com/arcticicestudio/igloo
 
