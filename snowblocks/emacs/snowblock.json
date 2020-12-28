@@ -1,0 +1,23 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v emacs >/dev/null 2>&1 || echo 'emacs not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "clean": ["$IGLOO_PATH_USER_CONFIG/emacs"]
+    },
+    {
+        "link": {
+            "$IGLOO_PATH_USER_CONFIG/emacs": {
+                "create": true,
+                "path": "emacs"
+            }
+        }
+    }
+]
