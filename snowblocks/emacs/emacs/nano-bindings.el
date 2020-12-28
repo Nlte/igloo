@@ -94,6 +94,11 @@ The prefix map is named 'my-DEF-map'."
  "b" '+ivy/switch-workspace-buffer
  "d" 'kill-current-buffer)
 
+;; g --- git
+(general-global-menu-definer
+ "git" "g"
+ "g" 'magit-status)
+
 ;; TAB --- workspace
 (general-global-menu-definer
   "workspace" "TAB"

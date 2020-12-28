@@ -106,6 +106,9 @@
 ;; Nano projectile configuration
 (require 'nano-projectile)
 
+;; Nano git
+(require 'nano-git)
+
 
 ;; Welcome message (optional)
 (let ((inhibit-message t))

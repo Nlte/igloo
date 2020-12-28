@@ -18,15 +18,18 @@
     "v" 'evil-window-vsplit
     ;; actions
     "q" 'evil-quit
-    "r" 'evil-window-rotate-downwards)
-  (evil-mode-map
-   :states '(normal visual)
-   "gc" 'evilnc-comment-operator))
+    "r" 'evil-window-rotate-downwards))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 
 (use-package evil-surround
+  :after evil
   :commands (global-evil-surround-mode
              evil-surround-edit
              evil-Surround-edit
@@ -34,7 +37,7 @@
   :config (global-evil-surround-mode 1))
 
 (use-package evil-embrace
-  :ensure t
+  :after evil
   :commands embrace-add-pair embrace-add-pair-regexp
   :hook (emacs-lisp-mode . embrace-emacs-lisp-mode-hook)
   :hook (org-mode . embrace-org-mode-hook)
@@ -45,13 +48,18 @@
   (setq evil-embrace-show-help-p nil))
 
 (use-package evil-nerd-commenter
+  :after evil
   :commands (evilnc-comment-operator
              evilnc-inner-comment
              evilnc-outer-commenter)
-  :general ([remap comment-line] #'evilnc-comment-or-uncomment-lines))
+  :general
+  ([remap comment-line] #'evilnc-comment-or-uncomment-lines)
+  (:states '(normal visual)
+   "gc" 'evilnc-comment-operator))
 
 
 (use-package evil-escape
+  :after evil
   :commands evil-escape
   :init
   (setq evil-escape-excluded-states '(normal visual multiedit emacs motion)
@@ -73,6 +81,7 @@
 
 (use-package smartparens
   ;; Auto-close delimiters and blocks as you type.
+  :after evil
   :commands sp-pair sp-local-pair sp-with-modes sp-point-in-comment sp-point-in-string
   :config
   (smartparens-global-mode 1)
