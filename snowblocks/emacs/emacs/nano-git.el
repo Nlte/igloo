@@ -115,6 +115,7 @@
 
 
 (use-package evil-collection
+  :after magit
   :defer t
   :init (defvar evil-collection-magit-use-z-for-folds t)
   :config
@@ -145,6 +146,9 @@
     magit-diff-mode-map)
    [tab] #'magit-section-toogle))
 
+
+(use-package git-auto-commit-mode
+  :defer t)
 
 
 
