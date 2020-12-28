@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/arcticicestudio/igloo/master/assets/igloo-logo-banner.svg?sanitize=true"/></p>
+![Igloo logo](.img/igloo-logo-banner.svg)
 
 Based on https://github.com/arcticicestudio/igloo
 
@@ -32,6 +32,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_exceltocsv
 │   │   ├── ig_genshapasswd
 │   │   ├── ig_genwordpasswd
+│   │   ├── ig_grep_files
 │   │   ├── ig_imgcat
 │   │   ├── ig_k8s_coredns_config
 │   │   ├── ig_k8s_coredns_delete
@@ -41,6 +42,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_man
 │   │   ├── ig_pdipython
 │   │   ├── ig_pyvenv
+│   │   ├── ig_sed_recursive
 │   │   ├── ig_showtermcolors
 │   │   └── ig_ssl_getcert
 │   ├── broot
@@ -55,6 +57,29 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── custom.el
 │   │   │   ├── init.el
 │   │   │   └── packages.el
+│   │   └── snowblock.json
+│   ├── emacs
+│   │   ├── emacs
+│   │   │   ├── nano-base-colors.el
+│   │   │   ├── nano-bindings.el
+│   │   │   ├── nano-colors.el
+│   │   │   ├── nano-command.el
+│   │   │   ├── nano-defaults.el
+│   │   │   ├── nano-evil.el
+│   │   │   ├── nano-faces.el
+│   │   │   ├── nano-help.el
+│   │   │   ├── nano-ivy.el
+│   │   │   ├── nano-layout.el
+│   │   │   ├── nano-modeline.el
+│   │   │   ├── nano-projectile.el
+│   │   │   ├── nano-session.el
+│   │   │   ├── nano-splash.el
+│   │   │   ├── nano-stdlib.el
+│   │   │   ├── nano-theme-dark.el
+│   │   │   ├── nano-theme-light.el
+│   │   │   ├── nano-theme.el
+│   │   │   ├── nano-workspace.el
+│   │   │   └── nano.el
 │   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish
