@@ -99,6 +99,11 @@ The prefix map is named 'my-DEF-map'."
  "git" "g"
  "g" 'magit-status)
 
+;; h --- help
+(general-global-menu-definer
+ "help" "h"
+ "k" 'helpful-key)
+
 ;; TAB --- workspace
 (general-global-menu-definer
   "workspace" "TAB"

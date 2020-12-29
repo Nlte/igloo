@@ -109,6 +109,9 @@
 ;; Nano git
 (require 'nano-git)
 
+;; Nano help
+(require 'nano-help)
+
 
 ;; Welcome message (optional)
 (let ((inhibit-message t))
@@ -120,9 +123,5 @@
 ; (unless (member "-no-splash" command-line-args)
 ;   (require 'nano-splash))
 
-;; Help (optional)
-(add-to-list 'command-switch-alist '("-no-help" . (lambda (args))))
-(unless (member "-no-help" command-line-args)
-  (require 'nano-help))
 
 (provide 'nano)
