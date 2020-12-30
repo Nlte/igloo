@@ -115,7 +115,7 @@
 
 
 (use-package evil-collection
-  :after magit
+  :after '(magit evil)
   :defer t
   :init (defvar evil-collection-magit-use-z-for-folds t)
   :config

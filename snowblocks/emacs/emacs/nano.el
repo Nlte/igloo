@@ -94,6 +94,9 @@
 ;; Nano evil mode
 (require 'nano-evil)
 
+;; Nano editor
+(require 'nano-editor)
+
 ;; Nano workspaces
 (require 'nano-workspace)
 
@@ -111,6 +114,9 @@
 
 ;; Nano help
 (require 'nano-help)
+
+;; Nano org-mode
+(require 'nano-org)
 
 
 ;; Welcome message (optional)

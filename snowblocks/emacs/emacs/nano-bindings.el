@@ -157,4 +157,3 @@ The prefix map is named 'my-DEF-map'."
 
 
 (provide 'nano-bindings)
-
