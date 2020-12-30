@@ -19,6 +19,13 @@ git clone --recursive git@github.com:Nlte/igloo.git
 ├── colors
 │   └── iterm
 │       └── doom.itermcolors
+├── img
+│   ├── igloo-logo-banner.jpg
+│   ├── igloo-logo-banner.png
+│   └── igloo-logo-banner.svg
+├── lib
+│   └── makefiles
+│       └── Makefile-python-pipenv
 ├── snowblocks
 │   ├── bat
 │   │   ├── config
@@ -59,18 +66,24 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   └── packages.el
 │   │   └── snowblock.json
 │   ├── emacs
+│   │   ├── README.md
 │   │   ├── emacs
 │   │   │   ├── nano-base-colors.el
 │   │   │   ├── nano-bindings.el
+│   │   │   ├── nano-bindings.elc
 │   │   │   ├── nano-colors.el
 │   │   │   ├── nano-command.el
+│   │   │   ├── nano-dashboard.el
 │   │   │   ├── nano-defaults.el
+│   │   │   ├── nano-editor.el
 │   │   │   ├── nano-evil.el
 │   │   │   ├── nano-faces.el
+│   │   │   ├── nano-git.el
 │   │   │   ├── nano-help.el
 │   │   │   ├── nano-ivy.el
 │   │   │   ├── nano-layout.el
 │   │   │   ├── nano-modeline.el
+│   │   │   ├── nano-org.el
 │   │   │   ├── nano-projectile.el
 │   │   │   ├── nano-session.el
 │   │   │   ├── nano-splash.el
@@ -79,7 +92,9 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── nano-theme-light.el
 │   │   │   ├── nano-theme.el
 │   │   │   ├── nano-workspace.el
-│   │   │   └── nano.el
+│   │   │   ├── nano-workspace.elc
+│   │   │   ├── nano.el
+│   │   │   └── nano.elc
 │   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish
