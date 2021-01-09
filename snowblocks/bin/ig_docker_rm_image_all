@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+docker image ls -q | xargs -I {} docker image rm {}
