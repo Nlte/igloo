@@ -10,13 +10,21 @@
         ]
     },
     {
-        "clean": ["$IGLOO_PATH_USER_CONFIG/emacs"]
+        "clean": ["$HOME/.emacs.d"]
     },
     {
         "link": {
-            "$IGLOO_PATH_USER_CONFIG/emacs": {
+            "$HOME/.emacs.d/init.el": {
                 "create": true,
-                "path": "emacs"
+                "path": "emacs/init.el"
+            },
+            "$HOME/.emacs.d/lisp": {
+                "create": true,
+                "path": "emacs/lisp"
+            },
+            "$HOME/.emacs.d/.projectile": {
+                "create": true,
+                "path": "emacs/.projectile"
             }
         }
     }
