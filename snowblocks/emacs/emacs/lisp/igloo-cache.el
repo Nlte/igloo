@@ -2,6 +2,8 @@
   (expand-file-name "~/.local/share/emacs/")
   "Directory where all cache files should be saved")
 
+(setq make-backup-files nil)
+
 (defun ig/cache-concat (name)
   "Return the absolute path of NAME under `ig/cache-directory'."
   (let* ((directory (file-name-as-directory ig/cache-directory))

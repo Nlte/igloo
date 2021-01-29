@@ -13,11 +13,17 @@ set -gx EDITOR vim
 set -gx RIPGREP_CONFIG_PATH $IGLOO_PATH_USER_CONFIG/ripgrep/config
 
 
+# locals
+set LC_ALL en_US.UTF-8
+set LANG en_US.UTF-8
+
+
 # path
 set PATH $HOME/Library/Python/3.7/bin $PATH
 set PATH $HOME/igloo/snowblocks/bin $PATH
 set PATH /usr/local/opt/llvm/bin $PATH
 set PATH /usr/local/opt/qt/bin $PATH
+set PATH $HOME/utils/binaries $PATH
 
 
 # alias
