@@ -231,12 +231,18 @@ class Link(snowsaw.Plugin):
             self._log.warning("Invalid link {} -> {}".format(link_name, self._link_destination(link_name)))
         elif not self._exists(link_name) and self._exists(absolute_source):
             try:
-                os.symlink(source, destination)
-            except OSError:
-                self._log.warning("Linking failed {} -> {}".format(link_name, source))
-            else:
+                if os.path.isdir(source):
+                    if source.endswith('/'):
+                        source = source[:-1]
+                    if destination.endswith('/'):
+                        destination = destination[:-1]
+                    os.symlink(source, destination, dir_fd=1, target_is_directory=True)
+                else:
+                    os.symlink(source, destination)
                 self._log.lowinfo("Creating link {} -> {}".format(link_name, source))
                 success = True
+            except OSError as e:
+                self._log.warning("Linking failed {} -> {}: {}".format(link_name, source, e))
         elif self._exists(link_name) and not self._is_link(link_name):
             self._log.warning("{} already exists but is a regular file or directory".format(link_name))
         elif self._is_link(link_name) and self._link_destination(link_name) != source:
