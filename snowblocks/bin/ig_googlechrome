@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]
+then
+    echo "usage: ig_googlechrome <url>"
+    echo "Open url in google chrome"
+    exit 1
+fi
+
+open -a "Google Chrome.app" "$1"
