@@ -13,7 +13,7 @@
   (igloo--setup-default-dir)
   )
 
-(add-to-list 'exec-path "/usr/local/bin")
+(use-package exec-path-from-shell)
 
 (use-package direnv
  :config
