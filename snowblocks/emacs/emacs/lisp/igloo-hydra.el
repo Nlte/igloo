@@ -39,7 +39,8 @@
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
  ("Hydra finder"
   (("f" counsel-find-file "find file")
-   ("g" counsel-rg "grep"))))
+   ("g" counsel-rg "grep")
+   ("p" ig/open-private-config "open private config"))))
 
 ;; Workspace
 (pretty-hydra-define ig-hydra-workspace
