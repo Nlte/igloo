@@ -14,8 +14,8 @@ set -gx RIPGREP_CONFIG_PATH $IGLOO_PATH_USER_CONFIG/ripgrep/config
 
 
 # locals
-set LC_ALL en_US.UTF-8
-set LANG en_US.UTF-8
+set -gx LC_ALL en_US.UTF-8
+set -gx LANG en_US.UTF-8
 
 
 # path
