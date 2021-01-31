@@ -1,9 +1,8 @@
 ;;; igloo-snippet.el --- Snippet config -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 (use-package yasnippet
-  :bind
-  (:map yas-minor-mode-map
-   ("TAB" . nil)
-   ([tab] . nil))
   :hook
   (prog-mode . yas-minor-mode)
   (text-mode . yas-minor-mode)
@@ -12,5 +11,8 @@
   :config
   (yas-reload-all))
 
+(use-package yasnippet-snippets)
+
 (provide 'igloo-snippet)
+
 ;;; igloo-snippet.el ends here
