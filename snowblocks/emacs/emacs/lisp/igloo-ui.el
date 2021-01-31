@@ -22,6 +22,15 @@
 ;; (global-hl-line-mode 1)
 (setq x-underline-at-descent-line t)
 
+;; Line numbers
+(add-hook 'conf-mode-hook #'display-line-numbers-mode)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(setq-default
+ display-line-numbers-current-absolute nil
+ display-line-numbers-type 'absolute
+ display-line-numbers-width 2)
+
 ;; Vertical window divider
 (setq window-divider-default-right-width 5)
 (setq window-divider-default-places 'right-only)
