@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [ $# -lt 2 ]
+then
+    echo "usage: ig_aws_ec2_get_privateid_by_tag <profile> <tag>"
+    echo "example: ig_aws_ec2_get_privateid_by_tag myprofile my-instance-tag"
+    echo "Get EC2 instance privateip by tag"
+    exit 1
+fi
+
+aws ec2 describe-instances --profile $1 | jq --arg v "$2" '.Reservations | .[0].Instances | select( .[].Tags | select(.[].Value == $v))' | jq '.[0] | .PrivateIpAddress' | sed 's/"//g'
