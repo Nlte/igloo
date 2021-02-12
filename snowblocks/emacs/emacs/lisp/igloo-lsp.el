@@ -7,7 +7,7 @@
   :hook (prog-mode . lsp)
   :init
   (setq-default
-   lsp-idle-delay 0.500 ;; to tune (how often lsp refresh)
+   lsp-idle-delay 0.200 ;; to tune (how often lsp refresh)
    lsp-completion-provider :capf
    lsp-headerline-breadcrumb-enable nil
    lsp-lens-enable nil

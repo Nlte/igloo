@@ -5,7 +5,7 @@
     {
         "shell": [
             {
-                "command": "command -v bat >/dev/null 2>&1 || echo 'bat' not installed'; exit 0",
+                "command": "command -v bat >/dev/null 2>&1 || echo 'bat not installed'; exit 0",
                 "stderr": true,
                 "stdin": true,
                 "stdout": true

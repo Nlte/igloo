@@ -106,6 +106,12 @@
   ("Hydra search"
    (("b" swiper "swiper"))))
 
+;; Insert
+(pretty-hydra-define ig-hydra-insert
+  (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
+  ("Hydra insert"
+   (("s" yas-insert-snippet "Snippet"))))
+
 
 
 (provide 'igloo-hydra)

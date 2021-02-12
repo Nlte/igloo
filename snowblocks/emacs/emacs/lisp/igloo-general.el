@@ -19,6 +19,7 @@
   "b" 'ig-hydra-buffer/body
   "p" 'ig-hydra-project/body
   "s" 'ig-hydra-search/body
+  "i" 'ig-hydra-insert/body
   "," '+ivy/switch-workspace-buffer)
 
 ; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)

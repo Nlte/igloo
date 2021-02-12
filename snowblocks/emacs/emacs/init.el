@@ -86,6 +86,7 @@
 (require 'igloo-csv)
 (require 'igloo-python)
 (require 'igloo-yaml)
+(require 'igloo-org)
 
 ;; Lib -------------------------------------------------------------------------
 (require 'igloo-lib)
