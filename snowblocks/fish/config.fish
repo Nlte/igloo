@@ -23,7 +23,8 @@ set PATH $HOME/Library/Python/3.7/bin $PATH
 set PATH $HOME/igloo/snowblocks/bin $PATH
 set PATH /usr/local/opt/llvm/bin $PATH
 set PATH /usr/local/opt/qt/bin $PATH
-set PATH $HOME/utils/binaries $PATH
+set PATH $HOME/utils/binaries/ $PATH
+set PATH $HOME/miniconda3/bin/ $PATH
 
 
 # alias
@@ -32,7 +33,6 @@ alias vim=nvim
 eval (direnv hook fish)
 
 # >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-eval /usr/local/Caskroom/miniconda/base/bin/conda "shell.fish" "hook" $argv | source
+eval conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
 
