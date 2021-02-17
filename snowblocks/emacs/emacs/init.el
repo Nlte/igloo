@@ -38,7 +38,11 @@
     (load custom-file)))
 
 ;; Emacs internals -------------------------------------------------------------
-(setq gc-cons-threshold 100000000)
+;; Threshold for garbage collection in bytes. If mem allocated past this threshold,
+;; emacs starts garbage collection.
+;; Can be increased a lot to speedup startup. Must be restored after the startup
+;; otherwise it causes eamcs to stutter and freeze in normal use.
+; (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 10 1024 1024)) ;; 10mb
 
 
@@ -47,14 +51,14 @@
 ;; -----------------------------------------------------------------------------
 
 ;; ui --------------------------------------------------------------------------
-;; (require 'nano-theme-light)
+(require 'nano-theme-light)
 (require 'igloo-ui)
-;; (require 'nano-faces)
-;; (nano-faces)
-;; (require 'nano-theme)
-;; (nano-theme)
+(require 'nano-faces)
+(nano-faces)
+(require 'nano-theme)
+(nano-theme)
 ;; (require 'igloo-theme)
-;; (require 'nano-modeline)
+(require 'nano-modeline)
 (require 'igloo-buffer)
 (require 'igloo-workspace)
 
