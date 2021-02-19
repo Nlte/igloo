@@ -2,8 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'igloo-hydra)
-
 (use-package lsp-python-ms
   :defer 0.3
   :custom
@@ -19,7 +17,7 @@
 (pretty-hydra-define python-hydra-test
   (:forein-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
   ("Hydra python test"
-   (("v" python-pytest-file "python-pytest-file")
+   (("v" python-pytest-file     "python-pytest-file")
     ("a" python-pytest-dispatch "python-pytest-dispatch")
     ("f" python-pytest-function "python-pytest-function"))))
 

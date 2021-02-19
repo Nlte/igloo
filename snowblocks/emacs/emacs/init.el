@@ -51,14 +51,14 @@
 ;; -----------------------------------------------------------------------------
 
 ;; ui --------------------------------------------------------------------------
-(require 'nano-theme-light)
+; (require 'nano-theme-light)
 (require 'igloo-ui)
-(require 'nano-faces)
-(nano-faces)
-(require 'nano-theme)
-(nano-theme)
+; (require 'nano-faces)
+; (nano-faces)
+; (require 'nano-theme)
+; (nano-theme)
 ;; (require 'igloo-theme)
-(require 'nano-modeline)
+;; (require 'nano-modeline)
 (require 'igloo-buffer)
 (require 'igloo-workspace)
 
