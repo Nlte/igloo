@@ -24,23 +24,44 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── igloo-logo-banner.png
 │   └── igloo-logo-banner.svg
 ├── lib
-│   └── makefiles
-│       └── Makefile-python-pipenv
+│   ├── bash
+│   │   ├── scrip-template.sh
+│   │   └── utils.sh
+│   ├── makefiles
+│   │   └── Makefile-python-pipenv
+│   ├── pandas
+│   │   ├── aggregate-column-names-per-value.ipynb
+│   │   └── explode.ipynb
+│   ├── project-templates
+│   │   └── analytics
+│   └── sql
+│       └── mysql
+│           ├── mysql-server-timezone.sql
+│           └── pivot_columns_to_rows.sql
 ├── snowblocks
 │   ├── bat
 │   │   ├── config
 │   │   └── snowblock.json
 │   ├── bin
 │   │   ├── _pdipython_startup.py
+│   │   ├── ig_aws_ec2_get_instance_by_tag
+│   │   ├── ig_aws_ec2_get_privateip_by_tag
 │   │   ├── ig_csvtoexcel
 │   │   ├── ig_curl_respheaders
 │   │   ├── ig_decrypt
+│   │   ├── ig_docker_rm_all
+│   │   ├── ig_docker_rm_image_all
 │   │   ├── ig_encrypt
 │   │   ├── ig_exceltocsv
 │   │   ├── ig_genshapasswd
 │   │   ├── ig_genwordpasswd
+│   │   ├── ig_googlechrome
 │   │   ├── ig_grep_files
 │   │   ├── ig_imgcat
+│   │   ├── ig_jupyter_notebook_open
+│   │   ├── ig_jupyter_open
+│   │   ├── ig_jupyter_server_list
+│   │   ├── ig_jupyter_tmux_session
 │   │   ├── ig_k8s_coredns_config
 │   │   ├── ig_k8s_coredns_delete
 │   │   ├── ig_k8s_coredns_logs
@@ -66,35 +87,42 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   └── packages.el
 │   │   └── snowblock.json
 │   ├── emacs
-│   │   ├── README.md
 │   │   ├── emacs
-│   │   │   ├── nano-base-colors.el
-│   │   │   ├── nano-bindings.el
-│   │   │   ├── nano-bindings.elc
-│   │   │   ├── nano-colors.el
-│   │   │   ├── nano-command.el
-│   │   │   ├── nano-dashboard.el
-│   │   │   ├── nano-defaults.el
-│   │   │   ├── nano-editor.el
-│   │   │   ├── nano-evil.el
-│   │   │   ├── nano-faces.el
-│   │   │   ├── nano-git.el
-│   │   │   ├── nano-help.el
-│   │   │   ├── nano-ivy.el
-│   │   │   ├── nano-layout.el
-│   │   │   ├── nano-modeline.el
-│   │   │   ├── nano-org.el
-│   │   │   ├── nano-projectile.el
-│   │   │   ├── nano-session.el
-│   │   │   ├── nano-splash.el
-│   │   │   ├── nano-stdlib.el
-│   │   │   ├── nano-theme-dark.el
-│   │   │   ├── nano-theme-light.el
-│   │   │   ├── nano-theme.el
-│   │   │   ├── nano-workspace.el
-│   │   │   ├── nano-workspace.elc
-│   │   │   ├── nano.el
-│   │   │   └── nano.elc
+│   │   │   ├── init.el
+│   │   │   └── lisp
+│   │   │       ├── igloo-buffer.el
+│   │   │       ├── igloo-cache.el
+│   │   │       ├── igloo-company.el
+│   │   │       ├── igloo-config.el
+│   │   │       ├── igloo-csv.el
+│   │   │       ├── igloo-elisp.el
+│   │   │       ├── igloo-env.el
+│   │   │       ├── igloo-evil.el
+│   │   │       ├── igloo-flycheck.el
+│   │   │       ├── igloo-general.el
+│   │   │       ├── igloo-git.el
+│   │   │       ├── igloo-hydra.el
+│   │   │       ├── igloo-ivy.el
+│   │   │       ├── igloo-jira.el
+│   │   │       ├── igloo-lib.el
+│   │   │       ├── igloo-lsp.el
+│   │   │       ├── igloo-org.el
+│   │   │       ├── igloo-projectile.el
+│   │   │       ├── igloo-python.el
+│   │   │       ├── igloo-shell.el
+│   │   │       ├── igloo-snippet.el
+│   │   │       ├── igloo-theme.el
+│   │   │       ├── igloo-ui.el
+│   │   │       ├── igloo-workspace.el
+│   │   │       ├── igloo-yaml.el
+│   │   │       ├── init-benchmarking.el
+│   │   │       ├── nano-base-colors.el
+│   │   │       ├── nano-faces.el
+│   │   │       ├── nano-modeline.el
+│   │   │       ├── nano-theme-dark.el
+│   │   │       ├── nano-theme-light.el
+│   │   │       ├── nano-theme.el
+│   │   │       └── nose.el
 │   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish

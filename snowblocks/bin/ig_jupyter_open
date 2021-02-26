@@ -9,16 +9,6 @@ fzf_select_if_more_than_two() {
     echo $ret
 }
 
-if [ $# -eq 0 ]; then
-    echo "usage: ig_jupyter_open_notebook <notebook.ipynb>"
-    echo "open notebook in local jupyter server"
-    echo "starts a jupyter lab server if none is found"
-    exit 1
-fi
-
-NOTEBOOK=$1
-NOTEBOOK_RELPATH=$(realpath --relative-to=$HOME $NOTEBOOK)
-
 tmux ls | grep jupyterlab > /dev/null
 
 if [ $? -eq 1 ]; then
@@ -29,7 +19,7 @@ fi
 
 servers=$(ig_jupyter_server_list)
 server=$(fzf_select_if_more_than_two $servers)
-url="${server}lab/tree/${NOTEBOOK_RELPATH}"
+url="${server}"
 
 echo "Opening ${url}"
 ig_googlechrome "${url}"
