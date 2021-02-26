@@ -7,9 +7,9 @@ SESSION_NAME=jupyterlab
 
 echo "Creating tmux session '$SESSION_NAME'"
 
-tmux new-session -d -s $SESSION_NAME || echo "Failed to create session '$SESSION_NAME. Is the session already running ? (tmux ls)'"
+tmux new-session -d -s $SESSION_NAME
 
 # cd $ROOT
 tmux send-keys -t $SESSION_NAME "cd $ROOT" ENTER
-tmux send-keys -t $SESSION_NAME "source ~/virtualenvs/py3/bin/activate.fish" ENTER
+# tmux send-keys -t $SESSION_NAME "source ~/virtualenvs/py3/bin/activate.fish" ENTER
 tmux send-keys -t $SESSION_NAME "jupyter lab --no-browser" ENTER

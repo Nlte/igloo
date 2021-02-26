@@ -2,7 +2,7 @@
 
 if [ $# -eq 0 ]
 then
-    ehco "usage: curl-resp-header.sh <url>"
+    echo "usage: curl-resp-header.sh <url>"
     exit 1
 fi
 

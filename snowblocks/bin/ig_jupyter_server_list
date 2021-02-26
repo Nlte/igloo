@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+servers=$(jupyter notebook list \
+        | tail -n +2 \
+        | awk -F '::' '{print $1}' \
+        | grep -Eo '(http|https)://[^/"]+/')
+
+printf '%s\n' ${servers[@]}
