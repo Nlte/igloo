@@ -17,7 +17,10 @@ if [ $# -eq 0 ]; then
 fi
 
 NOTEBOOK=$1
-NOTEBOOK_RELPATH=$(realpath --relative-to=$HOME $NOTEBOOK)
+escaped_home=$(echo $HOME | sed 's/\./\\./g' | sed 's/\//\\\//g')
+relative_path=$(echo $(pwd) | sed "s/$escaped_home\///g")
+NOTEBOOK_RELPATH="${relative_path}/${NOTEBOOK}"
+# NOTEBOOK_RELPATH=$(realpath --relative-to=$HOME $NOTEBOOK) # this follow symlinks on macos
 
 tmux ls | grep jupyterlab > /dev/null
 

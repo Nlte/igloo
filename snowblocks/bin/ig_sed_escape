@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+
+set -Eeuo pipefail
+
+if [ $# -ne 1 ]; then
+   echo "ig_sed_escape <string>"
+   echo "escape regex character for sed"
+   exit 1
+fi
+
+STR=$1
+
+do_escape() {
+    printf '%s\n' "$1" | sed -e 's/[]\/$*.^[]/\\&/g'
+}
+
+do_escape $STR

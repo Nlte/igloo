@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" &>/dev/null && pwd -P)
+
+escaped=$(ig_sed_escape $script_dir)
+
+find $script_dir -type f -name "ig_*" | sed "s/$escaped\///g" | fzf | tr -d '\n' | pbcopy

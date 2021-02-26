@@ -6,3 +6,8 @@ fzf_select_if_more_than_two() {
     ret=$(printf '%s\n' $@ | fzf --header="fzf text at the bottom")
     echo $ret
 }
+
+sed_example_escape() {
+    escaped=$(echo $1 | sed 's/\./\\./g; s/\//\\\//g ; s/\*/\\\*/g')
+    echo $escaped
+}
