@@ -98,7 +98,8 @@
 (pretty-hydra-define ig-hydra-project
     (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
     ("Hydra project"
-     (("p" counsel-projectile-switch-project "switch project"))))
+     (("p" counsel-projectile-switch-project "switch project")
+      ("i" projectile-invalidate-cache "invalidate project cache"))))
 
 ;; Search
 (pretty-hydra-define ig-hydra-search

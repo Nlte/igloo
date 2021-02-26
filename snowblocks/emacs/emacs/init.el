@@ -1,3 +1,7 @@
+;;; init.el --- Emacs init.el -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 ;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
 ;; (setq debug-on-error t)
 
@@ -113,3 +117,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;;; init.el ends here

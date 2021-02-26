@@ -4,7 +4,7 @@
 
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
 (use-package lsp-mode
-  :hook (prog-mode . lsp)
+  :hook (python-mode . lsp)
   :init
   (setq-default
    lsp-idle-delay 0.200 ;; to tune (how often lsp refresh)

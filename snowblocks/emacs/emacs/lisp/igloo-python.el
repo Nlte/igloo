@@ -39,7 +39,7 @@
 (use-package python-pytest)
 
 (pretty-hydra-define python-hydra-test
-  (:forein-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
   ("Hydra python test"
    (("f" python-pytest-file     "python-pytest-file")
     ("p" python-pytest-dispatch "python-pytest-dispatch")
