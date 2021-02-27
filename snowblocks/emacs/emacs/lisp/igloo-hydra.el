@@ -113,7 +113,11 @@
   ("Hydra insert"
    (("s" yas-insert-snippet "Snippet"))))
 
-
+;; Open
+(pretty-hydra-define ig-hydra-open
+  (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
+  ("Hydra open"
+   (("p" neotree-toggle "neotree-toggle"))))
 
 (provide 'igloo-hydra)
 

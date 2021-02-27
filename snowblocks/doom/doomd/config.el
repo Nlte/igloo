@@ -82,24 +82,24 @@
 ;; Package configs
 ;;
 ;; EIN
-(use-package! ein
-  :init
-  (setq ein:notebook-autosave-frequency 10)
-  (setq ein:notebook-create-checkpoint-on-save t))
-  :config
-  (map! (:when (featurep! :tools ein)
-       (:map ein:notebook-mode-map
-        :leader
-        (:prefix-map ("j" . "jupyter")
-        :desc "Execute cell"            "c" #'ein:worksheet-execute-cell-and-goto-next-km
-        :desc "Execute all cells"       "R" #'ein:worksheet-execute-all-cells
-        :desc "Insert cell below"       "b" #'ein:worksheet-insert-cell-below-km
-        :desc "Insert cell above"       "a" #'ein:worksheet-insert-cell-above-km
-        :desc "Next cell"               "j" #'ein:worksheet-goto-next-input-km
-        :desc "Previous cell"           "k" #'ein:worksheet-goto-prev-input-km
-        :desc "Yank cell"               "y" #'ein:worksheet-yank-cell-km
-        :desc "Rename notbook"          "w" #'ein:notebook-rename-command-km
-        ))))
+;; (use-package! ein
+;;   :init
+;;   (setq ein:notebook-autosave-frequency 10)
+;;   (setq ein:notebook-create-checkpoint-on-save t))
+;;   :config
+;;   (map! (:when (featurep! :tools ein)
+;;        (:map ein:notebook-mode-map
+;;         :leader
+;;         (:prefix-map ("j" . "jupyter")
+;;         :desc "Execute cell"            "c" #'ein:worksheet-execute-cell-and-goto-next-km
+;;         :desc "Execute all cells"       "R" #'ein:worksheet-execute-all-cells
+;;         :desc "Insert cell below"       "b" #'ein:worksheet-insert-cell-below-km
+;;         :desc "Insert cell above"       "a" #'ein:worksheet-insert-cell-above-km
+;;         :desc "Next cell"               "j" #'ein:worksheet-goto-next-input-km
+;;         :desc "Previous cell"           "k" #'ein:worksheet-goto-prev-input-km
+;;         :desc "Yank cell"               "y" #'ein:worksheet-yank-cell-km
+;;         :desc "Rename notbook"          "w" #'ein:notebook-rename-command-km
+;;         ))))
 ;; (add-hook 'kill-emacs-hook 'ein:stop)
 
 ;; Neotree
