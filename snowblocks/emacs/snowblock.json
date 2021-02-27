@@ -18,6 +18,14 @@
                 "create": true,
                 "path": "emacs/init.el"
             },
+            "$HOME/.emacs.d/early-init.el": {
+                "create": true,
+                "path": "emacs/early-init.el"
+            },
+            "$HOME/.emacs.d/core.el": {
+                "create": true,
+                "path": "emacs/core.el"
+            },
             "$HOME/.emacs.d/lisp": {
                 "create": true,
                 "path": "emacs/lisp"

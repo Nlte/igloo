@@ -2,14 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
-;; (setq debug-on-error t)
-
-;; Platform --------------------------------------------------------------------
-(defconst IS-MAC     (eq system-type 'darwin))
-(defconst IS-LINUX   (eq system-type 'gnu/linux))
-(defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
-
 (add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 ; (require 'init-benchmarking) ;; Measure startup time
 
@@ -40,15 +32,6 @@
     (setq user-init-file this-file)
     (setq custom-file custom-path)
     (load custom-file)))
-
-;; Emacs internals -------------------------------------------------------------
-;; Threshold for garbage collection in bytes. If mem allocated past this threshold,
-;; emacs starts garbage collection.
-;; Can be increased a lot to speedup startup. Must be restored after the startup
-;; otherwise it causes eamcs to stutter and freeze in normal use.
-; (setq gc-cons-threshold 100000000)
-(setq read-process-output-max (* 10 1024 1024)) ;; 10mb
-
 
 ;; -----------------------------------------------------------------------------
 ;; Load configs
