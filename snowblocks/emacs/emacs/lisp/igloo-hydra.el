@@ -117,7 +117,7 @@
 (pretty-hydra-define ig-hydra-open
   (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
   ("Hydra open"
-   (("p" neotree-toggle "neotree-toggle"))))
+   (("p" neotree-project-dir "neotree-toggle"))))
 
 (provide 'igloo-hydra)
 

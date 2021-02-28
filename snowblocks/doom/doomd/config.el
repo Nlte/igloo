@@ -150,7 +150,8 @@
 ;; Persp mode
 ;;
 ;; disable auto save (causes emacs to freeze on exit)
-(setq persp-auto-save-opt 0)
+;; (setq persp-auto-save-opt 0)
+(setq +workspaces-on-switch-project-behavior t)
 
 
 ;; Ledger
