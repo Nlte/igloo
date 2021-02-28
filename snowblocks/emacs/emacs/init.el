@@ -50,6 +50,7 @@
 (require 'igloo-workspace)
 
 ;; general ---------------------------------------------------------------------
+(require 'igloo-tree)
 (require 'igloo-config)
 (require 'igloo-evil)
 (require 'igloo-env)
