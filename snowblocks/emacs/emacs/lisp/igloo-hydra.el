@@ -99,7 +99,8 @@
     (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
     ("Hydra project"
      (("p" counsel-projectile-switch-project "switch project")
-      ("i" projectile-invalidate-cache "invalidate project cache"))))
+      ("i" projectile-invalidate-cache "invalidate project cache")
+      ("m" ivy-make-projectile "makefile"))))
 
 ;; Search
 (pretty-hydra-define ig-hydra-search
