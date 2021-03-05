@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+    echo "usage: ig_openssl_cert_to_text <cert>"
+    exit 1
+fi
+
+CERT=$1
+openssl x509 -in $CERT -text -noout
