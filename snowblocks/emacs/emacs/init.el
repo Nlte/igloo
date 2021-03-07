@@ -41,8 +41,6 @@
 (require 'igloo-evil)
 (require 'igloo-edit)
 (require 'igloo-env)
-(require 'igloo-cache)
-; (igloo--setup-env)
 
 ;; completion and keybinds -----------------------------------------------------
 (require 'igloo-general)
