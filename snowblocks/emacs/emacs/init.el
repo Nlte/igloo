@@ -19,20 +19,6 @@
 (require 'use-package)
 (setq use-package-always-ensure t)
 
-;; Customize support for 'emacs -q' (Optional)
-;; TODO maybe delete
-;; You can enable customizations by creating the nano-custom.el file
-;; with e.g. `touch nano-custom.el` in the folder containing this file.
-(let* ((this-file  (or load-file-name (buffer-file-name)))
-       (this-dir  (file-name-directory this-file))
-       (custom-path  (concat this-dir "igloo-custom.el")))
-  (when (and (eq nil user-init-file)
-             (eq nil custom-file)
-             (file-exists-p custom-path))
-    (setq user-init-file this-file)
-    (setq custom-file custom-path)
-    (load custom-file)))
-
 ;; -----------------------------------------------------------------------------
 ;; Load configs
 ;; -----------------------------------------------------------------------------
