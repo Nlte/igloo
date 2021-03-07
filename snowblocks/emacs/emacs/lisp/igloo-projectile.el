@@ -1,5 +1,3 @@
-(require 'igloo-cache)
-
 (use-package projectile
     :init
     (setq-default

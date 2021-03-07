@@ -1,3 +1,7 @@
+;;; igloo-buffer.el --- Buffer lib -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code: 
+
 (defvar +igloo-dashboard-name "*igloo*"
   "The name to use for the dashboard buffer.")
 (defvar igloo-fallback-buffer-name +igloo-dashboard-name
@@ -56,3 +60,6 @@ If ARG (universal argument), open selection in other-window."
 
 
 (provide 'igloo-buffer)
+
+
+;;; igloo-buffer.el ends here

@@ -1,9 +1,6 @@
-;; Workspace module
-;; Source: "Doom workspace"
-;; https://github.com/hlissner/doom-emacs/blob/master/modules/feature/workspaces/autoload/workspaces.el
-
-(require 'igloo-buffer)
-
+;;; igloo-workspace.el --- Workspace config -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code: Adapted from "Doom workspace" https://github.com/hlissner/doom-emacs/blob/master/modules/feature/workspaces/autoload/workspaces.el
 
 ;; Lib ------------------------------------------------------------------------
 
@@ -81,6 +78,38 @@
                               ('success 'success)
                               ('info 'font-lock-comment-face)))))
 
+
+;;
+;;; Hooks
+
+;;;###autoload
+(defun +workspaces-delete-associated-workspace-h (&optional frame)
+  "Delete workspace associated with current frame.
+A workspace gets associated with a frame when a new frame is interactively
+created."
+  (when persp-mode
+    (unless frame
+      (setq frame (selected-frame)))
+    (let ((frame-persp (frame-parameter frame 'workspace)))
+      (when (string= frame-persp (+workspace-current-name))
+        (+workspace/delete frame-persp)))))
+
+;;;###autoload
+(defun +workspaces-associate-frame-fn (frame &optional _new-frame-p)
+  "Create a blank, new perspective and associate it with FRAME."
+  (when persp-mode
+    (if (not (persp-frame-list-without-daemon))
+        (+workspace-switch +workspaces-main t)
+      (with-selected-frame frame
+        (+workspace-switch (format "#%s" (+workspace--generate-id)) t)
+        (switch-to-buffer (igloo-fallback-buffer))
+        (set-frame-parameter frame 'workspace (+workspace-current-name))
+        ;; ensure every buffer has a buffer-predicate
+        (persp-set-frame-buffer-predicate frame))
+      (run-at-time 0.1 nil #'+workspace/display))))
+
+
+
 ;;;###autoload
 (defun +workspace-message (message &optional type)
   "Show an 'elegant' message in the echo area next to a listing of workspaces."
@@ -130,9 +159,10 @@ Otherwise return t on success, nil otherwise."
   (when (+workspace-exists-p name)
     (error "A workspace named '%s' already exists" name))
   (let ((persp (persp-add-new name)))
-    (save-window-excursion
-      (let ((ignore-window-parameters t))
-        (persp-delete-other-windows)))
+    (persp-delete-other-windows)
+    ;; (save-window-excursion
+    ;;   (let ((ignore-window-parameters t))
+    ;;     (persp-delete-other-windows)))
     (persp-switch name)
     (switch-to-buffer (igloo-fallback-buffer))
     persp))
@@ -249,7 +279,6 @@ end of the workspace list."
   "Create a new workspace named NAME. If CLONE-P is non-nil, clone the current
 workspace, otherwise the new workspace is blank."
   (interactive (list nil current-prefix-arg))
-  (message "name: %s clone-p %s" name clone-p)
   (unless name
     (setq name (format "#%s" (+workspace--generate-id))))
   (condition-case e
@@ -303,12 +332,27 @@ workspace to delete."
   (add-hook 'persp-mode-hook #'+workspace-init-first-workspace-h)
   (persp-mode 1)
   :config
-  (setq persp-nil-hidden t ; hide the nil perspective
+  :config
+  (setq persp-autokill-buffer-on-remove 'kill-weak
+        persp-reset-windows-on-nil-window-conf nil
+        persp-nil-hidden t
+        persp-auto-save-fname "autosave"
+        persp-save-dir (concat igloo-etc-dir "workspaces/")
+        persp-set-last-persp-for-new-frames t
+        persp-switch-to-added-buffer nil
+        persp-kill-foreign-buffer-behaviour 'kill
+        persp-remove-buffers-from-nil-persp-behaviour nil
         persp-auto-resume-time -1 ; Don't auto-load on startup
-        persp-autokill-buffer-on-remove t
-        persp-auto-save-persps-to-their-file-before-kill nil ; do not autosave
-        persp-auto-save-persps-to-their-file nil
-        persp-mode-auto-save-opt 0))
+        persp-auto-save-opt (if noninteractive 0 1)) ; auto-save on kill
+
+  ;; per-frame workspaces
+  (setq persp-init-frame-behaviour t
+        persp-init-new-frame-behaviour-override nil
+        persp-interactive-init-frame-behaviour-override #'+workspaces-associate-frame-fn
+        persp-emacsclient-init-frame-behaviour-override #'+workspaces-associate-frame-fn)
+  (add-hook 'delete-frame-functions #'+workspaces-delete-associated-workspace-h))
 
 
 (provide 'igloo-workspace)
+
+;;; igloo-workspace.el ends here

@@ -1,172 +1,11 @@
+;;; igloo-ui.el --- UI config.el -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 ;; Lib -------------------------------------------------------------------------
 
-;;;###autoload
-(defvar +popup--display-buffer-alist nil)
 
-;;;###autoload
-(defvar +popup-defaults
-  (list :side   'bottom
-        :height 0.16
-        :width  40
-        :quit   t
-        :select #'ignore
-        :ttl    5)
-  "Default properties for popup rules defined with `set-popup-rule!'.")
-
-;;;###autoload
-(defun +popup-make-rule (predicate plist)
-  (if (plist-get plist :ignore)
-      (list predicate nil)
-    (let* ((plist (append plist +popup-defaults))
-           (alist
-            `((actions       . ,(plist-get plist :actions))
-              (side          . ,(plist-get plist :side))
-              (size          . ,(plist-get plist :size))
-              (window-width  . ,(plist-get plist :width))
-              (window-height . ,(plist-get plist :height))
-              (slot          . ,(plist-get plist :slot))
-              (vslot         . ,(plist-get plist :vslot))))
-           (params
-            `((ttl      . ,(plist-get plist :ttl))
-              (quit     . ,(plist-get plist :quit))
-              (select   . ,(plist-get plist :select))
-              (modeline . ,(plist-get plist :modeline))
-              (autosave . ,(plist-get plist :autosave))
-              ,@(plist-get plist :parameters))))
-      `(,predicate (+popup-buffer)
-                   ,@alist
-                   (window-parameters ,@params)))))
-
-;;;###autodef
-(defun set-popup-rule (predicate &rest plist)
-  "Define a popup rule.
-
-These rules affect buffers displayed with `pop-to-buffer' and `display-buffer'
-(or their siblings). Buffers displayed with `switch-to-buffer' (and its
-variants) will not be affected by these rules (as they are unaffected by
-`display-buffer-alist', which powers the popup management system).
-
-PREDICATE can be either a) a regexp string (matched against the buffer's name)
-or b) a function that takes two arguments (a buffer name and the ACTION argument
-of `display-buffer') and returns a boolean.
-
-PLIST can be made up of any of the following properties:
-
-:ignore BOOL
-  If BOOL is non-nil, popups matching PREDICATE will not be handled by the popup
-  system. Use this for buffers that have their own window management system like
-  magit or helm.
-
-:actions ACTIONS
-  ACTIONS is a list of functions or an alist containing (FUNCTION . ALIST). See
-  `display-buffer''s second argument for more information on its format and what
-  it accepts. If omitted, `+popup-default-display-buffer-actions' is used.
-
-:side 'bottom|'top|'left|'right
-  Which side of the frame to open the popup on. This is only respected if
-  `+popup-display-buffer-stacked-side-window-fn' or `display-buffer-in-side-window'
-  is in :actions or `+popup-default-display-buffer-actions'.
-
-:size/:width/:height FLOAT|INT|FN
-  Determines the size of the popup. If more than one of these size properties are
-  given :size always takes precedence, and is mapped with window-width or
-  window-height depending on what :side the popup is opened. Setting a height
-  for a popup that opens on the left or right is harmless, but comes into play
-  if two popups occupy the same :vslot.
-
-  If a FLOAT (0 < x < 1), the number represents how much of the window will be
-    consumed by the popup (a percentage).
-  If an INT, the number determines the size in lines (height) or units of
-    character width (width).
-  If a function, it takes one argument: the popup window, and can do whatever it
-    wants with it, typically resize it, like `+popup-shrink-to-fit'.
-
-:slot/:vslot INT
-  (This only applies to popups with a :side and only if :actions is blank or
-  contains the `+popup-display-buffer-stacked-side-window-fn' action) These control
-  how multiple popups are laid out. INT can be any integer, positive and
-  negative.
-
-  :slot controls lateral positioning (e.g. the horizontal positioning for
-    top/bottom popups, or vertical positioning for left/right popups).
-  :vslot controls popup stacking (from the edge of the frame toward the center).
-
-  Let's assume popup A and B are opened with :side 'bottom, in that order.
-    If they possess the same :slot and :vslot, popup B will replace popup A.
-    If popup B has a higher :slot, it will open to the right of popup A.
-    If popup B has a lower :slot, it will open to the left of popup A.
-    If popup B has a higher :vslot, it will open above popup A.
-    If popup B has a lower :vslot, it will open below popup A.
-
-:ttl INT|BOOL|FN
-  Stands for time-to-live. It can be t, an integer, nil or a function. This
-  controls how (and if) the popup system will clean up after the popup.
-
-  If any non-zero integer, wait that many seconds before killing the buffer (and
-    any associated processes).
-  If 0, the buffer is immediately killed.
-  If nil, the buffer won't be killed and is left to its own devices.
-  If t, resort to the default :ttl in `+popup-defaults'. If none exists, this is
-    the same as nil.
-  If a function, it takes one argument: the target popup buffer. The popup
-    system does nothing else and ignores the function's return value.
-
-:quit FN|BOOL|'other|'current
-  Can be t, 'other, 'current, nil, or a function. This determines the behavior
-  of the ESC/C-g keys in or outside of popup windows.
-
-  If t, close the popup if ESC/C-g is pressed anywhere.
-  If 'other, close this popup if ESC/C-g is pressed outside of any popup. This
-    is great for popups you may press ESC/C-g a lot in.
-  If 'current, close the current popup if ESC/C-g is pressed from inside of the
-    popup. This makes it harder to accidentally close a popup until you really
-    want to.
-  If nil, pressing ESC/C-g will never close this popup.
-  If a function, it takes one argument: the to-be-closed popup window, and is
-    run when ESC/C-g is pressed while that popup is open. It must return one of
-    the other values to determine the fate of the popup.
-
-:select BOOL|FN
-  Can be a boolean or function. The boolean determines whether to focus the
-  popup window after it opens (non-nil) or focus the origin window (nil).
-
-  If a function, it takes two arguments: the popup window and originating window
-    (where you were before the popup opened). The popup system does nothing else
-    and ignores the function's return value.
-
-:modeline BOOL|FN|LIST
-  Can be t (show the default modeline), nil (show no modeline), a function that
-  returns a modeline format or a valid value for `mode-line-format' to be used
-  verbatim. The function takes no arguments and is run in the context of the
-  popup buffer.
-
-:autosave BOOL|FN
-  This parameter determines what to do with modified buffers when closing popup
-  windows. It accepts t, 'ignore, a function or nil.
-
-  If t, no prompts. Just save them automatically (if they're file-visiting
-    buffers). Same as 'ignore for non-file-visiting buffers.
-  If nil (the default), prompt the user what to do if the buffer is
-    file-visiting and modified.
-  If 'ignore, no prompts, no saving. Just silently kill it.
-  If a function, it is run with one argument: the popup buffer, and must return
-    non-nil to save or nil to do nothing (but no prompts).
-
-:parameters ALIST
-  An alist of custom window parameters. See `(elisp)Window Parameters'.
-
-If any of these are omitted, defaults derived from `+popup-defaults' will be
-used.
-
-\(fn PREDICATE &key IGNORE ACTIONS SIDE SIZE WIDTH HEIGHT SLOT VSLOT TTL QUIT SELECT MODELINE AUTOSAVE PARAMETERS)"
-  (declare (indent defun))
-  (push (+popup-make-rule predicate plist) +popup--display-buffer-alist)
-  (when (bound-and-true-p +popup-mode)
-    (setq display-buffer-alist +popup--display-buffer-alist))
-  +popup--display-buffer-alist)
-
-
-;; Config ----------------------------------------------------------------------
+;; UI ----------------------------------------------------------------------
 
 (setq default-frame-alist
       (append (list
@@ -191,15 +30,6 @@ used.
 (menu-bar-mode 0)
 ;; (global-hl-line-mode 1)
 (setq x-underline-at-descent-line t)
-
-;; Line numbers
-(add-hook 'conf-mode-hook #'display-line-numbers-mode)
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
-(add-hook 'text-mode-hook #'display-line-numbers-mode)
-(setq-default
- display-line-numbers-current-absolute nil
- display-line-numbers-type 'absolute
- display-line-numbers-width 2)
 
 ;; Vertical window divider
 (setq window-divider-default-right-width 5)
@@ -303,13 +133,197 @@ used.
 ;; Minimum window height
 (setq window-min-height 1)
 
-;; Buffer encoding
-(prefer-coding-system       'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(set-language-environment   'utf-8)
 
+;; UX --------------------------------------------------------------------------
+;; Confirmation prompt when killing Emacs
+(setq confirm-kill-emacs #'yes-or-no-p)
+
+;; Don't prompt for confirmation when we create a new file or buffer
+(setq confirm-nonexistent-file-or-buffer nil)
+
+;;
+;;; Scrolling
+
+(setq hscroll-margin 2
+      hscroll-step 1
+      ;; Emacs spends too much effort recentering the screen if you scroll the
+      ;; cursor more than N lines past window edges (where N is the settings of
+      ;; `scroll-conservatively'). This is especially slow in larger files
+      ;; during large-scale scrolling commands. If kept over 100, the window is
+      ;; never automatically recentered.
+      scroll-conservatively 101
+      scroll-margin 0
+      scroll-preserve-screen-position t
+      ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
+      ;; for tall lines.
+      auto-window-vscroll nil
+      ;; mouse
+      mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
+      mouse-wheel-scroll-amount-horizontal 2)
+
+;; Remove hscroll-margin in shells, otherwise it causes jumpiness
+(add-hook 'eshell-mode-hook (lambda () (hscroll-margin 0)))
+(add-hook 'term-mode-hook (lambda () (hscroll-margin 0)))
+
+;;
+;;; Cursor
+
+;; The blinking cursor is distracting, but also interferes with cursor settings
+;; in some minor modes that try to change it buffer-locally (like treemacs) and
+;; can cause freezing for folks (esp on macOS) with customized & color cursors.
+(blink-cursor-mode -1)
+
+;; Don't blink the paren matching the one at point, it's too distracting.
+(setq blink-matching-paren nil)
+
+;; Don't stretch the cursor to fit wide characters, it is disorienting,
+;; especially for tabs.
+(setq x-stretch-cursor nil)
+
+
+;;
+;;; Fringes
+
+;; Reduce the clutter in the fringes; we'd like to reserve that space for more
+;; useful information, like git-gutter and flycheck.
+(setq indicate-buffer-boundaries nil
+      indicate-empty-lines nil)
+
+;;
+;;; Windows/frames
+
+;; A simple frame title
+(setq frame-title-format '("%b – igloo")
+      icon-title-format frame-title-format)
+
+;; Don't resize the frames in steps; it looks weird, especially in tiling window
+;; managers, where it can leave unseemly gaps.
+(setq frame-resize-pixelwise t)
+
+;; But do not resize windows pixelwise, this can cause crashes in some cases
+;; where we resize windows too quickly.
+(setq window-resize-pixelwise nil)
+
+;; Disable tool, menu, and scrollbars. Doom is designed to be keyboard-centric,
+;; so these are just clutter (the scrollbar also impacts performance). Whats
+;; more, the menu bar exposes functionality that Doom doesn't endorse.
+(push '(menu-bar-lines . 0)   default-frame-alist)
+(push '(tool-bar-lines . 0)   default-frame-alist)
+(push '(vertical-scroll-bars) default-frame-alist)
+
+;; These are disabled directly through their frame parameters to avoid the extra
+;; work their minor modes do, but their variables must be unset too, otherwise
+;; users will have to cycle them twice to re-enable them.
+(setq menu-bar-mode nil
+      tool-bar-mode nil
+      scroll-bar-mode nil)
+
+;; The native border "consumes" a pixel of the fringe on righter-most splits,
+;; `window-divider' does not. Available since Emacs 25.1.
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+
+
+;; always avoid GUI
+(setq use-dialog-box nil)
+;; Don't display floating tooltips; display their contents in the echo-area,
+;; because native tooltips are ugly.
+(when (bound-and-true-p tooltip-mode)
+  (tooltip-mode -1))
+;; ...especially on linux
+(when IS-LINUX
+  (setq x-gtk-use-system-tooltips nil))
+
+ ;; Favor vertical splits over horizontal ones. Screens are usually wide.
+(setq split-width-threshold 160
+      split-height-threshold nil)
+
+
+;;
+;;; Minibuffer
+
+;; Allow for minibuffer-ception. Sometimes we need another minibuffer command
+;; while we're in the minibuffer.
+(setq enable-recursive-minibuffers t)
+
+;; Show current key-sequence in minibuffer ala 'set showcmd' in vim. Any
+;; feedback after typing is better UX than no feedback at all.
+(setq echo-keystrokes 0.02)
+
+;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
+;; doesn't look too great with direnv, however...
+(setq resize-mini-windows 'grow-only)
+
+;; Typing yes/no is obnoxious when y/n will do
+(fset #'yes-or-no-p #'y-or-n-p)
+
+;; Try really hard to keep the cursor from getting stuck in the read-only prompt
+;; portion of the minibuffer.
+(setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+
+;;
+;;; Line numbers
+
+;; Explicitly define a width to reduce the cost of on-the-fly computation
+(setq-default display-line-numbers-width 3)
+
+;; Show absolute line numbers for narrowed regions to make it easier to tell the
+;; buffer is narrowed, and where you are, exactly.
+(setq-default display-line-numbers-widen t)
+
+;; Enable line numbers in most text-editing modes. We avoid
+;; `global-display-line-numbers-mode' because there are many special and
+;; temporary modes where we don't need/want them.
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+(add-hook 'text-mode-hook #'display-line-numbers-mode)
+(add-hook 'conf-mode-hook #'display-line-numbers-mode)
+
+;;
+;;; Built-in packages
+
+;;;###package ansi-color
+(setq ansi-color-for-comint-mode t)
+
+(eval-after-load 'comint
+  (setq comint-prompt-read-only t
+        comint-buffer-maximum-size 2048))
+
+; (defun igloo-apply-ansi-color-to-compilation-buffer-h ()
+;   "Applies ansi codes to the compilation buffers. Meant for
+; `compilation-filter-hook'."
+;   (with-silent-modifications
+;     (ansi-color-apply-on-region compilation-filter-start (point))))
+
+(with-eval-after-load "compile"
+  (setq compilation-always-kill t       ; kill compilation process before starting another
+        compilation-ask-about-save nil  ; save all buffers on `compile'
+        compilation-scroll-output 'first-error)
+  ;; Handle ansi codes in compilation buffer
+  (add-hook 'compilation-filter-hook
+            #'(lambda () ((with-silent-modifications
+                 (ansi-color-apply-on-region compilation-filter-start (point))))))
+  ;; Automatically truncate compilation buffers so they don't accumulate too
+  ;; much data and bog down the rest of Emacs.
+  (autoload 'comint-truncate-buffer "comint" nil t)
+  (add-hook 'compilation-filter-hook #'comint-truncate-buffer))
+
+
+(eval-after-load 'ediff
+  (setq ediff-diff-options "-w" ; turn off whitespace checking
+        ediff-split-window-function #'split-window-horizontally
+        ediff-window-setup-function #'ediff-setup-windows-plain))
+
+(use-package paren
+  ;; highlight matching delimiters
+  :config
+  (setq show-paren-delay 0.1
+        show-paren-highlight-openparen t
+        show-paren-when-point-inside-paren t
+        show-paren-when-point-in-periphery t))
 
 
 (provide 'igloo-ui)
+
+;;; igloo-ui.el ends here
