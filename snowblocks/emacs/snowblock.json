@@ -33,6 +33,10 @@
             "$HOME/.emacs.d/.projectile": {
                 "create": true,
                 "path": "emacs/.projectile"
+            },
+            "$HOME/.emacs.d/install": {
+                "create": true,
+                "path": "emacs/install"
             }
         }
     }
