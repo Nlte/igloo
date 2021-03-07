@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+emacs --batch -l ~/.emacs.d/init.el

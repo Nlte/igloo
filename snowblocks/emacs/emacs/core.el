@@ -40,15 +40,23 @@
           "Directory for local storage: ~/.emacs.d/.local/
           Must end with a slash.")
 
+(unless (file-exists-p igloo-local-dir)
+  (make-directory igloo-local-dir))
+
 (defconst igloo-etc-dir (concat igloo-local-dir "etc/")
           "Directory for non-volatile local storage: ~/.emacs.d/.local/etc/
           Use this for files that don't change much, like server binaries, external
           dependencies or long-term shared data. Must end with a slash.")
 
+(unless (file-exists-p igloo-etc-dir)
+  (make-directory igloo-etc-dir))
+
 (defconst igloo-cache-dir (concat igloo-local-dir "cache/")
           "Directory for volatile local storage: ~/.emacs.d/.local/cache/
           Use this for files that change often, like cache files. Must end with a slash.")
 
+(unless (file-exists-p igloo-cache-dir)
+  (make-directory igloo-cache-dir))
 ;;
 ;;; Custom hooks
 (defvar igloo-first-input-hook nil
