@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+
+import os
+import sys
+import argparse
+from argparse import RawTextHelpFormatter, ArgumentDefaultsHelpFormatter
+
+
+DESCRIPTION = """
+Create batch UPDATE SQL statements based on a list of primary keys.
+
+Note: SQL statements are not parameterised ergo unsafe.
+Only use manually with your own arguments / files, no external sources.
+And make a table backup before running anything.
+'''
+explain UPDATE {table}
+SET {value1=key1, value2=key2, ...}
+WHERE {pk_column} IN (
+{pklist}
+);
+'''
+
+usage:
+ig_sql_batch_update --table users \\
+                    --update "termsApproved=0" \\
+                    --pkcol user_id \\
+                    --pklist userids.txt \\
+                    --size 20
+"""
+
+def parse_args():
+    class Formatter(
+        ArgumentDefaultsHelpFormatter,
+        RawTextHelpFormatter
+    ):
+        pass
+    parser = argparse.ArgumentParser(description=DESCRIPTION,
+                                     formatter_class=Formatter)
+    parser.add_argument('--table', type=str, required=True,
+                        help='Name of the table to update')
+    parser.add_argument('--updates', type=str, required=True,
+                        help='List of updates (sql set)')
+    parser.add_argument('--pkcol', type=str, required=True,
+                        help='Name of the primary key column')
+    parser.add_argument('--pklist', type=str, required=True,
+                        help='File containing the list of primary keys')
+    parser.add_argument('--size', type=int, default=2000,
+                        help='Batch size')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+    if not os.path.isfile(args.pklist):
+        print('file {f} not found'.format(f=args.pklist))
+        return 1
+    with open(args.pklist, 'r') as f:
+        pks = f.read().splitlines()
+    pk_batches = [pks[i:i+args.size]
+                  for i in range(0, len(pks), args.size)]
+    update_statement = ("EXPLAIN UPDATE {table}\n"
+                        "SET {update}\n"
+                        "WHERE {column} IN (\n"
+                        "'{pks}');\n")
+    for i, batch in enumerate(pk_batches):
+        fname = 'update_{table}_{no}.sql'.format(
+            table=args.table,
+            no=i
+        )
+        with open(fname, 'w') as f:
+            f.write(update_statement.format(
+                table=args.table,
+                update=args.updates,
+                column=args.pkcol,
+                pks="',\n'".join(batch)
+            ))
+
+
+if __name__ == '__main__':
+    sys.exit(main())
