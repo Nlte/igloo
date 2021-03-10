@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+
+set -Eeuo pipefail
+
+if [ $# -ne 1 ]; then
+   echo "ig_sed_rm_empty_lines <file>"
+   echo "remove empty lines from file"
+   exit 1
+fi
+
+sed '/^$/d' $1
