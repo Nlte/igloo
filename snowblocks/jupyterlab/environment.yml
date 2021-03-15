@@ -1,0 +1,10 @@
+name: py3
+dependencies:
+  - numpy
+  - pandas
+  - requests
+  - dask[complete]
+  - jupyterlab
+  - flask
+  - pip
+  - notebook

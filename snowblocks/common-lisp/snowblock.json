@@ -1,0 +1,17 @@
+[
+    {
+        "shell": [
+            {
+                "command": "command -v ros >/dev/null 2>&1 || echo 'roswell not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "clean": [
+            "$IGLOO_PATH_USER_CONFIG/commonlisp"
+        ]
+    }
+]

@@ -1,0 +1,57 @@
+#+TITLE: Jupyter
+#+EXPORT_FILE_NAME: README.md
+
+* Installation
+** Create conda env
+#+begin_sh options
+conda env create -f environment.yml
+#+end_sh
+** Add addition kernels
+*** xeus-python
+https://github.com/jupyter-xeus/xeus-python
+#+begin_sh options
+conda install xeus-python -c conda-forge
+#+end_sh
+*** xeus-cling
+https://github.com/jupyter-xeus/xeus-cling
+#+begin_sh options
+conda install xeus-cling -c conda-forge
+#+end_sh
+*** common-lisp-jupyter
+https://github.com/yitzchak/common-lisp-jupyter
+#+begin_sh options
+# add roswell bin directory to path
+export PATH=$PATH:~/.roswell/bin
+ros install common-lisp-jupyter
+#+end_sh
+** Add plugins
+*** jupyterlab-templates
+https://github.com/timkpaine/jupyterlab_templates
+#+begin_sh options
+pip install jupyterlab_templates
+jupyter labextension install jupyterlab_templates
+jupyter serverextension enable --py jupyterlab_templates
+#+end_sh
+*** scratchpad
+https://github.com/minrk/nbextension-scratchpad
+#+begin_sh options
+cd ~/opt/
+git clone git://github.com/minrk/nbextension-scratchpad
+jupyter nbextension install nbextension-scratchpad
+jupyter nbextension enable nbextension-scratchpad/main
+#+end_sh
+*** quickopen
+https://github.com/parente/jupyterlab-quickopen
+#+begin_sh options
+pip install jupyterlab-quickopen
+#+end_sh
+*** dask-labextension
+https://github.com/dask/dask-labextension
+#+begin_sh options
+pip install dask-labextension
+#+end_sh
+*** debugger
+https://github.com/jupyterlab/debugger
+#+begin_sh options
+jupyter labextension install @jupyterlab/debugger
+#+end_sh

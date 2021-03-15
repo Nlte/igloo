@@ -1,0 +1,27 @@
+[
+{
+	"shell": [
+	{
+		"command": "./install.sh",
+			"stderr": true,
+			"stdin": true,
+			"stdout": true
+	}
+	]
+},
+{
+	"clean": [
+		"$IGLOO_PATH_USER_CONFIG/jupyterlab"
+	],
+	"link": {
+		"$IGLOO_PATH_USER_CONFIG/jupyterlab/templates": {
+			"path": "templates",
+			"create": true
+		},
+		"$HOME/.jupyter/jupyter_notebook_config.py": {
+			"path": "jupyter_notebook_config.py",
+			"create": true
+		}
+    }
+}
+]
