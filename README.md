@@ -189,6 +189,8 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── jupyterlab
 │   │   ├── README.md
 │   │   ├── environment.yml
+│   │   ├── ipython_config.py
+│   │   ├── ipython_kernel_config.py
 │   │   ├── jupyter_notebook_config.py
 │   │   ├── jupyterlab.org
 │   │   ├── snowblock.json
