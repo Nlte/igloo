@@ -55,3 +55,8 @@ https://github.com/jupyterlab/debugger
 #+begin_sh options
 jupyter labextension install @jupyterlab/debugger
 #+end_sh
+*** jupyterlab-tabular-data-editor
+https://github.com/jupytercalpoly/jupyterlab-tabular-data-editor
+#+begin_sh options
+jupyter labextension install jupyterlab-tabular-data-editor
+#+end_sh
