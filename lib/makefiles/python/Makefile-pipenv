@@ -14,14 +14,7 @@ PACKAGE = <package>
 # Environment ------------------------------------------------------------------
 
 .PHONY: init
-init: ## initialise the local dev environment
-	@echo '>> initialising'
-	@scripts/requirements.sh
-	@pip install $(PIPENV)
-	@$(PIPENV) install --dev
-
-.PHONY: init-build
-init-build: ## initialise for the build target
+init: ## initialise for the build target
 	@echo '>> initialising'
 	@pip install $(PIPENV)
 	@$(PIPENV) install --dev
@@ -102,4 +95,4 @@ gen-reqs: ## generate requirements.txt for pip installable package
 	./scripts/genreqs-from-pipenv.py Pipfile.lock
 
 .PHONY: build
-build: init-build lint test gen-reqs ## build project
+build: init lint test gen-reqs ## build project
