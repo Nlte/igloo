@@ -1,0 +1,40 @@
+default_target: help
+
+.PHONY: help
+help: ## show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+	| sort \
+	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+.PHONY: installtestdeps
+installtestdeps:
+	# Installing test dependencies
+	@pip install pipenv
+	@pipenv install --dev
+
+.PHONY: lint
+lint:
+	# Running linting checks
+	pipenv run pylint --rcfile pylintrc bynder_identity
+
+.PHONY: test
+test:
+	# Running unit tests
+	@echo ">> Testing"
+	@pipenv run pytest \
+		-v \
+		--cov-report xml \
+		--cov-report term-missing:skip-covered \
+		--cov bynder_identity/
+
+.PHONY: bandit
+bandit:
+	# Running static code analysis
+	pipenv run bandit -r -s B101 .
+
+.PHONY: mypy
+mypy:
+	pipenv run mypy --ignore-missing-imports .
+
+.PHONY: build
+build: installtestdeps lint mypy bandit test

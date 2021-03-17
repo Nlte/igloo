@@ -1680,6 +1680,7 @@
 
 # Jupyter templates
 # https://github.com/timkpaine/jupyterlab_templates
-c.JupyterLabTemplates.template_dirs = ['~/.config/jupyterlab/templates/']
+import os
+c.JupyterLabTemplates.template_dirs = [os.path.expanduser('~/.config/jupyterlab/templates/')]
 c.JupyterLabTemplates.include_default = True
 c.JupyterLabTemplates.include_core_paths = True

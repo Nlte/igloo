@@ -1,0 +1,105 @@
+# Makefile ---------------------------------------------------------------------
+default_target: help
+
+.PHONY: help
+help: ## show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+	| sort \
+	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+
+PIPENV = pipenv
+PACKAGE = <package>
+
+# Environment ------------------------------------------------------------------
+
+.PHONY: init
+init: ## initialise the local dev environment
+	@echo '>> initialising'
+	@scripts/requirements.sh
+	@pip install $(PIPENV)
+	@$(PIPENV) install --dev
+
+.PHONY: init-build
+init-build: ## initialise for the build target
+	@echo '>> initialising'
+	@pip install $(PIPENV)
+	@$(PIPENV) install --dev
+
+.PHONY: clean
+clean:
+	@find . -name '*.pyc' -delete
+	@find . -name '*.pyo' -delete
+	@find . -name '*__pycache__*' -delete
+	@rm -rf build/
+	@rm -rf dist/
+    @rm -rf *.egg-info/
+
+# Format -----------------------------------------------------------------------
+
+.PHONY: isort
+isort: ## run isort
+	@echo '>> running isort'
+	@$(PIPENV) run isort .
+
+.PHONY: isort-check
+isort-check: ## run isort check
+	@echo '>> running isort check'
+	@$(PIPENV) run isort --check .
+
+.PHONY: black
+black: ## run black
+	@echo '>> running black'
+	@$(PIPENV) run black .
+
+.PHONY: black-check
+black-check: ## run black check
+	@echo '>> running black check'
+	@$(PIPENV) run black --check .
+
+.PHONY: format
+format: isort black ## run formatting suite
+
+.PHONY: format-check
+format-check: isort-check black-check ## run the formatting suite test
+
+# Static analysis --------------------------------------------------------------
+
+.PHONY: bandit
+bandit: ## run bandit static analysis
+	@echo ">> bandit"
+	$(PIPENV) run bandit -r -x test .
+
+.PHONY: pylint
+pylint: ## run pylint
+	@echo ">> pylint"
+	$(PIPENV) run pylint --rcfile .pylintrc $(PACKAGE)/
+
+.PHONY: mypy
+mypy: ## run mypy type analysis
+	@echo ">> mypy"
+	$(PIPENV) run mypy --ignore-missing-imports .
+
+.PHONY: lint
+lint: format-check bandit mypy pylint ## run the lint suite
+
+# Tests ------------------------------------------------------------------------
+
+.PHONY: test
+test: # run tests
+	@echo ">> testing"
+	@$(PIPENV) run pytest \
+		-v \
+		--cov-report xml \
+		--cov-report term-missing:skip-covered \
+		--cov $(PACKAGE)/
+
+# Building ---------------------------------------------------------------------
+
+.PHONY: gen-reqs
+gen-reqs: ## generate requirements.txt for pip installable package
+	@echo ">> generating requirements.txt"
+	./scripts/genreqs-from-pipenv.py Pipfile.lock
+
+.PHONY: build
+build: init-build lint test gen-reqs ## build project

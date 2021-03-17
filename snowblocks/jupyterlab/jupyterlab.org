@@ -27,11 +27,11 @@ ros install common-lisp-jupyter
 ** Add plugins
 *** jupyterlab-templates
 https://github.com/timkpaine/jupyterlab_templates
-#+begin_sh options
+#+begin_src sh :exports code
 pip install jupyterlab_templates
 jupyter labextension install jupyterlab_templates
 jupyter serverextension enable --py jupyterlab_templates
-#+end_sh
+#+end_src
 *** scratchpad
 https://github.com/minrk/nbextension-scratchpad
 #+begin_sh options
