@@ -1,0 +1,93 @@
+# Makefile ---------------------------------------------------------------------
+default_target: help
+
+.PHONY: help
+help: ## show this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
+	| sort \
+	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
+
+POETRY = poetry
+PACKAGE = proservices
+
+# export CRYPTOGRAPHY_DONT_BUILD_RUST = 1
+
+# Environment ------------------------------------------------------------------
+
+.PHONY: init
+init: ## initialise the local dev environment
+	@echo '>> initialising'
+	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+	source $HOME/.poetry/env
+	$(POETRY) install
+
+.PHONY: clean
+clean:
+	@find . -name '*.pyc' -delete
+	@find . -name '*.pyo' -delete
+	@find . -name '*__pycache__*' -delete
+	@rm -rf build/
+	@rm -rf dist/
+	@rm -rf *.egg-info/
+
+# Format -----------------------------------------------------------------------
+
+.PHONY: isort
+isort: ## run isort
+	@echo ">> running isort"
+	$(POETRY) run isort .
+
+.PHONY: isort-check
+isort-check: ## run isort check
+	@echo ">> running isort check"
+	$(POETRY) run isort --check .
+
+.PHONY: black
+black: ## run black
+	@echo ">> running black"
+	$(POETRY) run black .
+
+.PHONY: black-check
+black-check: ## run black check
+	@echo ">> running black check"
+	$(POETRY) run black --check .
+
+.PHONY: format
+format: isort black ## run formatting suite
+
+.PHONY: format-check
+format-check: isort-check black-check ## run the formatting suite test
+
+# Static analysis --------------------------------------------------------------
+
+.PHONY: bandit
+bandit: ## run bandit static analysis
+	@echo ">> bandit"
+	$(POETRY) run bandit -r -x test .
+
+.PHONY: pylint
+pylint: ## run pylint
+	@echo ">> pylint"
+	$(POETRY) run pylint $(PACKAGE)
+
+.PHONY: mypy
+mypy: ## run mypy type analysis
+	@echo ">> mypy"
+	$(POETRY) run mypy --ignore-missing-imports .
+
+.PHONY: lint
+lint: format-check bandit pylint ## run the lint suite
+
+# Tests ------------------------------------------------------------------------
+.PHONY: test
+test: ## run tests
+	@echo ">> testing"
+	$(POETRY) run pytest -v
+
+# Building ---------------------------------------------------------------------
+
+.PHONY: build
+build: init lint test ## build project
+	@echo ">> building"
+	$(POETRY) build
