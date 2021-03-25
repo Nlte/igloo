@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+import sys
+import ipaddress
+
+if len(sys.argv) < 2:
+    print('usage: ig_ip_from_cidr <cidr notation>')
+    print('output the list of ip addresses in the cidr range')
+    sys.exit(1)
+
+ips = [str(ip) for ip in ipaddress.IPv4Network('192.0.2.0/28')]
+
+print('\n'.join(ips))
