@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "${DIR}/ig_dask_conf.sh"
+
+dask-scheduler --pid-file "$SCHEDULER_PID" --scheduler-file "$SCHEDULER_INFO" --no-dashboard

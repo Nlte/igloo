@@ -32,6 +32,7 @@
 (setq org-directory "~/org/")
 (setq org-startup-folded t)
 (setq org-web-tools-pandoc-sleep-time 1)
+(setq org-roam-directory "~/org")
 
 ;; Change default directory to HOME
 (setq default-directory "~/")

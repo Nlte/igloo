@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "${DIR}/ig_dask_conf.sh"
+
+if ! [ -f "$SCHEDULER_INFO" ]; then
+    echo "$SCHEDULER_INFO not found, run dask-scheduler first"
+    exit 1
+fi
+
+LOCAL_WORKER_DIR="$LOCAL_DIR/dask-worker-space"
+
+dask-worker --scheduler-file "$SCHEDULER_INFO" --local-directory "$LOCAL_WORKER_DIR"

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "${DIR}/ig_dask_conf.sh"
+
+if ! [ -f "$SCHEDULER_INFO" ]; then
+    echo "$SCHEDULER_INFO not found, run dask-scheduler first"
+    exit 1
+fi
+
+port=$(cat "$SCHEDULER_INFO" | jq '.services.dashboard')
+# TODO test jq out
+url="http://127.0.0.1/{}"
