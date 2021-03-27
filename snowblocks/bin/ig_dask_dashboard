@@ -9,5 +9,9 @@ if ! [ -f "$SCHEDULER_INFO" ]; then
 fi
 
 port=$(cat "$SCHEDULER_INFO" | jq '.services.dashboard')
-# TODO test jq out
-url="http://127.0.0.1/{}"
+if [ "$port" == "null" ]; then
+    echo "dashboard port not found in $SCHEDULER_INFO"
+    exit 1
+fi
+url="http://127.0.0.1:${port}/"
+ig_googlechrome "$url"
