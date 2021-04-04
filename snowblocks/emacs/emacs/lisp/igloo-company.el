@@ -2,16 +2,16 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package company
-  :hook
-  (prog-mode . global-company-mode)
-  :init
-  (setq-default
-    company-global-modes '(not org-mode shell-mode eshell-mode))
-  :custom
-  (company-backends '(company-capf))
-  (company-minimum-prefix-length 1)
-  (company-idle-delay 0))
+;; (use-package company
+;;   :hook
+;;   (prog-mode . global-company-mode)
+;;   :init
+;;   (setq-default
+;;     company-global-modes '(not org-mode shell-mode eshell-mode))
+;;   :custom
+;;   (company-backends '(company-capf))
+;;   (company-minimum-prefix-length 1)
+;;   (company-idle-delay 0.1))
 
 ;; (use-package company-box
 ;;   :hook

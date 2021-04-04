@@ -21,3 +21,5 @@
 
 ;; Load core.el
 (load (concat user-emacs-directory "core") nil 'nomessage)
+;; Load igloo-ui.el
+(load (concat user-emacs-directory "lisp/igloo-ui") nil 'nomessage)

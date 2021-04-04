@@ -43,24 +43,24 @@
    ("p" ig/open-private-config "open private config"))))
 
 ;; Workspace
-(pretty-hydra-define ig-hydra-workspace
- (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
- ("Hydra workspace"
-  (("n" +workspace/new "new workspace")
-   ("d" +workspace/delete "delete workspace")
-   ("[" +workspace/switch-left "switch left")
-   ("]" +workspace/switch-right "switch right")
-   ("TAB" +workspace/display "show workspaces"))
-   ""
-   (("1" +workspace/switch-to-0 "switch to 0")
-   ("2" +workspace/switch-to-1 "switch to 1")
-   ("3" +workspace/switch-to-2 "switch to 2")
-   ("4" +workspace/switch-to-3 "switch to 3")
-   ("5" +workspace/switch-to-4 "switch to 4")
-   ("6" +workspace/switch-to-5 "switch to 5")
-   ("7" +workspace/switch-to-6 "switch to 6")
-   ("8" +workspace/switch-to-7 "switch to 7")
-   ("9" +workspace/switch-to-8 "switch to 8"))))
+;; (pretty-hydra-define ig-hydra-workspace
+;;  (:foreign-keys warn :color teal :idle 0.5 :quit-key ("q" "<escape>"))
+;;  ("Hydra workspace"
+;;   (("n" +workspace/new "new workspace")
+;;    ("d" +workspace/delete "delete workspace")
+;;    ("[" +workspace/switch-left "switch left")
+;;    ("]" +workspace/switch-right "switch right")
+;;    ("TAB" +workspace/display "show workspaces"))
+;;    ""
+;;    (("1" +workspace/switch-to-0 "switch to 0")
+;;    ("2" +workspace/switch-to-1 "switch to 1")
+;;    ("3" +workspace/switch-to-2 "switch to 2")
+;;    ("4" +workspace/switch-to-3 "switch to 3")
+;;    ("5" +workspace/switch-to-4 "switch to 4")
+;;    ("6" +workspace/switch-to-5 "switch to 5")
+;;    ("7" +workspace/switch-to-6 "switch to 6")
+;;    ("8" +workspace/switch-to-7 "switch to 7")
+;;    ("9" +workspace/switch-to-8 "switch to 8"))))
 
 ;; Window
 (pretty-hydra-define ig-hydra-window

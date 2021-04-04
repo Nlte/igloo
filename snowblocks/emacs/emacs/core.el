@@ -9,7 +9,7 @@
   "The initialisation time in seconds.")
 
 ;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
-;; (setq debug-on-error t)
+(setq debug-on-error t)
 
 
 ;; Platform

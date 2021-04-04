@@ -3,145 +3,106 @@
 ;;; Code:
 
 ;; Lib -------------------------------------------------------------------------
+;;;###autoload
+(defun igloo-apply-ansi-color-to-compilation-buffer-h ()
+  "Apply ansi codes to the compilation buffers.Meant for `compilation-filter-hook'."
+  (with-silent-modifications
+    (ansi-color-apply-on-region compilation-filter-start (point))))
 
 
-;; UI ----------------------------------------------------------------------
+;; Config ----------------------------------------------------------------------
 
-(setq default-frame-alist
-      (append (list
-	       '(font . "Roboto Mono:style=Light:size=12")
-	       ;; '(font . "Roboto Mono Emacs Regular:size=14")
-	       '(min-height . 1)  '(height     . 45)
-	       '(min-width  . 1) '(width      . 81)
-               '(vertical-scroll-bars . nil)
-               '(internal-border-width . 5)
-               '(left-fringe    . 2)
-               '(right-fringe   . 2)
-               '(tool-bar-lines . 1)
-               '(menu-bar-lines . 1))))
+;; Custom hooks
+(defvar igloo-init-ui-hook nil
+  "Hooks to run when the UI has been initialized.")
 
+(defvar igloo-switch-buffer-hook nil
+  "Hooks to run after changing buffer.")
 
-(setq inhibit-startup-screen t
-      inhibit-startup-message t
-      inhibit-startup-echo-area-message t
-      initial-scratch-message nil)
-(tool-bar-mode 0)
-(tooltip-mode 0)
-(menu-bar-mode 0)
-;; (global-hl-line-mode 1)
-(setq x-underline-at-descent-line t)
+(defvar igloo-switch-window-hook nil
+  "Hooks to run after changing window.")
 
-;; Vertical window divider
-(setq window-divider-default-right-width 5)
-(setq window-divider-default-places 'right-only)
-(window-divider-mode 1)
+(defvar igloo-switch-frame-hook nil
+  "Hooks to run after changing frame.")
 
-;; No ugly button for checkboxes
-(setq widget-image-enable nil)
+(defvar igloo-inhibit-switch-buffer-hooks nil
+  "Letvar for inhibiting `igloo-switch-buffer-hook'.Do not set this directly.")
+(defvar igloo-inhibit-switch-window-hooks nil
+  "Letvar for inhibiting `igloo-switch-window-hook'.Do not set this directly.")
+(defvar igloo-inhibit-switch-frame-hooks nil
+  "Letvar for inhibiting `igloo-switch-frame-hook'.Do not set this directly.")
 
-;; Hide org markup for README
-(setq org-hide-emphasis-markers t)
+(defvar igloo--last-window nil)
+(defvar igloo--last-frame nil)
 
+(defun igloo-run-switch-window-hooks-h ()
+  (unless (or igloo-inhibit-switch-window-hooks
+              (eq igloo--last-window (selected-window))
+              (minibufferp))
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (igloo-inhibit-switch-window-hooks t)
+          (inhibit-redisplay t))
+      (run-hooks 'igloo-switch-window-hook)
+      (setq igloo--last-window (selected-window)))))
 
-;; No startup  screen
-(setq inhibit-startup-screen t)
+(defun igloo-run-switch-frame-hooks-h (&rest _)
+  (unless (or igloo-inhibit-switch-frame-hooks
+              (eq igloo--last-frame (selected-frame))
+              (frame-parameter nil 'parent-frame))
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (igloo-inhibit-switch-frame-hooks t))
+      (run-hooks 'igloo-switch-frame-hook)
+      (setq igloo--last-frame (selected-frame)))))
 
-;; No startup message
-(setq inhibit-startup-message t)
-(setq inhibit-startup-echo-area-message t)
+(defun igloo-run-switch-buffer-hooks-a (orig-fn buffer-or-name &rest args)
+  (if (or igloo-inhibit-switch-buffer-hooks
+          (and buffer-or-name
+               (eq (current-buffer)
+                   (get-buffer buffer-or-name)))
+          (and (eq orig-fn #'switch-to-buffer) (car args)))
+      (apply orig-fn buffer-or-name args)
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (igloo-inhibit-switch-buffer-hooks t)
+          (inhibit-redisplay t))
+      (when-let (buffer (apply orig-fn buffer-or-name args))
+        (with-current-buffer (if (windowp buffer)
+                                 (window-buffer buffer)
+                               buffer)
+          (run-hooks 'igloo-switch-buffer-hook))
+        buffer))))
 
-;; No message in scratch buffer
-(setq initial-scratch-message nil)
+(defun igloo-run-switch-to-next-prev-buffer-hooks-a (orig-fn &rest args)
+  (if igloo-inhibit-switch-buffer-hooks
+      (apply orig-fn args)
+    (let ((gc-cons-threshold most-positive-fixnum)
+          (igloo-inhibit-switch-buffer-hooks t)
+          (inhibit-redisplay t))
+      (when-let (buffer (apply orig-fn args))
+        (with-current-buffer buffer
+          (run-hooks 'igloo-switch-buffer-hook))
+        buffer))))
 
-;; Initial buffer 
-(setq initial-buffer-choice nil)
-
-;; No frame title
-(setq frame-title-format nil)
-
-;; No file dialog
-(setq use-file-dialog nil)
-
-;; No dialog box
-(setq use-dialog-box nil)
-
-;; No popup windows
-(setq pop-up-windows nil)
-
-;; No empty line indicators
-(setq indicate-empty-lines nil)
-
-;; No cursor in inactive windows
-(setq cursor-in-non-selected-windows nil)
-
-;; Moderate font lock
-(setq font-lock-maximum-decoration nil)
-
-;; No limit on font lock
-(setq font-lock-maximum-size nil)
-
-;; No line break space points
-(setq auto-fill-mode nil)
-
-;; Fill column at 80
-(setq fill-column 80)
-
-;; No scroll bars
-(scroll-bar-mode 0)
-
-;; No toolbar
-(tool-bar-mode 0)
-
-;; No menu bar
-(if (display-graphic-p)
-    (menu-bar-mode t) ;; When nil, focus problem on OSX
-  (menu-bar-mode -1))
-
-;; Navigate windows using shift+direction
-(windmove-default-keybindings)
-
-;; Tab behavior
-;; (setq tab-always-indent 'complete)
-;; (global-company-mode)
-;; (define-key company-mode-map [remap indent-for-tab-command]
-;;   #'company-indent-or-complete-common)
-
-;; Pixel scroll (as opposed to char scrool)
-(pixel-scroll-mode t)
-
-;; Mac specific
-;; (setq ns-use-native-fullscreen t
-;;       mac-option-key-is-meta nil
-;;       mac-command-key-is-meta t
-;;       mac-command-modifier 'meta
-;;       mac-option-modifier nil
-;;       mac-use-title-bar nil)
-
-;; No confirmation for visiting non-existent files
-(setq confirm-nonexistent-file-or-buffer nil)
-
-;; No tabs
-(setq-default indent-tabs-mode nil)
-
-;; Tab.space equivalence
-(setq tab-width 4)
-
-;; Size of temporary buffers
-(temp-buffer-resize-mode)
-(setq temp-buffer-max-height 5)
-
-;; Minimum window height
-(setq window-min-height 1)
+(defun igloo-protect-fallback-buffer-h ()
+  "Don't kill the scratch buffer. Meant for `kill-buffer-query-functions'."
+  (not (eq (current-buffer) (igloo-fallback-buffer))))
 
 
 ;; UX --------------------------------------------------------------------------
-;; Confirmation prompt when killing Emacs
-(setq confirm-kill-emacs #'yes-or-no-p)
+; (setq confirm-kill-emacs t)
 
-;; Don't prompt for confirmation when we create a new file or buffer
+;; Don't prompt for confirmation when we create a new file or buffer (assume the
+;; user knows what they're doing).
 (setq confirm-nonexistent-file-or-buffer nil)
 
-;;
+(setq uniquify-buffer-name-style 'forward
+      ;; no beeping or blinking please
+      ring-bell-function #'ignore
+      visible-bell nil)
+
+;; middle-click paste at point, not at click
+(setq mouse-yank-at-point t)
+
+
 ;;; Scrolling
 
 (setq hscroll-margin 2
@@ -161,27 +122,20 @@
       mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
       mouse-wheel-scroll-amount-horizontal 2)
 
-;; Remove hscroll-margin in shells, otherwise it causes jumpiness
-(add-hook 'eshell-mode-hook (lambda () (hscroll-margin 0)))
-(add-hook 'term-mode-hook (lambda () (hscroll-margin 0)))
 
-;;
 ;;; Cursor
 
-;; The blinking cursor is distracting, but also interferes with cursor settings
-;; in some minor modes that try to change it buffer-locally (like treemacs) and
-;; can cause freezing for folks (esp on macOS) with customized & color cursors.
+;; The blinking cursor is distracting
 (blink-cursor-mode -1)
 
 ;; Don't blink the paren matching the one at point, it's too distracting.
 (setq blink-matching-paren nil)
 
-;; Don't stretch the cursor to fit wide characters, it is disorienting,
-;; especially for tabs.
+;; Don't stretch the cursor to fit wide characters
 (setq x-stretch-cursor nil)
 
 
-;;
+
 ;;; Fringes
 
 ;; Reduce the clutter in the fringes; we'd like to reserve that space for more
@@ -189,11 +143,11 @@
 (setq indicate-buffer-boundaries nil
       indicate-empty-lines nil)
 
-;;
+
 ;;; Windows/frames
 
 ;; A simple frame title
-(setq frame-title-format '("%b – igloo")
+(setq frame-title-format '("%b – Igloo")
       icon-title-format frame-title-format)
 
 ;; Don't resize the frames in steps; it looks weird, especially in tiling window
@@ -204,9 +158,7 @@
 ;; where we resize windows too quickly.
 (setq window-resize-pixelwise nil)
 
-;; Disable tool, menu, and scrollbars. Doom is designed to be keyboard-centric,
-;; so these are just clutter (the scrollbar also impacts performance). Whats
-;; more, the menu bar exposes functionality that Doom doesn't endorse.
+;; Disable tool, menu, and scrollbars.
 (push '(menu-bar-lines . 0)   default-frame-alist)
 (push '(tool-bar-lines . 0)   default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
@@ -223,7 +175,7 @@
 (setq window-divider-default-places t
       window-divider-default-bottom-width 1
       window-divider-default-right-width 1)
-
+(add-hook 'igloo-init-ui-hook #'window-divider-mode)
 
 ;; always avoid GUI
 (setq use-dialog-box nil)
@@ -240,8 +192,7 @@
       split-height-threshold nil)
 
 
-;;
-;;; Minibuffer
+;;; Minibuffer -----------------------------------------------------------------
 
 ;; Allow for minibuffer-ception. Sometimes we need another minibuffer command
 ;; while we're in the minibuffer.
@@ -263,65 +214,45 @@
 (setq minibuffer-prompt-properties '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-;;
-;;; Line numbers
 
-;; Explicitly define a width to reduce the cost of on-the-fly computation
-(setq-default display-line-numbers-width 3)
-
-;; Show absolute line numbers for narrowed regions to make it easier to tell the
-;; buffer is narrowed, and where you are, exactly.
-(setq-default display-line-numbers-widen t)
-
-;; Enable line numbers in most text-editing modes. We avoid
-;; `global-display-line-numbers-mode' because there are many special and
-;; temporary modes where we don't need/want them.
-(add-hook 'prog-mode-hook #'display-line-numbers-mode)
-(add-hook 'text-mode-hook #'display-line-numbers-mode)
-(add-hook 'conf-mode-hook #'display-line-numbers-mode)
-
-;;
-;;; Built-in packages
+;;; Packages ----------------------------------------------------------
 
 ;;;###package ansi-color
 (setq ansi-color-for-comint-mode t)
 
+
 (eval-after-load 'comint
   (setq comint-prompt-read-only t
-        comint-buffer-maximum-size 2048))
+        comint-buffer-maximum-size 2048)) ; double the default
 
-; (defun igloo-apply-ansi-color-to-compilation-buffer-h ()
-;   "Applies ansi codes to the compilation buffers. Meant for
-; `compilation-filter-hook'."
-;   (with-silent-modifications
-;     (ansi-color-apply-on-region compilation-filter-start (point))))
 
-(with-eval-after-load "compile"
-  (setq compilation-always-kill t       ; kill compilation process before starting another
-        compilation-ask-about-save nil  ; save all buffers on `compile'
-        compilation-scroll-output 'first-error)
-  ;; Handle ansi codes in compilation buffer
-  (add-hook 'compilation-filter-hook
-            #'(lambda () ((with-silent-modifications
-                 (ansi-color-apply-on-region compilation-filter-start (point))))))
-  ;; Automatically truncate compilation buffers so they don't accumulate too
-  ;; much data and bog down the rest of Emacs.
-  (autoload 'comint-truncate-buffer "comint" nil t)
-  (add-hook 'compilation-filter-hook #'comint-truncate-buffer))
+; (eval-after-load 'compile
+;   (progn (setq compilation-always-kill t       ; kill compilation process before starting another
+;         compilation-ask-about-save nil  ; save all buffers on `compile'
+;         compilation-scroll-output 'first-error)
+;   ;; Handle ansi codes in compilation buffer
+;   (add-hook 'compilation-filter-hook #'igloo-apply-ansi-color-to-compilation-buffer-h)
+
+;   ;; Automatically truncate compilation buffers so they don't accumulate too
+;   ;; much data and bog down the rest of Emacs.
+;   (autoload 'comint-truncate-buffer "comint" nil t)
+;   (add-hook 'compilation-filter-hook #'comint-truncate-buffer)))
 
 
 (eval-after-load 'ediff
+  (progn
   (setq ediff-diff-options "-w" ; turn off whitespace checking
         ediff-split-window-function #'split-window-horizontally
-        ediff-window-setup-function #'ediff-setup-windows-plain))
+        ediff-window-setup-function #'ediff-setup-windows-plain)
 
-(use-package paren
-  ;; highlight matching delimiters
-  :config
-  (setq show-paren-delay 0.1
-        show-paren-highlight-openparen t
-        show-paren-when-point-inside-paren t
-        show-paren-when-point-in-periphery t))
+  (defvar igloo--ediff-saved-wconf nil)
+  ;; Restore window layout after quiting ediff
+  (add-hook 'ediff-before-setup-hook
+            (defun igloo-ediff-save-wconf-h ()
+              (setq igloo--ediff-saved-wconf (current-window-configuration))))
+  (add-hook 'ediff-quit-hook (defun igloo-ediff-restore-wconf-h ()
+              (when (window-configuration-p igloo--ediff-saved-wconf)
+                (set-window-configuration igloo--ediff-saved-wconf))))))
 
 
 (provide 'igloo-ui)

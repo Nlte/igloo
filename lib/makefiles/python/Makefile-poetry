@@ -8,7 +8,8 @@ help: ## show this help
 	| awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 
-POETRY = poetry
+POETRY = ~/.poetry/bin/poetry
+# POETRY = ~/.local/bin/poetry # for install-poetry.py
 PACKAGE = proservices
 
 # export CRYPTOGRAPHY_DONT_BUILD_RUST = 1
@@ -19,7 +20,8 @@ PACKAGE = proservices
 init: ## initialise the local dev environment
 	@echo '>> initialising'
 	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-	source $HOME/.poetry/env
+    # or if above does not work (ssl handshake fails)
+    # curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
 	$(POETRY) install
 
 .PHONY: clean
