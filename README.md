@@ -28,45 +28,83 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── script-template.sh
 │   │   └── utils.sh
 │   ├── makefiles
-│   │   └── Makefile-python-pipenv
+│   │   └── python
+│   │       ├── Makefile-pipenv
+│   │       ├── Makefile-pipenv-simple
+│   │       ├── Makefile-poetry
+│   │       └── genreqs-from-pipenv.py
 │   ├── pandas
 │   │   ├── aggregate-column-names-per-value.ipynb
+│   │   ├── concatenate-values.py
 │   │   ├── df_to_excel_in_s3.py
 │   │   ├── explode.ipynb
 │   │   └── group_status_based_on_row.py
 │   ├── project-templates
-│   │   └── analytics
+│   │   ├── airflow
+│   │   │   ├── Dockerfile
+│   │   │   ├── Makefile
+│   │   │   ├── README.md
+│   │   │   ├── docker-compose.yaml
+│   │   │   └── scripts
+│   │   │       └── init.sh
+│   │   ├── analytics
+│   │   │   ├── README.md
+│   │   │   ├── cookiecutter.json
+│   │   │   ├── hooks
+│   │   │   │   └── pre_gen_project.py
+│   │   │   ├── requirements.txt
+│   │   │   ├── scripts
+│   │   │   ├── tests
+│   │   │   │   ├── conftest.py
+│   │   │   │   └── test_creation.py
+│   │   │   └── {{\ cookiecutter.repo_name\ }}
+│   │   │       ├── Makefile
+│   │   │       ├── README.md
+│   │   │       ├── notebooks
+│   │   │       ├── requirements.txt
+│   │   │       ├── setup.py
+│   │   │       ├── src
+│   │   │       │   ├── __init__.py
+│   │   │       │   ├── data
+│   │   │       │   │   ├── __init__.py
+│   │   │       │   │   └── make_dataset.py
+│   │   │       │   ├── features
+│   │   │       │   │   ├── __init__.py
+│   │   │       │   │   └── build_features.py
+│   │   │       │   ├── models
+│   │   │       │   │   ├── __init__.py
+│   │   │       │   │   ├── predict_model.py
+│   │   │       │   │   └── train_model.py
+│   │   │       │   └── visualization
+│   │   │       │       ├── __init__.py
+│   │   │       │       └── visualize.py
+│   │   │       ├── test_environment.py
+│   │   │       └── tox.ini
+│   │   └── python-lib-poetry
 │   │       ├── README.md
-│   │       ├── cookiecutter.json
-│   │       ├── hooks
-│   │       │   └── pre_gen_project.py
-│   │       ├── requirements.txt
-│   │       ├── tests
-│   │       │   ├── conftest.py
-│   │       │   └── test_creation.py
-│   │       └── {{\ cookiecutter.repo_name\ }}
-│   │           ├── Makefile
-│   │           ├── README.md
-│   │           ├── notebooks
-│   │           ├── requirements.txt
-│   │           ├── setup.py
-│   │           ├── src
+│   │       ├── copier.yaml
+│   │       └── python-lib-poetry
+│   │           ├── Makefile.tmpl
+│   │           ├── README.md.tmpl
+│   │           ├── [[package_name]]
 │   │           │   ├── __init__.py
-│   │           │   ├── data
+│   │           │   ├── cli
 │   │           │   │   ├── __init__.py
-│   │           │   │   └── make_dataset.py
-│   │           │   ├── features
-│   │           │   │   ├── __init__.py
-│   │           │   │   └── build_features.py
-│   │           │   ├── models
-│   │           │   │   ├── __init__.py
-│   │           │   │   ├── predict_model.py
-│   │           │   │   └── train_model.py
-│   │           │   └── visualization
-│   │           │       ├── __init__.py
-│   │           │       └── visualize.py
-│   │           ├── test_environment.py
-│   │           └── tox.ini
+│   │           │   │   └── main.py
+│   │           │   └── tests
+│   │           │       └── __init__.py
+│   │           ├── config
+│   │           │   ├── coverage.ini.tmpl
+│   │           │   ├── flake8.ini
+│   │           │   ├── mypy.ini
+│   │           │   └── pytest.ini
+│   │           ├── pyproject.toml.tmpl
+│   │           └── scripts
+│   │               ├── changelog.jinja
+│   │               ├── changelog.py
+│   │               └── setup.sh
+│   ├── python
+│   │   └── cli-script.py
 │   └── sql
 │       ├── mysql
 │       │   ├── approximate_row_count.sql
@@ -86,16 +124,23 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_aws_ec2_get_privateip_by_tag
 │   │   ├── ig_csvtoexcel
 │   │   ├── ig_curl_respheaders
+│   │   ├── ig_dask_conf.sh
+│   │   ├── ig_dask_dashboard
+│   │   ├── ig_dask_scheduler
+│   │   ├── ig_dask_worker
 │   │   ├── ig_decrypt
+│   │   ├── ig_docker_mysql_run
 │   │   ├── ig_docker_rm_all
 │   │   ├── ig_docker_rm_image_all
 │   │   ├── ig_encrypt
 │   │   ├── ig_exceltocsv
 │   │   ├── ig_genshapasswd
 │   │   ├── ig_genwordpasswd
+│   │   ├── ig_git_initial_commit
 │   │   ├── ig_googlechrome
 │   │   ├── ig_grep_files
 │   │   ├── ig_imgcat
+│   │   ├── ig_ip_from_cidr
 │   │   ├── ig_jupyter_notebook_open
 │   │   ├── ig_jupyter_open
 │   │   ├── ig_jupyter_server_list
@@ -128,6 +173,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── doom
 │   │   ├── doomd
 │   │   │   ├── config.el
+│   │   │   ├── custom.el
 │   │   │   ├── init.el
 │   │   │   └── packages.el
 │   │   └── snowblock.json
@@ -138,10 +184,13 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── init.el
 │   │   │   ├── install
 │   │   │   └── lisp
+│   │   │       ├── #igloo-ui.el#
 │   │   │       ├── igloo-buffer.el
 │   │   │       ├── igloo-company.el
 │   │   │       ├── igloo-config.el
 │   │   │       ├── igloo-csv.el
+│   │   │       ├── igloo-dashboard.el
+│   │   │       ├── igloo-dashboard.el~
 │   │   │       ├── igloo-edit.el
 │   │   │       ├── igloo-elisp.el
 │   │   │       ├── igloo-env.el
@@ -159,9 +208,12 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │       ├── igloo-python.el
 │   │   │       ├── igloo-shell.el
 │   │   │       ├── igloo-snippet.el
+│   │   │       ├── igloo-tab.el
+│   │   │       ├── igloo-tab.el~
 │   │   │       ├── igloo-theme.el
 │   │   │       ├── igloo-tree.el
 │   │   │       ├── igloo-ui.el
+│   │   │       ├── igloo-ui.el~
 │   │   │       ├── igloo-workspace.el
 │   │   │       ├── igloo-yaml.el
 │   │   │       ├── init-benchmarking.el
@@ -231,7 +283,4 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   └── wget
 │       ├── snowblock.json
 │       └── wgetrc
-└── wallpapers
-    ├── wallpaper-nord-1.jpg
-    └── wallpaper-nord-2.jpg
 ```
