@@ -1,0 +1,29 @@
+# Conf -------------------------------------------------------------------------
+_subdirectory: python-lib-poetry
+_templates_suffix: .tmpl
+
+# Prompt -----------------------------------------------------------------------
+package_name:
+  type: str
+  help: package name
+  default: mylib
+
+package_description:
+  type: str
+  help: package description
+  default: ""
+
+authors:
+  type: str
+  help: authors "Name <name@email.com>"
+  default: "Name <name@email.com>"
+
+copyright_license:
+  type: str
+  help: project license
+  default: ""
+
+python_min_version:
+  type: str
+  help: python minimum version
+  default: 3.7

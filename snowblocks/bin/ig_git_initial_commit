@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [ $# -lt 1 ]
+then
+    echo "usage: ig_git_initial_commit"
+    echo "example: ig_git_initial_commit git@github.com/Uname/repo.git"
+    echo "push an exisiting folder to git repository"
+    exit 1
+fi
+
+git init
+git remote add origin $1
+git add .
+git commit -m "Initial commit"
+git push -u origin master

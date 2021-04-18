@@ -1,0 +1,20 @@
+[coverage:paths]
+source =
+  [[ package_name ]]
+
+[coverage:run]
+branch = true
+source =
+    [[ package_name ]]
+parallel = true
+
+[coverage:report]
+precision = 2
+omit =
+  [[ package_name ]]/__init__.py
+
+[coverage:html]
+directory = build/coverage
+
+[coverage:json]
+output = build/coverage.json
