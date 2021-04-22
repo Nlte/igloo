@@ -29,6 +29,7 @@ set PATH /usr/local/opt/qt/bin $PATH
 set PATH $HOME/utils/binaries/ $PATH
 set PATH $HOME/miniconda3/bin/ $PATH
 set PATH $HOME/.roswell/bin $PATH
+set PATH $HOME/.cargo/bin $PATH
 
 
 # alias
