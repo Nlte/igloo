@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'igloo-general)
 
 (use-package evil
   :ensure t

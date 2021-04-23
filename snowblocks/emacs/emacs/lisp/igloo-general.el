@@ -1,5 +1,6 @@
-(require 'igloo-hydra)
-
+;;; igloo-general.el --- Keybindings config -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
 
 (use-package general
     :ensure t)
@@ -23,6 +24,7 @@
   "o" 'ig-hydra-open/body
   "," '+ivy/switch-workspace-buffer)
 
-; (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (provide 'igloo-general)
+
+;;; igloo-general.el ends here

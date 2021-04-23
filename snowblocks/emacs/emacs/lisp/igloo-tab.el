@@ -1,6 +1,17 @@
 ;;; igloo-tab.el --- Tab config -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
+;; Lib ------------------------------------------------------------------------
+
+;;;###autoload
+(defun igloo-tabs-list ()
+"Return the list of buffers in the current group."
+  (interactive)
+    (message "%s" (centaur-tabs-buffer-tabs)))
+
+;; Config ----------------------------------------------------------------------
+
  (use-package centaur-tabs
    :after (evil)
    :config
@@ -8,7 +19,9 @@
    (centaur-tabs-group-by-projectile-project)
    (setq centaur-tabs-style "bar"
 	  centaur-tabs-set-bar 'under
-	  x-underline-at-descent-line t)
+	  x-underline-at-descent-line t
+	  ; Cycle through tabs in the current group, do not switch groups
+	  centaur-tabs-cycle-scope 'tabs)
    (centaur-tabs-headline-match)
    ;; (setq centaur-tabs-gray-out-icons 'buffer)
    ;; (centaur-tabs-enable-buffer-reordering)
@@ -36,7 +49,7 @@
 	  ("g T" . centaur-tabs-backward)))
 
 
-(defun igloo-ivy/centaur-tabs-switch-group ()
+(defun igloo-tabs/centaur-tabs-switch-group ()
   "Display a list of current buffer groups using Counsel."
   (interactive)
   (when (featurep 'ivy)
