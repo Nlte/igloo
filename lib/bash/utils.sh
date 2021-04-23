@@ -11,3 +11,15 @@ sed_example_escape() {
     escaped=$(echo $1 | sed 's/\./\\./g; s/\//\\\//g ; s/\*/\\\*/g')
     echo $escaped
 }
+# example:
+# libdir="/opt/my/lib"
+# escaped=$(sed_example_escape "${libdir}")
+# find "${libdir}" -name '*.py' | sed "s/${escaped}//g"
+
+do_something_with_find() {
+    libdir=/opt/my/lib
+    find "${libdir}" -name '*.py' -print0 | while read -d $'\0' file
+    do
+        echo "Do something with $file"
+    done
+}
