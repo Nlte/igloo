@@ -113,8 +113,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │       │   ├── pivot_columns_to_rows.sql
 │       │   ├── pk_dist_psize_compute.ipynb
 │       │   ├── server_timezone.sql
-│       │   ├── table_size.sql
-│       │   └── table_size.sql~
+│       │   └── table_size.sql
 │       └── psql
 │           └── approximate_row_count.sql
 ├── snowblocks
@@ -195,19 +194,15 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── init.el
 │   │   │   ├── install
 │   │   │   ├── lisp
-│   │   │   │   ├── #igloo-ui.el#
 │   │   │   │   ├── igloo-buffer.el
 │   │   │   │   ├── igloo-company.el
 │   │   │   │   ├── igloo-config.el
 │   │   │   │   ├── igloo-csv.el
 │   │   │   │   ├── igloo-dashboard.el
-│   │   │   │   ├── igloo-dashboard.el~
 │   │   │   │   ├── igloo-edit.el
 │   │   │   │   ├── igloo-elisp.el
 │   │   │   │   ├── igloo-env.el
-│   │   │   │   ├── igloo-env.el~
 │   │   │   │   ├── igloo-evil.el
-│   │   │   │   ├── igloo-evil.el~
 │   │   │   │   ├── igloo-flycheck.el
 │   │   │   │   ├── igloo-general.el
 │   │   │   │   ├── igloo-git.el
@@ -222,15 +217,11 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   │   ├── igloo-shell.el
 │   │   │   │   ├── igloo-snippet.el
 │   │   │   │   ├── igloo-tab.el
-│   │   │   │   ├── igloo-tab.el~
 │   │   │   │   ├── igloo-term.el
-│   │   │   │   ├── igloo-term.el~
 │   │   │   │   ├── igloo-theme.el
 │   │   │   │   ├── igloo-tree.el
 │   │   │   │   ├── igloo-ui-nano.el
-│   │   │   │   ├── igloo-ui-nano.el~
 │   │   │   │   ├── igloo-ui.el
-│   │   │   │   ├── igloo-ui.el~
 │   │   │   │   ├── igloo-workspace.el
 │   │   │   │   ├── igloo-yaml.el
 │   │   │   │   ├── init-benchmarking.el
@@ -242,8 +233,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   │   ├── nano-theme-light.el
 │   │   │   │   ├── nano-theme.el
 │   │   │   │   └── nose.el
-│   │   │   ├── packages.el
-│   │   │   └── packages.el~
+│   │   │   └── packages.el
 │   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish
