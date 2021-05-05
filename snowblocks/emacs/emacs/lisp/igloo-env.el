@@ -19,8 +19,8 @@
  :config
  (direnv-mode))
 
-(when (memq window-system '(mac ns x))
-  (exec-path-from-shell-initialize))
+;; (when (memq window-system '(mac ns x))
+;;   (exec-path-from-shell-initialize))
 (setq default-directory "~/") ;; TODO
 
 (provide 'igloo-env)

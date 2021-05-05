@@ -2,9 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(require 'general)
 
 (use-package evil
-  :ensure t
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)

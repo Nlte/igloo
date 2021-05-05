@@ -1,0 +1,9 @@
+SELECT
+  TABLE_SCHEMA AS "database",
+  TABLE_NAME AS "table",
+  ROUND((DATA_LENGTH + INDEX_LENGTH) / 1024 / 1024 / 1024) AS "size (GB)"
+FROM
+  information_schema.TABLES
+ORDER BY
+  (DATA_LENGTH + INDEX_LENGTH)
+DESC;

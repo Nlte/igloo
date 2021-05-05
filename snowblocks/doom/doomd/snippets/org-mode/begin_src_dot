@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: begin_src_dot
+# key: <sdot
+# uuid: begin_src_dot
+# --
+#+begin_src dot :file ~/org/images/${1:filename}.png :cmdline -Kdot -Tpng
+`%`$0
+#+end_src

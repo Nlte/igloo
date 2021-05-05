@@ -2,8 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package general
-    :ensure t)
+(use-package general)
 
 (general-define-key
   :states '(emacs normal hybrid motion visual operator)

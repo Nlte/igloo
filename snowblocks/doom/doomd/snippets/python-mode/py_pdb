@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: py_pdb
+# key: <pdb
+# group: testing
+# --
+import pdb; pdb.set_trace()

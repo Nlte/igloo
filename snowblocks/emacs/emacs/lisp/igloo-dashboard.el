@@ -1,5 +1,4 @@
 (use-package dashboard
-  :ensure t
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-banner-logo-title "Igloo emacs"

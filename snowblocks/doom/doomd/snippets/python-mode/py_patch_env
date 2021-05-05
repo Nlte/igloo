@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: py_patch_env
+# group: testing
+# --
+with patch.dict(os.environ, {"${1:VAR}": "${2:value}"}):
+     pass

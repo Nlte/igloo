@@ -74,7 +74,6 @@ window that already exists in that direction. It will split otherwise."
 
 
 (use-package magit
-  :ensure t
   :config
   (setq
    magit-save-repository-buffers nil

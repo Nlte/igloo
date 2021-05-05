@@ -40,3 +40,4 @@ eval (direnv hook fish)
 # >>> conda initialize >>>
 eval conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
+source ~/.byndercli/local.env

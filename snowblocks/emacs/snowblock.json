@@ -18,6 +18,10 @@
                 "create": true,
                 "path": "emacs/init.el"
             },
+            "$HOME/.emacs.d/packages.el": {
+                "create": true,
+                "path": "emacs/packages.el"
+            },
             "$HOME/.emacs.d/early-init.el": {
                 "create": true,
                 "path": "emacs/early-init.el"

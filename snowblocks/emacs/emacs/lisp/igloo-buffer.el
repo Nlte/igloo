@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code: 
 
-(defvar +igloo-dashboard-name "*igloo*"
+(defvar +igloo-dashboard-name "*dashboard*"
   "The name to use for the dashboard buffer.")
 (defvar igloo-fallback-buffer-name +igloo-dashboard-name
   "The name of the fallback buffer.")

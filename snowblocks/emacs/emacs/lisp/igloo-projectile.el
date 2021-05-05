@@ -11,8 +11,7 @@
     :config
     (projectile-mode 1))
 
-(use-package counsel-projectile
-    :ensure t)
+(use-package counsel-projectile)
 
 
 (provide 'igloo-projectile)
