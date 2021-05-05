@@ -27,6 +27,10 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── bash
 │   │   ├── script-template.sh
 │   │   └── utils.sh
+│   ├── jupyter
+│   │   └── notebooks
+│   │       ├── python-analytics-distributed.ipynb
+│   │       └── python-analytics.ipynb
 │   ├── makefiles
 │   │   └── python
 │   │       ├── Makefile-pipenv
@@ -40,13 +44,10 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── explode.ipynb
 │   │   └── group_status_based_on_row.py
 │   ├── project-templates
-│   │   ├── airflow
-│   │   │   ├── Dockerfile
+│   │   ├── airflow-build
 │   │   │   ├── Makefile
 │   │   │   ├── README.md
-│   │   │   ├── docker-compose.yaml
 │   │   │   └── scripts
-│   │   │       └── init.sh
 │   │   ├── analytics
 │   │   │   ├── README.md
 │   │   │   ├── cookiecutter.json
@@ -104,13 +105,16 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │               ├── changelog.py
 │   │               └── setup.sh
 │   ├── python
-│   │   └── cli-script.py
+│   │   ├── cli-script.py
+│   │   └── fetch-package-version.py
 │   └── sql
 │       ├── mysql
 │       │   ├── approximate_row_count.sql
 │       │   ├── pivot_columns_to_rows.sql
 │       │   ├── pk_dist_psize_compute.ipynb
-│       │   └── server_timezone.sql
+│       │   ├── server_timezone.sql
+│       │   ├── table_size.sql
+│       │   └── table_size.sql~
 │       └── psql
 │           └── approximate_row_count.sql
 ├── snowblocks
@@ -142,6 +146,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_imgcat
 │   │   ├── ig_ip_from_cidr
 │   │   ├── ig_jupyter_notebook_open
+│   │   ├── ig_jupyter_notebook_template
 │   │   ├── ig_jupyter_open
 │   │   ├── ig_jupyter_server_list
 │   │   ├── ig_jupyter_tmux_session
@@ -175,7 +180,13 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── config.el
 │   │   │   ├── custom.el
 │   │   │   ├── init.el
-│   │   │   └── packages.el
+│   │   │   ├── packages.el
+│   │   │   └── snippets
+│   │   │       ├── org-mode
+│   │   │       │   └── begin_src_dot
+│   │   │       └── python-mode
+│   │   │           ├── py_patch_env
+│   │   │           └── py_pdb
 │   │   └── snowblock.json
 │   ├── emacs
 │   │   ├── emacs
@@ -183,48 +194,56 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │   ├── early-init.el
 │   │   │   ├── init.el
 │   │   │   ├── install
-│   │   │   └── lisp
-│   │   │       ├── #igloo-ui.el#
-│   │   │       ├── igloo-buffer.el
-│   │   │       ├── igloo-company.el
-│   │   │       ├── igloo-config.el
-│   │   │       ├── igloo-csv.el
-│   │   │       ├── igloo-dashboard.el
-│   │   │       ├── igloo-dashboard.el~
-│   │   │       ├── igloo-edit.el
-│   │   │       ├── igloo-elisp.el
-│   │   │       ├── igloo-env.el
-│   │   │       ├── igloo-evil.el
-│   │   │       ├── igloo-flycheck.el
-│   │   │       ├── igloo-general.el
-│   │   │       ├── igloo-git.el
-│   │   │       ├── igloo-hydra.el
-│   │   │       ├── igloo-ivy.el
-│   │   │       ├── igloo-jira.el
-│   │   │       ├── igloo-lib.el
-│   │   │       ├── igloo-lsp.el
-│   │   │       ├── igloo-org.el
-│   │   │       ├── igloo-projectile.el
-│   │   │       ├── igloo-python.el
-│   │   │       ├── igloo-shell.el
-│   │   │       ├── igloo-snippet.el
-│   │   │       ├── igloo-tab.el
-│   │   │       ├── igloo-tab.el~
-│   │   │       ├── igloo-theme.el
-│   │   │       ├── igloo-tree.el
-│   │   │       ├── igloo-ui.el
-│   │   │       ├── igloo-ui.el~
-│   │   │       ├── igloo-workspace.el
-│   │   │       ├── igloo-yaml.el
-│   │   │       ├── init-benchmarking.el
-│   │   │       ├── ivy-make.el
-│   │   │       ├── nano-base-colors.el
-│   │   │       ├── nano-faces.el
-│   │   │       ├── nano-modeline.el
-│   │   │       ├── nano-theme-dark.el
-│   │   │       ├── nano-theme-light.el
-│   │   │       ├── nano-theme.el
-│   │   │       └── nose.el
+│   │   │   ├── lisp
+│   │   │   │   ├── #igloo-ui.el#
+│   │   │   │   ├── igloo-buffer.el
+│   │   │   │   ├── igloo-company.el
+│   │   │   │   ├── igloo-config.el
+│   │   │   │   ├── igloo-csv.el
+│   │   │   │   ├── igloo-dashboard.el
+│   │   │   │   ├── igloo-dashboard.el~
+│   │   │   │   ├── igloo-edit.el
+│   │   │   │   ├── igloo-elisp.el
+│   │   │   │   ├── igloo-env.el
+│   │   │   │   ├── igloo-env.el~
+│   │   │   │   ├── igloo-evil.el
+│   │   │   │   ├── igloo-evil.el~
+│   │   │   │   ├── igloo-flycheck.el
+│   │   │   │   ├── igloo-general.el
+│   │   │   │   ├── igloo-git.el
+│   │   │   │   ├── igloo-hydra.el
+│   │   │   │   ├── igloo-ivy.el
+│   │   │   │   ├── igloo-jira.el
+│   │   │   │   ├── igloo-lib.el
+│   │   │   │   ├── igloo-lsp.el
+│   │   │   │   ├── igloo-org.el
+│   │   │   │   ├── igloo-projectile.el
+│   │   │   │   ├── igloo-python.el
+│   │   │   │   ├── igloo-shell.el
+│   │   │   │   ├── igloo-snippet.el
+│   │   │   │   ├── igloo-tab.el
+│   │   │   │   ├── igloo-tab.el~
+│   │   │   │   ├── igloo-term.el
+│   │   │   │   ├── igloo-term.el~
+│   │   │   │   ├── igloo-theme.el
+│   │   │   │   ├── igloo-tree.el
+│   │   │   │   ├── igloo-ui-nano.el
+│   │   │   │   ├── igloo-ui-nano.el~
+│   │   │   │   ├── igloo-ui.el
+│   │   │   │   ├── igloo-ui.el~
+│   │   │   │   ├── igloo-workspace.el
+│   │   │   │   ├── igloo-yaml.el
+│   │   │   │   ├── init-benchmarking.el
+│   │   │   │   ├── ivy-make.el
+│   │   │   │   ├── nano-base-colors.el
+│   │   │   │   ├── nano-faces.el
+│   │   │   │   ├── nano-modeline.el
+│   │   │   │   ├── nano-theme-dark.el
+│   │   │   │   ├── nano-theme-light.el
+│   │   │   │   ├── nano-theme.el
+│   │   │   │   └── nose.el
+│   │   │   ├── packages.el
+│   │   │   └── packages.el~
 │   │   └── snowblock.json
 │   ├── fish
 │   │   ├── config.fish
@@ -283,4 +302,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   └── wget
 │       ├── snowblock.json
 │       └── wgetrc
+└── wallpapers
+    ├── wallpaper-nord-1.jpg
+    └── wallpaper-nord-2.jpg
 ```
