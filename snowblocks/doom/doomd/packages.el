@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! org-web-tools)
+(package! org-download)

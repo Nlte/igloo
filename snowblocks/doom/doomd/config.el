@@ -34,6 +34,27 @@
 (setq org-web-tools-pandoc-sleep-time 1)
 (setq org-roam-directory "~/org")
 
+(defun igloo/org-download-paste-clipboard (&optional use-default-filename)
+  (interactive "P")
+  (require 'org-download)
+  (let ((file
+         (if (not use-default-filename)
+             (read-string (format "Filename [%s]: "
+                                  org-download-screenshot-basename)
+                          nil nil org-download-screenshot-basename)
+           nil)))
+    (org-download-clipboard file)))
+
+(after! org
+  (setq org-download-method 'directory)
+  (setq org-download-image-dir "images")
+  (setq org-download-heading-lvl nil)
+  (setq org-download-timestamp "%Y%m%d-%H%M%S_")
+  (setq org-image-actual-width 300)
+  (map! :map org-mode-map
+        "C-c l a y" #'igloo/org-download-paste-clipboard
+        "C-M-y" #'igloo/org-download-paste-clipboard))
+
 
 ;; Change default directory to HOME
 (setq default-directory "~/")
