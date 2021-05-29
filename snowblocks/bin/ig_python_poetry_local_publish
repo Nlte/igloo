@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+DIR=~/.local/share/local-pypi/
+
+mkdir -p "$DIR"
+
+poetry build
+cp dist/*.tar.gz "$DIR"
