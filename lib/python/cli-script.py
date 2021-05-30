@@ -4,9 +4,11 @@ import sys
 import argparse
 
 
-DESCRIPTION = """
-Script description
-"""
+def info(s: str):
+    print("INFO: %s" % s)
+
+def error(s: str):
+    print("ERROR: %s" % s)
 
 
 def parse_args():
@@ -16,6 +18,10 @@ def parse_args():
         argparse.RawTextHelpFormatter
     ):
         pass
+
+    DESCRIPTION = """
+    Script description
+    """
 
     parser = argparse.ArgumentParser(description=DESCRIPTION,
                                      formatter_class=Formatter)
