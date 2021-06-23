@@ -72,6 +72,15 @@
 (add-to-list 'yas-snippet-dirs "~/.doom.d/snippets")
 
 
+; JDBC
+(setq clomacs-httpd-default-port 8090) ; Use a port other than 8080.
+(require 'ejc-company)
+(push 'ejc-company-backend company-backends)
+(add-hook 'ejc-sql-minor-mode-hook
+          (lambda ()
+            (company-mode t)))
+
+
 ;; Custom functions
 (defun igloo/fill-to-end ()
   (interactive)

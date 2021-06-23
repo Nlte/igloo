@@ -51,3 +51,4 @@
 
 (package! org-web-tools)
 (package! org-download)
+(package! ejc-sql)

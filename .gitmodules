@@ -1,0 +1,3 @@
+[submodule "snowblocks/jupyterlab/async-ipython-magic"]
+	path = snowblocks/jupyterlab/async-ipython-magic
+	url = https://github.com/leriomaggio/async-ipython-magic.git
