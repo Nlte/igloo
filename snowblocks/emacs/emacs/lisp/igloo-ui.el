@@ -239,6 +239,9 @@
 ;   (add-hook 'compilation-filter-hook #'comint-truncate-buffer)))
 
 
+(use-package all-the-icons)
+
+
 (eval-after-load 'ediff
   (progn
   (setq ediff-diff-options "-w" ; turn off whitespace checking

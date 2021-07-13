@@ -52,3 +52,6 @@
 (package! org-web-tools)
 (package! org-download)
 (package! ejc-sql)
+(package! emacs-application-framework
+        :recipe (:host github :repo "manateelazycat/emacs-application-framework"
+        :files ("eaf.el" "src/lisp/*.el")))
