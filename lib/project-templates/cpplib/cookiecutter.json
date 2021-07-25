@@ -1,0 +1,6 @@
+{
+    "project_name": "Project name",
+    "project_name_norm": "{{ cookiecutter.project_name.replace(' ', '') }}",
+    "repo_name": "{{ cookiecutter.project_name.lower().replace(' ', '') }}",
+    "description": ""
+}
