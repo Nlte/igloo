@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+if [ $# -lt 2 ]
+then
+  echo "usage: ig_lex_yacc_compile <file.l> <file.y>"
+  echo "Compile lex analyzer and yacc parser."
+  exit 1
+fi
+
+lex $1
+yacc -d $2
+gcc -o out y.tab.c lex.yy.c -ll -ly
