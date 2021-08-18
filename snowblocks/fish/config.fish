@@ -34,10 +34,12 @@ set PATH $HOME/.cargo/bin $PATH
 
 # alias
 alias vim=nvim
+alias python=python3
+
+source ~/virtualenvs/py3/bin/activate.fish
+
 # direnv
 eval (direnv hook fish)
 
-# >>> conda initialize >>>
-eval conda "shell.fish" "hook" $argv | source
-# <<< conda initialize <<<
 source ~/.byndercli/local.env
+fish_add_path /usr/local/opt/ruby/bin
