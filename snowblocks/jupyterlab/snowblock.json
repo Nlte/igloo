@@ -27,7 +27,11 @@
 		"$HOME/.ipython/profile_default/startup/run_async": {
 			"path": "async-ipython-magic/run_async",
 			"create": true
-		}
+		},
+        "$HOME/.jupyter/nbconfig/notebook.json": {
+            "path": "notebook.json",
+            "create": true
+        }
     }
 }
 ]
