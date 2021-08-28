@@ -64,6 +64,8 @@
 (setq +python-jupyter-repl-args '("--simple-prompt"))
 ;; (when (executable-find "ipython")
 ;;   (setq python-shell-interpreter "ipython"))
+(add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
+(add-to-list 'auto-mode-alist '("\\.pxi\\'" . cython-mode))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.

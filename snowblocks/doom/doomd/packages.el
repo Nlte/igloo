@@ -52,5 +52,4 @@
 (package! org-web-tools)
 (package! org-download)
 
-(package! example
-  :recipe (:host github :repo "Wilfred/bison-mode"))
+(package! cython-mode)
