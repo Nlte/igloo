@@ -22,8 +22,8 @@
     Plug 'editorconfig/editorconfig-vim'
     Plug 'lervag/vimtex'
     Plug 'hardcoreplayers/dashboard-nvim'
-    Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary!' }
     Plug 'liuchengxu/vista.vim'
+    Plug 'liuchengxu/vim-clap'
     Plug 'skywind3000/asynctasks.vim'
     Plug 'skywind3000/asyncrun.vim'
 

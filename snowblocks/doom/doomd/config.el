@@ -62,6 +62,8 @@
 ;; Python
 (setq +python-ipython-repl-args '("-i" "--simple-prompt" "--no-color-info"))
 (setq +python-jupyter-repl-args '("--simple-prompt"))
+;; (when (executable-find "ipython")
+;;   (setq python-shell-interpreter "ipython"))
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
