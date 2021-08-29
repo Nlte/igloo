@@ -121,9 +121,11 @@ all hooks after it are ignored.")
   :prefix "SPC"
   "!" 'shell-command
   ":" 'counsel-M-x
+  "," 'persp-ivy-switch-buffer
   "m" 'major-mode-hydra
   "f" 'ig-hydra-find/body
-  "w" 'ig-hydra-window/body)
+  "w" 'ig-hydra-window/body
+  "g" 'ig-hydra-git/body)
 
 
 (provide 'init-keybinds)

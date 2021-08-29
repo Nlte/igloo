@@ -24,6 +24,11 @@
   :config
   (evil-collection-init))
 
+(use-package evil-commentary 
+  :quelpa (evil-commentary :fetcher github :repo "linktohack/evil-commentary")
+  :config
+  (evil-commentary-mode 1))
+
 
 (provide 'init-evil)
 ;;; init-evil.el ends here

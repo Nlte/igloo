@@ -589,5 +589,7 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
 (add-hook 'org-load-hook
 	  #'+org-init-appearance-h)
 
+(setq org-startup-folded 1)
+
 (provide 'init-org)
 ;;; init-org.el ends here
