@@ -12,7 +12,10 @@
   ;; The default sorter is much to slow and the default for `ivy-sort-max-size'
   ;; is way too big (30,000). Turn it down so big repos affect project
   ;; navigation less.
-  (setq ivy-sort-max-size 7500)
+  (setq ivy-sort-max-size 7500
+    ;; better performance on everything (especially windows), ivy-0.10.0 required
+    ;; @see https://github.com/abo-abo/swiper/issues/1218
+	ivy-dynamic-exhibit-delay-ms 250)
 
   (setq ivy-height 17
         ivy-count-format ""

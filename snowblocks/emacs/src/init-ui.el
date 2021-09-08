@@ -46,14 +46,7 @@
            :repo "rougier/nano-theme"))
 
 (load-theme 'nano t)
-(set-face-attribute 'ivy-current-match nil :foreground "white")
-  (set-face-attribute 'ivy-minibuffer-match-face-2 nil :foreground "black" :background "lightgrey")
-  (set-face-attribute 'ivy-minibuffer-match-face-3 nil :foreground "black" :background "orange")
-  (set-face-attribute 'ivy-minibuffer-match-face-4 nil :foreground "black" :background "lightblue")
-  ;;
-  (set-face-attribute 'swiper-match-face-2         nil :foreground "black" :background "lightgrey")
-  (set-face-attribute 'swiper-match-face-3         nil :foreground "black" :background "orange")
-  (set-face-attribute 'swiper-match-face-4         nil :foreground "black" :background "lightblue")
+
 
 (provide 'init-ui)
 ;;; init-ui.el ends here

@@ -12,6 +12,8 @@
 	evil-normal-state-cursor 'box
 	evil-insert-state-cursor 'bar
 	evil-visual-state-cursor 'hollow
+	;; Navigation
+	evil-want-C-u-scroll t
 	;; Search
 	evil-symbol-word-search t)
   :config

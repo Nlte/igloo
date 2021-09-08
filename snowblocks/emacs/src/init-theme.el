@@ -33,9 +33,11 @@
 (window-divider-mode 1)
 
 (use-package nano-sidebar
+  ;; :ensure nil
+  ;; :defer t
   :quelpa (nano-sidebar
            :fetcher github
-           :repo "nlte/nano-sidebar"))
+           :repo "Nlte/nano-sidebar"))
 
 ;; Set default font
 ;;(set-face-attribute 'default nil

@@ -17,23 +17,29 @@
   (eq system-type 'darwin))
 ;; ~Platform
 
+(defun make-dir-if-not-exists (dir)
+  (when (not (file-exists-p dir))
+    (make-directory dir t)))
+
 
 ;; Directories and config files 
 (defconst igloo-local-dir (concat (file-name-as-directory (getenv "HOME")) ".local/share/igloo.emacs.d/")
   "Local non versioned directory for packages, local system config and other files.
    Must end with slash.")
+(make-dir-if-not-exists igloo-local-dir)
 
 (defconst igloo-etc-dir (concat igloo-local-dir "etc/")
   "Use this for files that don't change much, like server binaries, external
 dependencies or long-term shared data. Must end with a slash.")
+(make-dir-if-not-exists igloo-etc-dir)
 
 (defconst igloo-cache-dir (concat igloo-local-dir "cache/")
   "Directory for volatile local storage.
 Use this for files that change often, like cache files. Must end with a slash.")
+(make-dir-if-not-exists igloo-cache-dir)
 
 (defconst igloo-local-config-file (concat igloo-local-dir "local.el")
   "Local .el file to set system specific variables such as keyboard layout.")
-
 
 ;; Load local config file
 (if (file-exists-p igloo-local-config-file)

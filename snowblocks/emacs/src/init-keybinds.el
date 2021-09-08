@@ -92,11 +92,11 @@ all hooks after it are ignored.")
 
   "Resize"
    (("q" evil-quit "quit window")
-   ("=" evil-resize "resize window"))))
+   ("=" balance-window "resize window"))))
 
 (pretty-hydra-define ig-hydra-git
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
- ("Hydra git"
+ ("Git"
   (("g" magit-status "magit status")
    ("b" magit-branch-checkout "magit switch branch")
    ("B" magit-blame "magit blame")
@@ -106,11 +106,16 @@ all hooks after it are ignored.")
 
 (pretty-hydra-define ig-hydra-buffer
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
-  ("Hydra buffer"
+  ("Buffer"
    (("b" +ivy/switch-workspace-buffer "switch workspace buffer")
     ("B" +ivy/switch-buffer "switch buffer")
     ("d" kill-current-buffer "kill buffer")
     ("k" kill-current-buffer "kill buffer"))))
+
+(pretty-hydra-define ig-hydra-project
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  ("Project"
+   (("p" counsel-projectile-switch-project))))
 
 
 (use-package general)
@@ -120,12 +125,16 @@ all hooks after it are ignored.")
   :keymaps 'override
   :prefix "SPC"
   "!" 'shell-command
+  "SPC" 'counsel-projectile-find-file
   ":" 'counsel-M-x
   "," 'persp-ivy-switch-buffer
   "m" 'major-mode-hydra
   "f" 'ig-hydra-find/body
   "w" 'ig-hydra-window/body
-  "g" 'ig-hydra-git/body)
+  "g" 'ig-hydra-git/body
+  "p" 'ig-hydra-project/body
+  "b" 'ig-hydra-buffer/body)
+
 
 
 (provide 'init-keybinds)
