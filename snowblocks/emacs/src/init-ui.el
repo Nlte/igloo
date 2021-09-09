@@ -3,6 +3,10 @@
 ;; Filename: init-ui.el
 ;; Description: Configure the ui
 
+
+;; Performance
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
 ;; Vertical Scroll
 (setq scroll-step 1)
 (setq scroll-margin 1)
@@ -19,6 +23,7 @@
 
 ;; Notifications
 (setq ring-bell-function 'ignore)
+
 
 ;; Layout
 ;; Vertical window divider
