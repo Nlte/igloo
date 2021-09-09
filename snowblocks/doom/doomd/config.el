@@ -67,6 +67,9 @@
 (add-to-list 'auto-mode-alist '("\\.pyx\\'" . cython-mode))
 (add-to-list 'auto-mode-alist '("\\.pxi\\'" . cython-mode))
 
+
+;; bison / flex
+
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type t)
@@ -93,6 +96,16 @@
   (interactive)
   (save-excursion
     (insert "00000000-0000-0000-0000000000000000")))
+
+(defun igloo/arrayify (start end quote)
+    "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
+    (interactive "r\nMQuote: ")
+    (let ((insertion
+           (mapconcat
+            (lambda (x) (format "%s%s%s" quote x quote))
+            (split-string (buffer-substring start end)) ", ")))
+      (delete-region start end)
+      (insert insertion)))
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
