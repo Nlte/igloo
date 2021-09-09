@@ -127,7 +127,7 @@ all hooks after it are ignored.")
   "!" 'shell-command
   "SPC" 'counsel-projectile-find-file
   ":" 'counsel-M-x
-  "," 'persp-ivy-switch-buffer
+  "," 'persp-counsel-switch-buffer
   "m" 'major-mode-hydra
   "f" 'ig-hydra-find/body
   "w" 'ig-hydra-window/body

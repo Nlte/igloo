@@ -50,6 +50,7 @@
 
 
 (use-package counsel-projectile)
+(use-package persp-projectile)
 
 
 (provide 'init-project)
