@@ -62,7 +62,7 @@
 ; (require 'init-ivy)
 
 ;; Git
-; (require 'init-git)
+(require 'git)
 
 ;; Languages
 ; (require 'init-org)
