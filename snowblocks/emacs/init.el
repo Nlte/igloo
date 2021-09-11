@@ -1,17 +1,17 @@
-;;; init.el --- Emacs init.el -*- lexical-binding: t -*-
+;; init.el --- Emacs init.el -*- lexical-binding: t -*-
 ;; Igloo emacs
 
 ;; GarbageCollection
-(defvar igloo-gc-cons-threshold 134217728 ; 128mb
-  "The default value to use for `gc-cons-threshold'.
-  gc-cons-threshold determines how many bytes can be allocated without triggering a garbage collection.
-  In case of freezes, decrease the value. In case of stuttering, increase the value.")
+;; (defvar igloo-gc-cons-threshold 134217728 ; 128mb
+;;   "The default value to use for `gc-cons-threshold'.
+;;   gc-cons-threshold determines how many bytes can be allocated without triggering a garbage collection.
+;;   In case of freezes, decrease the value. In case of stuttering, increase the value.")
 
-(add-hook 'emacs-startup-hook
-          (lambda ()
-            (setq gc-cons-threshold igloo-gc-cons-threshold)
-            (setq file-name-handler-alist file-name-handler-alist-original)
-            (makunbound 'file-name-handler-alist-original)))
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             (setq gc-cons-threshold igloo-gc-cons-threshold)
+;;             (setq file-name-handler-alist file-name-handler-alist-original)
+;;             (makunbound 'file-name-handler-alist-original)))
 ;; ~GarbageCollection
 
 ;; LoadPath
@@ -31,36 +31,44 @@
 (update-to-load-path (expand-file-name "src" user-emacs-directory))
 ;; ~LoadPath
 
-;; Constants
-(require 'init-constants)
+;;; Core ------------------------------------------------------------
 
-;;Packages
-(require 'init-package)
+;; Core
+(require 'core)
+(require 'core-packages)
+; Core of emacs is now loaded, we can use-package to configure additional
+; functionalities
+
+;; Editor
+(require 'editor)
+
+;; Evil navigation
+(require 'evil)
 
 ;; UI
-(require 'init-ui)
+(require 'ui)
+
+;;; Packages -------------------------------------------------------
 ;; (require 'init-theme)
 
 ;; Perspectives
-(require 'init-perspective)
-
-;; Evil
-(require 'init-evil)
+; (require 'init-perspective)
 
 ;; Keybinds
-(require 'init-keybinds)
+; (require 'init-keybinds)
 
 ;; Completions
-(require 'init-ivy)
+(require 'completion)
+; (require 'init-ivy)
 
 ;; Git
-(require 'init-git)
+; (require 'init-git)
 
 ;; Languages
-(require 'init-org)
+; (require 'init-org)
 
 ;; Project management
-(require 'init-project)
+; (require 'init-project)
 
 
 (custom-set-variables

@@ -1,11 +1,7 @@
-;;; init-evil.el --- -*- lexical-binding: t -*-
-
-;;
-;; Filename: init-evil.el
-;; Description: Configure Evil
+;;; evil.el --- Evil mode -*- lexical-binding: t -*-
 
 (use-package evil
-  :ensure t
+  :straight t
   :init
   (setq evil-want-keybinding nil
 	;; cursor appearance
@@ -22,15 +18,16 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
+  :straight t
   :config
   (evil-collection-init))
 
 (use-package evil-commentary 
-  :quelpa (evil-commentary :fetcher github :repo "linktohack/evil-commentary")
+  :straight t
+  ; :quelpa (evil-commentary :fetcher github :repo "linktohack/evil-commentary")
   :config
   (evil-commentary-mode 1))
 
 
-(provide 'init-evil)
-;;; init-evil.el ends here
+(provide 'evil)
+;;; evil.el ends here

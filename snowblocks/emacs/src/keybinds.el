@@ -1,7 +1,4 @@
-;;; init-keybinds.el --- -*- lexical-binding: t -*-
-;;
-;; Filename: init-keybinds.el
-;; Description: Configure Keybinds 
+;;; keybinds.el --- Keybindings configuration -*- lexical-binding: t -*-
 
 (defvar igloo-leader-key "SPC"
   "The leader prefix key.")
@@ -71,7 +68,8 @@ all hooks after it are ignored.")
 (global-set-key [remap keyboard-quit] #'igloo/escape)
 
 
-(use-package major-mode-hydra)
+(use-package major-mode-hydra
+  :straight t)
 
 (pretty-hydra-define ig-hydra-find
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
@@ -118,7 +116,8 @@ all hooks after it are ignored.")
    (("p" counsel-projectile-switch-project))))
 
 
-(use-package general)
+(use-package general
+  :straight t)
 
 (general-define-key
   :states '(emacs normal hybrid motion visual operator)

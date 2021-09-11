@@ -1,10 +1,12 @@
 ;;; early-init.el --- -*- lexical-binding: t -*-
 
 ;; DeferGC
-(setq gc-cons-threshold 100000000)
+;; Don't run GC during startup then reenable later.
+(setq gc-cons-threshold most-positive-fixnum)
 ;; -DeferGC
 
 ;; UnsetPES
+;; Prevent package.el to load packages prior to init.el loading
 (setq package-enable-at-startup nil)
 ;; -UnsetPES
 
@@ -29,5 +31,4 @@
 ;; -DisableUnnecessaryInterface
 
 (provide 'early-init)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; early-init.el ends here
