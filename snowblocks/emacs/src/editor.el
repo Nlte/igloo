@@ -98,8 +98,9 @@
 ;;
 ;;; Packages
 (use-package smartparens
-    :straight t)
-
+  :straight t
+  :config
+  (smartparens-mode 1))
 
 (provide 'editor)
 

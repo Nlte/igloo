@@ -66,6 +66,7 @@ all hooks after it are ignored.")
              (setq this-command 'keyboard-quit))))))
 
 (global-set-key [remap keyboard-quit] #'igloo/escape)
+(global-set-key (kbd "<escape>")      'keyboard-escape-quit)
 
 
 (use-package major-mode-hydra
@@ -74,8 +75,7 @@ all hooks after it are ignored.")
 (pretty-hydra-define ig-hydra-find
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
  ("Find"
-  (("f" counsel-find-file "find file")
-   ("g" counsel-rg "grep"))))
+  (("f" find-file "find file"))))
 
 
 (pretty-hydra-define ig-hydra-window
@@ -90,7 +90,7 @@ all hooks after it are ignored.")
 
   "Resize"
    (("q" evil-quit "quit window")
-   ("=" balance-window "resize window"))))
+   ("=" balance-windows "resize windows"))))
 
 (pretty-hydra-define ig-hydra-git
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
@@ -105,15 +105,15 @@ all hooks after it are ignored.")
 (pretty-hydra-define ig-hydra-buffer
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Buffer"
-   (("b" +ivy/switch-workspace-buffer "switch workspace buffer")
-    ("B" +ivy/switch-buffer "switch buffer")
+   (("b" projectile-switch-to-buffer "switch workspace buffer")
+    ("B" switch-to-buffer "switch buffer")
     ("d" kill-current-buffer "kill buffer")
     ("k" kill-current-buffer "kill buffer"))))
 
 (pretty-hydra-define ig-hydra-project
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Project"
-   (("p" counsel-projectile-switch-project))))
+   (("p" projectile-switch-project))))
 
 
 (use-package general
@@ -124,8 +124,9 @@ all hooks after it are ignored.")
   :keymaps 'override
   :prefix "SPC"
   "!" 'shell-command
-  "SPC" 'counsel-projectile-find-file
-  ":" 'counsel-M-x
+  "SPC" 'projectile-find-file
+  "X" 'org-capture
+  ":" 'execute-extended-command
   "," 'persp-counsel-switch-buffer
   "m" 'major-mode-hydra
   "f" 'ig-hydra-find/body
@@ -136,6 +137,6 @@ all hooks after it are ignored.")
 
 
 
-(provide 'init-keybinds)
+(provide 'keybinds)
 
-;;; init-keybinds.el ends here 
+;;; keybinds.el ends here 

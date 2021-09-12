@@ -1,8 +1,4 @@
-;;; init-org.el --- -*- lexical-binding: t -*-
-;;
-;; Filename: init-org.el
-;; Description: Configure Org Mode and Org related things
-
+;;; lang-org.el --- -*- lexical-binding: t -*-
 
 ;; Lib
 (defun +org--toggle-inline-images-in-subtree (&optional beg end refresh)
@@ -578,6 +574,8 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
 
 ;; Config
 (use-package evil-org
+  :straight t
+  :after org
   :hook (org-mode . evil-org-mode)
   :hook (org-capture-mode . evil-insert-state)
   :config
@@ -589,7 +587,9 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
 (add-hook 'org-load-hook
 	  #'+org-init-appearance-h)
 
-(setq org-startup-folded 1)
+(setq org-startup-folded t)
 
-(provide 'init-org)
-;;; init-org.el ends here
+;; (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+
+(provide 'lang-org)
+;;; lang-org.el ends here

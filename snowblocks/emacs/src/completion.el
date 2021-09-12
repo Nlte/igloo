@@ -1,7 +1,10 @@
 ;; Vertico completion engine
 (use-package vertico
   :straight t
-  :config
+  :init
+  (setq
+   vertico-count 10
+   vertico-resize nil)
   (vertico-mode))
 
 ;; Orderless completion style
@@ -18,5 +21,14 @@
   :straight t
   :init
   (savehist-mode))
+
+
+(use-package consult
+  :straight t)
+
+(use-package marginalia
+  :straight t
+  :init
+  (marginalia-mode))
 
 (provide 'completion)

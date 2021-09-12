@@ -55,7 +55,7 @@
 ; (require 'init-perspective)
 
 ;; Keybinds
-; (require 'init-keybinds)
+(require 'keybinds)
 
 ;; Completions
 (require 'completion)
@@ -64,12 +64,14 @@
 ;; Git
 (require 'git)
 
-;; Languages
-; (require 'init-org)
-
 ;; Project management
-; (require 'init-project)
+(require 'project)
 
+;; Workspaces
+(require 'workspaces)
+
+;; Languages
+(require 'lang-org)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

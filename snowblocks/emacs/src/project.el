@@ -1,8 +1,4 @@
-;;; init-project.el --- -*- lexical-binding: t -*-
-
-;;
-;; Filename: init-project.el
-;; Description: Configure Projectile
+;;; project.el --- Project management -*- lexical-binding: t -*-
 
 (defvar igloo-projectile-cache-limit 10000)
 
@@ -14,6 +10,7 @@
 
 
 (use-package projectile
+  :straight t
   :init
   (setq projectile-cache-file (concat igloo-cache-dir "projectile.cache")
 	projectile-auto-discover nil
@@ -48,10 +45,8 @@
         projectile-project-root-files-top-down-recurring '("Makefile"))
 )
 
-
-(use-package counsel-projectile)
-(use-package persp-projectile)
+;; (use-package persp-projectile)
 
 
-(provide 'init-project)
-;;; init-project.el ends here
+(provide 'project)
+;;; project.el ends here
