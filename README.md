@@ -40,21 +40,20 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   ├── pandas
 │   │   ├── aggregate-column-names-per-value.ipynb
 │   │   ├── concatenate-values.py
-│   │   ├── df_to_excel_in_s3.py
+│   │   ├── dask-advanced-pivot-table.ipynb
+│   │   ├── df-to-excel-in-s3.py
 │   │   ├── explode.ipynb
-│   │   └── group_status_based_on_row.py
+│   │   └── group-status-based-on-row.py
 │   ├── project-templates
 │   │   ├── airflow-build
 │   │   │   ├── Makefile
-│   │   │   ├── README.md
-│   │   │   └── scripts
+│   │   │   └── README.md
 │   │   ├── analytics
 │   │   │   ├── README.md
 │   │   │   ├── cookiecutter.json
 │   │   │   ├── hooks
 │   │   │   │   └── pre_gen_project.py
 │   │   │   ├── requirements.txt
-│   │   │   ├── scripts
 │   │   │   ├── tests
 │   │   │   │   ├── conftest.py
 │   │   │   │   └── test_creation.py
@@ -81,6 +80,28 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │       │       └── visualize.py
 │   │   │       ├── test_environment.py
 │   │   │       └── tox.ini
+│   │   ├── cpplib
+│   │   │   ├── README.md
+│   │   │   ├── cookiecutter.json
+│   │   │   └── {{\ cookiecutter.repo_name\ }}
+│   │   │       ├── CMakeLists.txt
+│   │   │       ├── Makefile
+│   │   │       ├── README.md
+│   │   │       ├── apps
+│   │   │       │   ├── CMakeLists.txt
+│   │   │       │   └── app_main.cpp
+│   │   │       ├── docs
+│   │   │       │   ├── CMakeLists.txt
+│   │   │       │   └── mainpage.md
+│   │   │       ├── include
+│   │   │       │   └── mylib
+│   │   │       │       └── lib.hpp
+│   │   │       ├── src
+│   │   │       │   ├── CMakeLists.txt
+│   │   │       │   └── lib.cpp
+│   │   │       └── tests
+│   │   │           ├── CMakeLists.txt
+│   │   │           └── test_mylib.cpp
 │   │   └── python-lib-poetry
 │   │       ├── README.md
 │   │       ├── copier.yaml
@@ -135,6 +156,7 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_docker_mysql_run
 │   │   ├── ig_docker_rm_all
 │   │   ├── ig_docker_rm_image_all
+│   │   ├── ig_docker_rm_network_all
 │   │   ├── ig_encrypt
 │   │   ├── ig_exceltocsv
 │   │   ├── ig_genshapasswd
@@ -154,14 +176,18 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   ├── ig_k8s_coredns_logs
 │   │   ├── ig_k8s_coredns_pods
 │   │   ├── ig_killallps
+│   │   ├── ig_lex_yacc_compile
+│   │   ├── ig_macos_screencapture
 │   │   ├── ig_man
 │   │   ├── ig_openssl_cert_to_text
 │   │   ├── ig_pdipython
+│   │   ├── ig_python_poetry_local_publish
 │   │   ├── ig_pyvenv
 │   │   ├── ig_sed_escape
 │   │   ├── ig_sed_recursive
 │   │   ├── ig_sed_rm_empty_lines
 │   │   ├── ig_showtermcolors
+│   │   ├── ig_sql_batch_delete
 │   │   ├── ig_sql_batch_update
 │   │   └── ig_ssl_getcert
 │   ├── broot
@@ -185,58 +211,38 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   │       │   └── begin_src_dot
 │   │   │       └── python-mode
 │   │   │           ├── py_patch_env
-│   │   │           └── py_pdb
+│   │   │           ├── py_pdb
+│   │   │           └── sprefectflow
 │   │   └── snowblock.json
 │   ├── emacs
-│   │   ├── emacs
-│   │   │   ├── core.el
-│   │   │   ├── early-init.el
-│   │   │   ├── init.el
-│   │   │   ├── install
-│   │   │   ├── lisp
-│   │   │   │   ├── igloo-buffer.el
-│   │   │   │   ├── igloo-company.el
-│   │   │   │   ├── igloo-config.el
-│   │   │   │   ├── igloo-csv.el
-│   │   │   │   ├── igloo-dashboard.el
-│   │   │   │   ├── igloo-edit.el
-│   │   │   │   ├── igloo-elisp.el
-│   │   │   │   ├── igloo-env.el
-│   │   │   │   ├── igloo-evil.el
-│   │   │   │   ├── igloo-flycheck.el
-│   │   │   │   ├── igloo-general.el
-│   │   │   │   ├── igloo-git.el
-│   │   │   │   ├── igloo-hydra.el
-│   │   │   │   ├── igloo-ivy.el
-│   │   │   │   ├── igloo-jira.el
-│   │   │   │   ├── igloo-lib.el
-│   │   │   │   ├── igloo-lsp.el
-│   │   │   │   ├── igloo-org.el
-│   │   │   │   ├── igloo-projectile.el
-│   │   │   │   ├── igloo-python.el
-│   │   │   │   ├── igloo-shell.el
-│   │   │   │   ├── igloo-snippet.el
-│   │   │   │   ├── igloo-tab.el
-│   │   │   │   ├── igloo-term.el
-│   │   │   │   ├── igloo-theme.el
-│   │   │   │   ├── igloo-tree.el
-│   │   │   │   ├── igloo-ui-nano.el
-│   │   │   │   ├── igloo-ui.el
-│   │   │   │   ├── igloo-workspace.el
-│   │   │   │   ├── igloo-yaml.el
-│   │   │   │   ├── init-benchmarking.el
-│   │   │   │   ├── ivy-make.el
-│   │   │   │   ├── nano-base-colors.el
-│   │   │   │   ├── nano-faces.el
-│   │   │   │   ├── nano-modeline.el
-│   │   │   │   ├── nano-theme-dark.el
-│   │   │   │   ├── nano-theme-light.el
-│   │   │   │   ├── nano-theme.el
-│   │   │   │   └── nose.el
-│   │   │   └── packages.el
-│   │   └── snowblock.json
+│   │   ├── codesamples.el
+│   │   ├── early-init.el
+│   │   ├── init.el
+│   │   ├── init.el~
+│   │   ├── snowblock.json
+│   │   └── src
+│   │       ├── completion.el
+│   │       ├── core-packages.el
+│   │       ├── core.el
+│   │       ├── editor.el
+│   │       ├── evil.el
+│   │       ├── git.el
+│   │       ├── igloo-theme.el
+│   │       ├── init-constants.el
+│   │       ├── init-ivy.el
+│   │       ├── init-perspective.el
+│   │       ├── init-selectrum.el
+│   │       ├── init-theme.el
+│   │       ├── keybinds.el
+│   │       ├── lang-elisp.el
+│   │       ├── lang-org.el
+│   │       ├── project.el
+│   │       ├── themer-light-theme.el
+│   │       ├── ui.el
+│   │       └── workspaces.el
 │   ├── fish
 │   │   ├── config.fish
+│   │   ├── fish_user_key_bindings.fish
 │   │   ├── fishfile
 │   │   └── snowblock.json
 │   ├── git
@@ -249,11 +255,13 @@ git clone --recursive git@github.com:Nlte/igloo.git
 │   │   └── snowblock.json
 │   ├── jupyterlab
 │   │   ├── README.md
+│   │   ├── async-ipython-magic
 │   │   ├── environment.yml
 │   │   ├── ipython_config.py
 │   │   ├── ipython_kernel_config.py
 │   │   ├── jupyter_notebook_config.py
 │   │   ├── jupyterlab.org
+│   │   ├── notebook.json
 │   │   ├── snowblock.json
 │   │   └── templates
 │   │       └── analytics.ipynb
