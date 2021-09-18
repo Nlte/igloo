@@ -584,10 +584,12 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
              #'+org-cycle-only-current-subtree-h))
 
 
-(add-hook 'org-load-hook
-	  #'+org-init-appearance-h)
+;; (add-hook 'org-load-hook
+;; 	  #'+org-init-appearance-h)
 
-(setq org-startup-folded t)
+(setq org-startup-folded t
+      org-hide-leading-stars t
+      org-startup-indented t)
 
 ;; (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
 
