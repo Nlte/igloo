@@ -724,6 +724,15 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
         ("KILL" . +org-todo-cancel)))
 
 
+;; Org capture
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
+         "* [ ] %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("a" "Archive" entry (file "~/org/archive.org")
+         "* %U %?\n")))
+
 (major-mode-hydra-define org-mode
   (:title "Org mode" :idle 0.5 :quit-key ("q" "<escape>"))
   ("Eval"
