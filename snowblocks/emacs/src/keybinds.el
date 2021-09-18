@@ -72,10 +72,23 @@ all hooks after it are ignored.")
 (use-package major-mode-hydra
   :straight t)
 
+
+(defun ig-find-file-in-private-directory ()
+  (interactive)
+  (consult-find "~/.emacs.d/"))
+
 (pretty-hydra-define ig-hydra-find
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
  ("Find"
-  (("f" find-file "find file"))))
+  (("f" find-file "find file")
+   ("p" ig-find-file-in-private-directory "open config"))))
+
+(pretty-hydra-define ig-hydra-search
+ (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+ ("Search"
+  (("b" consult-line "search buffer")
+   ("i" consult-isearch "consult isearch"))))
+  
 
 
 (pretty-hydra-define ig-hydra-window
@@ -133,7 +146,8 @@ all hooks after it are ignored.")
   "w" 'ig-hydra-window/body
   "g" 'ig-hydra-git/body
   "p" 'ig-hydra-project/body
-  "b" 'ig-hydra-buffer/body)
+  "b" 'ig-hydra-buffer/body
+  "s" 'ig-hydra-search/body)
 
 
 
