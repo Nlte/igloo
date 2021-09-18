@@ -112,12 +112,99 @@
   (setq org-hide-emphasis-markers +org-pretty-mode)
   (org-toggle-pretty-entities)
   (with-silent-modifications
-   ;; In case the above un-align tables
-   (org-table-map-tables 'org-table-align t)))
+    ;; In case the above un-align tables
+    (org-table-map-tables 'org-table-align t)))
 
 
 ;;
 ;;; Commands
+;;;###autoload
+(defun ig-org-return-dwim (&optional default)
+  "A helpful replacement for `org-return'.  With prefix, call `org-return'.
+
+On headings, move point to position after entry content.  In
+lists, insert a new item or end the list, with checkbox if
+appropriate.  In tables, insert a new row or end the table."
+  ;; Inspired by John Kitchin: http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode/
+  (interactive "p")
+  (if default
+      (org-return)
+    (cond
+     ;; Act depending on context around point.
+
+     ;; NOTE: I prefer RET to not follow links, but by uncommenting this block, links will be
+     ;; followed.
+
+     ((eq 'link (car (org-element-context)))
+      ;; Link: Open it.
+      (org-open-at-point-global))
+
+     ((org-at-heading-p)
+      ;; Heading: Move to position after entry content.
+      ;; NOTE: This is probably the most interesting feature of this function.
+      (let ((heading-start (org-entry-beginning-position)))
+        (goto-char (org-entry-end-position))
+        (cond ((and (org-at-heading-p)
+                    (= heading-start (org-entry-beginning-position)))
+               ;; Entry ends on its heading; add newline after
+               (end-of-line)
+               (insert "\n\n"))
+              (t
+               ;; Entry ends after its heading; back up
+               (forward-line -1)
+               (end-of-line)
+               (when (org-at-heading-p)
+                 ;; At the same heading
+                 (forward-line)
+                 (insert "\n")
+                 (forward-line -1))
+               ;; FIXME: looking-back is supposed to be called with more arguments.
+               (while (not (looking-back (rx (repeat 3 (seq (optional blank) "\n")))))
+                 (insert "\n"))
+               (forward-line -1)))))
+
+     ((org-at-item-checkbox-p)
+      ;; Checkbox: Insert new item with checkbox.
+      (org-insert-todo-heading nil))
+
+     ((org-in-item-p)
+      ;; Plain list.  Yes, this gets a little complicated...
+      (let ((context (org-element-context)))
+        (if (or (eq 'plain-list (car context))  ; First item in list
+                (and (eq 'item (car context))
+                     (not (eq (org-element-property :contents-begin context)
+                              (org-element-property :contents-end context))))
+                (unpackaged/org-element-descendant-of 'item context))  ; Element in list item, e.g. a link
+            ;; Non-empty item: Add new item.
+            (org-insert-item)
+          ;; Empty item: Close the list.
+          ;; TODO: Do this with org functions rather than operating on the text. Can't seem to find the right function.
+          (delete-region (line-beginning-position) (line-end-position))
+          (insert "\n"))))
+
+     ((when (fboundp 'org-inlinetask-in-task-p)
+        (org-inlinetask-in-task-p))
+      ;; Inline task: Don't insert a new heading.
+      (org-return))
+
+     ((org-at-table-p)
+      (cond ((save-excursion
+               (beginning-of-line)
+               ;; See `org-table-next-field'.
+               (cl-loop with end = (line-end-position)
+                        for cell = (org-element-table-cell-parser)
+                        always (equal (org-element-property :contents-begin cell)
+                                      (org-element-property :contents-end cell))
+                        while (re-search-forward "|" end t)))
+             ;; Empty row: end the table.
+             (delete-region (line-beginning-position) (line-end-position))
+             (org-return))
+            (t
+             ;; Non-empty row: call `org-return'.
+             (org-return))))
+     (t
+      ;; All other cases: call `org-return'.
+      (org-return)))))
 
 ;;;###autoload
 (defun +org/dwim-at-point (&optional arg)
@@ -580,18 +667,68 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
   :hook (org-capture-mode . evil-insert-state)
   :config
   (add-hook 'org-tab-first-hook
-             ;; Only fold the current tree, rather than recursively
-             #'+org-cycle-only-current-subtree-h))
+            ;; Only fold the current tree, rather than recursively
+            #'+org-cycle-only-current-subtree-h))
 
 
 ;; (add-hook 'org-load-hook
 ;; 	  #'+org-init-appearance-h)
 
+;; UI
 (setq org-startup-folded t
       org-hide-leading-stars t
-      org-startup-indented t)
+      org-startup-indented t
+      org-enforce-todo-dependencies t
+      org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
 
-;; (add-to-list 'auto-mode-alist '("\\.org\\'" . org-mode))
+;; HACK Face specs fed directly to `org-todo-keyword-faces' don't respect
+;;      underlying faces like the `org-todo' face does, so we define our own
+;;      intermediary faces that extend from org-todo.
+(with-no-warnings
+  (custom-declare-face '+org-todo-active  '((t (:inherit (bold font-lock-constant-face org-todo)))) "")
+  (custom-declare-face '+org-todo-project '((t (:inherit (bold font-lock-doc-face org-todo)))) "")
+  (custom-declare-face '+org-todo-onhold  '((t (:inherit (bold warning org-todo)))) "")
+  (custom-declare-face '+org-todo-cancel  '((t (:inherit (bold error org-todo)))) ""))
+;; Keywords
+(setq org-todo-keywords
+      '((sequence
+         "TODO(t)"  ; A task that needs doing & is ready to do
+         "PROJ(p)"  ; A project, which usually contains other tasks
+         "LOOP(r)"  ; A recurring task
+         "STRT(s)"  ; A task that is in progress
+         "WAIT(w)"  ; Something external is holding up this task
+         "HOLD(h)"  ; This task is paused/on hold because of me
+         "IDEA(i)"  ; An unconfirmed and unapproved task or notion
+         "|"
+         "DONE(d)"  ; Task successfully completed
+         "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
+        (sequence
+         "[ ](T)"   ; A task that needs doing
+         "[-](S)"   ; Task is in progress
+         "[?](W)"   ; Task is being held up or paused
+         "|"
+         "[X](D)")  ; Task was completed
+        (sequence
+         "|"
+         "OKAY(o)"
+         "YES(y)"
+         "NO(n)"))
+      org-todo-keyword-faces
+      '(("[-]"  . +org-todo-active)
+        ("STRT" . +org-todo-active)
+        ("[?]"  . +org-todo-onhold)
+        ("WAIT" . +org-todo-onhold)
+        ("HOLD" . +org-todo-onhold)
+        ("PROJ" . +org-todo-project)
+        ("NO"   . +org-todo-cancel)
+        ("KILL" . +org-todo-cancel)))
+
+
+(major-mode-hydra-define org-mode
+  (:title "Org mode" :idle 0.5 :quit-key ("q" "<escape>"))
+  ("Eval"
+   (("p" nil "no-op"))))
+
 
 (provide 'lang-org)
 ;;; lang-org.el ends here

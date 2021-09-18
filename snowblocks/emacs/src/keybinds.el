@@ -87,8 +87,8 @@ all hooks after it are ignored.")
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
  ("Search"
   (("b" consult-line "search buffer")
-   ("i" consult-isearch "consult isearch"))))
-  
+   ("i" consult-imenu "consult imenu")
+   ("g" consult-ripgrep "consult ripgrep"))))
 
 
 (pretty-hydra-define ig-hydra-window
