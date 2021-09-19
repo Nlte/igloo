@@ -9,6 +9,23 @@
   "Find binary (fdfind on ubuntu, debian) and fd on other distribution")
 
 
+;;;###autoload
+(defun igloo-project-root (&optional dir)
+  "Return the project root of DIR (defaults to `default-directory').
+Returns nil if not in a project."
+  (let ((projectile-project-root
+         (unless dir (bound-and-true-p projectile-project-root)))
+        projectile-require-project-root)
+    (projectile-project-root dir)))
+
+
+;;;###autoload
+(defun igloo-project-p (&optional dir)
+  "Return t if DIR (defaults to `default-directory') is a valid project."
+  (and (igloo-project-root dir)
+       t))
+
+
 (use-package projectile
   :straight t
   :init
@@ -32,7 +49,6 @@
   ;; files/directories projectile searches for when resolving the project root.
   (setq projectile-project-root-files-bottom-up
         (append '(".projectile"  ; projectile's root marker
-                  ".project"     ; doom project marker
                   ".git")        ; Git VCS root dir
                 (when (executable-find "hg")
                   '(".hg"))      ; Mercurial VCS root dir
@@ -45,8 +61,19 @@
         projectile-project-root-files-top-down-recurring '("Makefile"))
 )
 
-;; (use-package persp-projectile)
+;; Makefile
+(use-package makefile-executor
+  :straight t
+  :config
+  (add-hook 'makefile-mode-hook 'makefile-executor-mode))
 
+(defun ig-make-run ()
+  (interactive)
+  (makefile-executor-execute-target))
+
+(defun ig-make-run-last ()
+  (interactive)
+  (makefile-executor-execute-last))
 
 (provide 'project)
 ;;; project.el ends here

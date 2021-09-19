@@ -140,7 +140,7 @@ all hooks after it are ignored.")
   "SPC" 'projectile-find-file
   "X" 'org-capture
   ":" 'execute-extended-command
-  "," 'persp-counsel-switch-buffer
+  "," 'projectile-switch-to-buffer
   "m" 'major-mode-hydra
   "f" 'ig-hydra-find/body
   "w" 'ig-hydra-window/body
