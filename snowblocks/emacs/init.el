@@ -73,6 +73,7 @@
 ;; Languages
 (require 'lang-org)
 (require 'lang-elisp)
+(require 'lang-bison)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
