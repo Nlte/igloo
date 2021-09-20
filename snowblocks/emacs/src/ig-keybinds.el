@@ -128,6 +128,11 @@ all hooks after it are ignored.")
   ("Project"
    (("p" projectile-switch-project))))
 
+(pretty-hydra-define ig-hydra-insert
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  ("Insert"
+   (("s" yas-insert-snippet))))
+
 
 (use-package general
   :straight t)
@@ -147,6 +152,7 @@ all hooks after it are ignored.")
   "g" 'ig-hydra-git/body
   "p" 'ig-hydra-project/body
   "b" 'ig-hydra-buffer/body
+  "i" 'ig-hydra-insert/body
   "s" 'ig-hydra-search/body)
 
 

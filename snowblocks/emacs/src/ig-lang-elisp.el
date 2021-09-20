@@ -3,7 +3,7 @@
 (use-package emacs-lisp-mode
   :mode-hydra
   (emacs-lisp-mode
-   (:title "Elisp mode" :idle 0.5 :quit-key ("q" "<escape>"))
+   (:title "Elisp mode" :color teal :idle 0.5 :quit-key ("q" "<escape>"))
    ("Eval"
     (("b" eval-buffer "buffer")
      ("e" eval-defun "defun")

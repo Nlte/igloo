@@ -734,7 +734,7 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
          "* %U %?\n")))
 
 (major-mode-hydra-define org-mode
-  (:title "Org mode" :idle 0.5 :quit-key ("q" "<escape>"))
+  (:title "Org mode" :color teal :idle 0.5 :quit-key ("q" "<escape>"))
   ("Eval"
    (("p" nil "no-op"))))
 

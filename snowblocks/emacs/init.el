@@ -69,6 +69,9 @@
 ;; Workspaces
 (require 'ig-workspaces)
 
+;; Snippets
+(require 'ig-snippets)
+
 ;; Languages
 (require 'ig-lang-org)
 (require 'ig-lang-elisp)
