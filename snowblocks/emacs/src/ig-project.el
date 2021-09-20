@@ -1,4 +1,4 @@
-;;; project.el --- Project management -*- lexical-binding: t -*-
+;;; ig-project.el --- Project management -*- lexical-binding: t -*-
 
 (defvar igloo-projectile-cache-limit 10000)
 
@@ -75,5 +75,5 @@ Returns nil if not in a project."
   (interactive)
   (makefile-executor-execute-last))
 
-(provide 'project)
-;;; project.el ends here
+(provide 'ig-project)
+;;; ig-project.el ends here

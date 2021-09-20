@@ -1,4 +1,4 @@
-;;; core-packages.el --- Core packages -*- lexical-binding: t -*-
+;;; ig-core-packages.el --- Core packages -*- lexical-binding: t -*-
 
 (straight-use-package 'use-package)
 
@@ -13,5 +13,5 @@
   (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize)))
 
-(provide 'core-packages)
-;;; core-packages.el ends here
+(provide 'ig-core-packages)
+;;; ig-core-packages.el ends here

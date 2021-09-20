@@ -1,4 +1,4 @@
-;;; evil.el --- Evil mode -*- lexical-binding: t -*-
+;;; ig-evil.el --- Evil mode -*- lexical-binding: t -*-
 
 (use-package evil
   :straight t
@@ -29,5 +29,5 @@
   (evil-commentary-mode 1))
 
 
-(provide 'evil)
-;;; evil.el ends here
+(provide 'ig-evil)
+;;; ig-evil.el ends here

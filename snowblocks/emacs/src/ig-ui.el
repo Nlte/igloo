@@ -1,4 +1,4 @@
-;;; ui.el --- UI configuration -*- lexical-binding: t -*-
+;;; ig-ui.el --- UI configuration -*- lexical-binding: t -*-
 
 ;; (straight-use-package '(nano-theme :type git :host github
 ;;                                    :repo "rougier/nano-theme"))
@@ -24,5 +24,5 @@
 (setq ring-bell-function 'ignore)
 
 
-(provide 'ui)
-;;; ui.el ends here
+(provide 'ig-ui)
+;;; ig-ui.el ends here

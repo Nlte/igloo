@@ -34,19 +34,19 @@
 ;;; Core ------------------------------------------------------------
 
 ;; Core
-(require 'core)
-(require 'core-packages)
+(require 'ig-core)
+(require 'ig-core-packages)
 ; Core of emacs is now loaded, we can use-package to configure additional
 ; functionalities
 
 ;; Editor
-(require 'editor)
+(require 'ig-editor)
 
 ;; Evil navigation
-(require 'evil)
+(require 'ig-evil)
 
 ;; UI
-(require 'ui)
+(require 'ig-ui)
 
 ;;; Packages -------------------------------------------------------
 ;; (require 'init-theme)
@@ -55,25 +55,25 @@
 ; (require 'init-perspective)
 
 ;; Keybinds
-(require 'keybinds)
+(require 'ig-keybinds)
 
 ;; Completions
-(require 'completion)
-; (require 'init-ivy)
+(require 'ig-completion)
 
 ;; Git
-(require 'git)
+(require 'ig-git)
 
 ;; Project management
-(require 'project)
+(require 'ig-project)
 
 ;; Workspaces
-(require 'workspaces)
+(require 'ig-workspaces)
 
 ;; Languages
-(require 'lang-org)
-(require 'lang-elisp)
-(require 'lang-bison)
+(require 'ig-lang-org)
+(require 'ig-lang-elisp)
+(require 'ig-lang-bison)
+(require 'ig-lang-python)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

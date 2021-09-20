@@ -1,4 +1,4 @@
-;;; workspaces.el --- -*- lexical-binding: t -*-
+;;; ig-workspaces.el --- -*- lexical-binding: t -*-
 
 (defvar +workspaces-main "main"
   "The name of the primary and initial workspace, which cannot be deleted.")
@@ -116,5 +116,5 @@ error if NAME doesn't exist."
         persp-auto-save-opt (if noninteractive 0 1)) ; auto-save on kill
   )
 
-(provide 'workspaces)
-;;; workspaces.el ends here
+(provide 'ig-workspaces)
+;;; ig-workspaces.el ends here

@@ -31,4 +31,4 @@
   :init
   (marginalia-mode))
 
-(provide 'completion)
+(provide 'ig-completion)

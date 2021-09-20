@@ -1,4 +1,4 @@
-;; editor.el --- Editing in emacs -*- lexical-binding: t; -*-
+;; ig-editor.el --- Editing in emacs -*- lexical-binding: t; -*-
 
 ;; Resolve symlinks when opening files, so that any operations are conducted
 ;; from the file's true directory (like `find-file').
@@ -102,6 +102,6 @@
   :config
   (smartparens-mode 1))
 
-(provide 'editor)
+(provide 'ig-editor)
 
-;;; editor.el ends here
+;;; ig-editor.el ends here

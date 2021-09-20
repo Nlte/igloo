@@ -1,4 +1,4 @@
-;;; keybinds.el --- Keybindings configuration -*- lexical-binding: t -*-
+;;; ig-keybinds.el --- Keybindings configuration -*- lexical-binding: t -*-
 
 (defvar igloo-leader-key "SPC"
   "The leader prefix key.")
@@ -151,6 +151,6 @@ all hooks after it are ignored.")
 
 
 
-(provide 'keybinds)
+(provide 'ig-keybinds)
 
-;;; keybinds.el ends here 
+;;; ig-keybinds.el ends here 

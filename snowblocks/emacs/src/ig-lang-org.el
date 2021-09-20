@@ -1,4 +1,4 @@
-;;; lang-org.el --- -*- lexical-binding: t -*-
+;;; ig-lang-org.el --- -*- lexical-binding: t -*-
 
 ;; Lib
 (defun +org--toggle-inline-images-in-subtree (&optional beg end refresh)
@@ -739,5 +739,5 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
    (("p" nil "no-op"))))
 
 
-(provide 'lang-org)
-;;; lang-org.el ends here
+(provide 'ig-lang-org)
+;;; ig-lang-org.el ends here

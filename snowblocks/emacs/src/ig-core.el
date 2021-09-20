@@ -1,4 +1,4 @@
-;; core.el --- Constant and overall optimisations -*- lexical-binding: t; -*-
+;; ig-core.el --- Constant and overall optimisations -*- lexical-binding: t; -*-
 
 (set-language-environment "UTF-8")
 
@@ -179,5 +179,5 @@ Use this for files that change often, like cache files. Must end with a slash.")
   (load bootstrap-file nil 'nomessage))
 
 
-(provide 'core)
-;;; core.el ends here
+(provide 'ig-core)
+;;; ig-core.el ends here

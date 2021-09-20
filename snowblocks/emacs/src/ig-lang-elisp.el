@@ -1,4 +1,4 @@
-;;; lang-elisp.el --- -*- lexical-binding: t -*-
+;;; ig-lang-elisp.el --- -*- lexical-binding: t -*-
 
 (use-package emacs-lisp-mode
   :mode-hydra
@@ -21,5 +21,5 @@
      ("i" info-lookup-symbol "info lookup")))))
 
 
-(provide 'lang-elisp)
-;;; lang-elisp.el ends here
+(provide 'ig-lang-elisp)
+;;; ig-lang-elisp.el ends here
