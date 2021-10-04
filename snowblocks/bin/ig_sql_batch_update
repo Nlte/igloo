@@ -26,6 +26,7 @@ ig_sql_batch_update --table users \\
                     --pkcol user_id \\
                     --pklist userids.txt \\
                     --size 20
+                    --where "accountid='abcd'"
 """
 
 def parse_args():
@@ -46,6 +47,8 @@ def parse_args():
                         help='File containing the list of primary keys')
     parser.add_argument('--size', type=int, default=2000,
                         help='Batch size')
+    parser.add_argument('--where', type=str,
+                        help='Extra where condition')
     return parser.parse_args()
 
 
@@ -62,6 +65,13 @@ def main():
                         "SET {update}\n"
                         "WHERE {column} IN (\n"
                         "'{pks}');\n")
+    if args.where:
+        update_statement = ("EXPLAIN UPDATE {{table}}\n"
+                            "SET {{update}}\n"
+                            "WHERE {where}\n"
+                            "AND {{column}} IN (\n"
+                            "'{{pks}}');\n".format(where=args.where))
+
     for i, batch in enumerate(pk_batches):
         fname = 'update_{table}_{no}.sql'.format(
             table=args.table,
