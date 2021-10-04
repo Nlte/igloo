@@ -50,10 +50,11 @@
   (setq org-download-image-dir "images")
   (setq org-download-heading-lvl nil)
   (setq org-download-timestamp "%Y%m%d-%H%M%S_")
-  (setq org-image-actual-width 300)
-  (map! :map org-mode-map
-        "C-c l a y" #'igloo/org-download-paste-clipboard
-        "C-M-y" #'igloo/org-download-paste-clipboard))
+  (setq org-image-actual-width 300))
+
+(setq org-plantuml-jar-path (expand-file-name "~/opt/plantuml.jar"))
+;; (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
 
 
 ;; Change default directory to HOME
@@ -106,6 +107,9 @@
             (split-string (buffer-substring start end)) ", ")))
       (delete-region start end)
       (insert insertion)))
+
+
+;; SQL
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
