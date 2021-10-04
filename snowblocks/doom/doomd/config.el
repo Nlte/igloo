@@ -109,6 +109,20 @@
       (insert insertion)))
 
 
+
+;; Cookiecutter
+(defun igloo/project-cookiecutter()
+  (interative))
+;; (defun igloo/github-search-and-clone-cookiecutter (query)
+;;   (interactive (list (read-string-hist "cookiecutter query:")))
+;;   (let* ((url (fz (cl-sn (concat "upd glh cookiecutter " (q query) " | cat" ) :chomp t)))
+;;          (dir (if url (gc url)))
+;;          (name (if (and url dir) (read-string-hist "project name: " query))))
+;;     (if (and dir name)
+;;         (term-sps (concat "CWD= zrepl cookiecutter " (q dir)) (new-project-dir name)))))
+
+
+
 ;; SQL
 
 
