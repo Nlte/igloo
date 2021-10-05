@@ -18,12 +18,13 @@
     Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
     Plug 'benmills/vimux'
     Plug 'SirVer/ultisnips'
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neovim/nvim-lspconfig'
     Plug 'editorconfig/editorconfig-vim'
     Plug 'lervag/vimtex'
     Plug 'hardcoreplayers/dashboard-nvim'
     Plug 'liuchengxu/vista.vim'
-    Plug 'liuchengxu/vim-clap'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
     Plug 'skywind3000/asynctasks.vim'
     Plug 'skywind3000/asyncrun.vim'
 
@@ -133,9 +134,6 @@
         autocmd VimLeavePre * call VimuxCloseRunner()
     augroup END
 
-" coc.vim
-    source $HOME/.config/nvim/coc.vim
-
 " python venv
     " Figure out the system Python for Neovim.
     if exists("$VIRTUAL_ENV")
@@ -178,15 +176,13 @@
 
 " Vim-clap
 
-    let g:clap_layout = { 'relative': 'editor' }
-    nnoremap <silent> <Leader>fh :<C-u>Clap history<CR>
-    nnoremap <silent> <Leader>ff :<C-u>Clap files ++finder=rg --ignore --hidden --files<cr>
-    nnoremap <silent> <Leader><space> :<C-u>Clap buffers<CR>
-    nnoremap <silent> <Leader>tc :<C-u>Clap colors<CR>
-    nnoremap <silent> <Leader>fg :<C-u>Clap grep2<CR>
-    nnoremap <silent> <Leader>ft :<C-u>Clap tags<CR>
-    nnoremap <silent> <Leader>fb :<C-u>Clap marks<CR>
-    nnoremap <silent> <Leader>yy :<C-u>Clap yanks<CR>
+    nnoremap <silent> <Leader>fh :<C-u>History<CR>
+    nnoremap <silent> <Leader>ff :<C-u>GFiles<cr>
+    nnoremap <silent> <Leader><space> :<C-u>Buffers<CR>
+    nnoremap <silent> <Leader>bb :<C-u>Buffers<CR>
+    nnoremap <silent> <Leader>fg :<C-u>Rg<CR>
+    nnoremap <silent> <Leader>ft :<C-u>Tags<CR>
+    nnoremap <silent> <Leader>fs :<C-u>Snippets<CR>
 
 " Vista
     nnoremap <silent> <Leader>ot :<C-u>Vista!!<CR>
