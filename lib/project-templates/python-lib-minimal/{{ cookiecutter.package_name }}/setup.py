@@ -23,7 +23,7 @@ setup(
     packages=['{{ cookiecutter.package_name }}'],
     install_requires=reqs(),
     entry_points={
-        'console_scripts': ['{{ cookiecutter.package_name }}-main={{ cookiecutter.package_name }}.run:main'],
+        'console_scripts': ['{{ cookiecutter.package_name }}-main={{ cookiecutter.package_name }}.main:main'],
     },
     include_package_data=True,
     zip_safe=False

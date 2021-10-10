@@ -26,6 +26,8 @@
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-one)
+;; Remove vi empty line after doom-nord
+;; (setq-default indicate-empty-lines nil)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -109,7 +111,20 @@
       (insert insertion)))
 
 
+;; Makefile
+(map!
+ :leader
+ :prefix "c"
+ :desc "+make/run" "c" #'+make/run)
+
 ;; SQL
+(setq sql-connection-alist
+      '((pg-docker-local
+         (sql-product 'postgres)
+         (sql-server "127.0.0.1")
+         (sql-user "postgres")
+         (sql-password "postgres")
+         (sql-database "postgres"))))
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
