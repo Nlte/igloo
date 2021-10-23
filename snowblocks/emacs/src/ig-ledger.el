@@ -1,4 +1,4 @@
-;;; ledger.el --- summary -*- lexical-binding: t -*-
+;;; ig-ledger.el --- summary -*- lexical-binding: t -*-
 
 ;;; Commentary:
 
@@ -13,6 +13,6 @@
   :config
   (setq ledger-post-amount-alignment-at :decimal))
 
-(provide 'ledger)
+(provide 'ig-ledger)
 
-;;; ledger.el ends here
+;;; ig-ledger.el ends here

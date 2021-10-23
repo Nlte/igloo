@@ -2,10 +2,59 @@
 
 (defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut"))
 (defconst *ig-ledger-currencies* '("EUR"))
-(defconst *ig-ledger-expense-categories* '(""))
-(defconst *ig-ledger-file* (format-time-string "~/org/budget/ledger-%Y.dat"))
+(defconst *ig-ledger-expense-categories*
+  '("Groceries" "Furnitures" "Utilities" "Travel" "Misc"))
 
-(string-join '("one" "two" "three") ", ")
+(defconst *ig-ledger-expense-categories*
+  '(
+    "Housing"
+    "Housing:Rent"
+    "Housing:Taxes"
+    "Housing:Repairs"
+    "Transportation"
+    "Transportation:Parkingfees"
+    "Transportation:Travelcard"
+    "Food"
+    "Food:Groceries"
+    "Food:Restaurants"
+    "Utilities"
+    "Utilities:Electricity"
+    "Utilities:Gaz"
+    "Utilities:Water"
+    "Utilities:Garbage"
+    "Utilities:Phones"
+    "Utilities:Internet"
+    "Clothing"
+    "Medical"
+    "Medical:Primary care"
+    "Medical:Medications"
+    "Insurance"
+    "Insurance:Health"
+    "Insurance:Home"
+    "Insurance:Life"
+    "Supplies"
+    "Supplies:Cleaning"
+    "Supplies:Tools"
+    "Personal"
+    "Personal:Gym"
+    "Personal:Hairsalon"
+    "Personal:Cosmetics"
+    "Personal:Subscriptions"
+    "Personal:Purchases"
+    "Education"
+    "Education:Books"
+    "Gifts"
+    "Gifts:Birthday"
+    "Gifts:Christmas"
+    "Entertainment"
+    "Entertainment:Subscriptions"
+    "Entertainment:Movies"
+    "Entertainment:Games"
+    "Entertainment:Bars"
+    "Entertainment:Concerts"
+    "Entertainment:Vacations"))
+
+(defconst *ig-ledger-file* (format-time-string "~/org/budget/ledger-%Y.dat"))
 
 (defun ig-ledger-account-string ()
   (string-join (append '("Account") *ig-ledger-accounts*) "|"))
@@ -13,12 +62,18 @@
 (defun ig-ledger-currency-string ()
   (string-join (append '("Currency") *ig-ledger-currencies*) "|"))
 
+(defun ig-ledger-expenses-category-string ()
+  (string-join (append '("Category") *ig-ledger-expense-categories*) "|"))
 
-(defun ig-org-template-ledger-expense-cash ()
+(defun ig-org-template-ledger-expense-normal ()
   "Template for cash withdrawal"
   (format "%%(org-read-date) * %%^{Merchant}
-    Expenses:Cash                                           %%^{Amount} %%^{%s}
-    Assets:%%^{%s}" (ig-ledger-currency-string) (ig-ledger-account-string)))
+    ; :Note: %%^{Note}
+    Expenses:%%^{%s}                                           %%^{Amount} %%^{%s}
+    Assets:%%^{%s}"
+          (ig-ledger-expenses-category-string)
+          (ig-ledger-currency-string)
+          (ig-ledger-account-string)))
 
 (defun ig-org-template-ledger-expense-cash ()
   "Template for cash withdrawal"
@@ -57,7 +112,7 @@
 
 ("le" "Expenses" plain
  (file *ig-ledger-file*)
- (function ig-org-template-ledger-expense-card))
+ (function ig-org-template-ledger-expense-normal))
 
 ("lc" "Cash" plain
  (file *ig-ledger-file*)

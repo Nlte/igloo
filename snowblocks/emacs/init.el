@@ -74,6 +74,9 @@
 ;; Snippets
 (require 'ig-snippets)
 
+;; Ledger
+(require 'ig-ledger)
+
 ;; Languages
 (require 'ig-lang-org)
 (require 'ig-lang-elisp)
