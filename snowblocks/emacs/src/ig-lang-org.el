@@ -660,19 +660,19 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
           ("KILL" . +org-todo-cancel)))) ;; +org-init-appearance-h
 
 ;; Config
-(use-package evil-org
-  :straight t
-  :after org
-  :hook (org-mode . evil-org-mode)
-  :hook (org-capture-mode . evil-insert-state)
-  :config
-  (add-hook 'org-tab-first-hook
-            ;; Only fold the current tree, rather than recursively
-            #'+org-cycle-only-current-subtree-h))
+;; (use-package evil-org
+;;   :straight t
+;;   :after (:all evil org)
+;;   :hook (org-mode . evil-org-mode)
+;;   :hook (org-capture-mode . evil-insert-state)
+;;   :config
+;;   (add-hook 'org-tab-first-hook
+;;             ;; Only fold the current tree, rather than recursively
+;;             #'+org-cycle-only-current-subtree-h))
 
 
-;; (add-hook 'org-load-hook
-;; 	  #'+org-init-appearance-h)
+(add-hook 'org-load-hook
+	  #'+org-init-appearance-h)
 
 ;; UI
 (setq org-startup-folded t
@@ -725,13 +725,14 @@ All my (performant) foldings needs are met between this and `org-show-subtree'
 
 
 ;; Org capture
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
-         "* [ ] %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ("a" "Archive" entry (file "~/org/archive.org")
-         "* %U %?\n")))
+(require 'ig-org-capture-templates)
+;; (setq 'org-capture-templates
+;;       '(("t" "Todo" entry (file+headline "~/org/todo.org" "Tasks")
+;;          "* [ ] %?\n  %i\n  %a")
+;;         ("j" "Journal" entry (file+datetree "~/org/journal.org")
+;;          "* %?\nEntered on %U\n  %i\n  %a")
+;;         ("a" "Archive" entry (file "~/org/archive.org")
+;;          "* %U %?\n")))
 
 (major-mode-hydra-define org-mode
   (:title "Org mode" :color teal :idle 0.5 :quit-key ("q" "<escape>"))
