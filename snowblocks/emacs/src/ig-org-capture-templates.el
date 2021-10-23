@@ -2,8 +2,6 @@
 
 (defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut"))
 (defconst *ig-ledger-currencies* '("EUR"))
-(defconst *ig-ledger-expense-categories*
-  '("Groceries" "Furnitures" "Utilities" "Travel" "Misc"))
 
 (defconst *ig-ledger-expense-categories*
   '(
