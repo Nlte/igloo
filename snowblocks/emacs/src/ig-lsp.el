@@ -10,6 +10,9 @@
 ;;          (lsp-mode . lsp-enable-which-key-integration))
 ;;   :commands lsp)
 
+(use-package eglot
+  :straight t)
+
 
 (provide 'lsp)
 ;;; lsp.el ends here

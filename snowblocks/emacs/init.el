@@ -53,6 +53,8 @@
 
 ;; Perspectives
 ; (require 'init-perspective)
+;; Terminals
+(require 'ig-terminal)
 
 ;; Keybinds
 (require 'ig-keybinds)

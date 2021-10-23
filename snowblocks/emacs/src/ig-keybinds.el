@@ -75,7 +75,7 @@ all hooks after it are ignored.")
 
 (defun ig-find-file-in-private-directory ()
   (interactive)
-  (consult-find "~/.emacs.d/"))
+  (find-file "~/igloo/snowblocks/emacs/"))
 
 (pretty-hydra-define ig-hydra-find
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
@@ -126,12 +126,20 @@ all hooks after it are ignored.")
 (pretty-hydra-define ig-hydra-project
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Project"
-   (("p" projectile-switch-project))))
+   (("p" projectile-switch-project)
+    ("d" projectile-remove-known-project)
+    ("a" projectile-add-known-project))))
 
 (pretty-hydra-define ig-hydra-insert
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Insert"
    (("s" yas-insert-snippet))))
+
+(pretty-hydra-define ig-hydra-open
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  ("Open"
+   (("t" vterm)
+    ("e" eshell))))
 
 
 (use-package general
@@ -153,7 +161,8 @@ all hooks after it are ignored.")
   "p" 'ig-hydra-project/body
   "b" 'ig-hydra-buffer/body
   "i" 'ig-hydra-insert/body
-  "s" 'ig-hydra-search/body)
+  "s" 'ig-hydra-search/body
+  "o" 'ig-hydra-open/body)
 
 
 
