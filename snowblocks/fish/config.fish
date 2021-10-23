@@ -36,12 +36,8 @@ set PATH $HOME/.cargo/bin $PATH
 alias vim=nvim
 alias python=python3
 
-source ~/virtualenvs/py3/bin/activate.fish
-
 # direnv
 eval (direnv hook fish)
-
-source ~/.byndercli/local.env
 
 fish_add_path /usr/local/opt/ruby/bin
 fish_add_path /usr/local/opt/openssl@1.1/bin
@@ -50,4 +46,4 @@ export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
 
-export WORKON_HOME="~/virtualenvs/"
+fish_vi_key_bindings
