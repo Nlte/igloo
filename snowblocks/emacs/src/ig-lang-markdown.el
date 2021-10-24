@@ -1,7 +1,5 @@
 ;;; ig-lang-markdown.el --- summary -*- lexical-binding: t -*-
 
-(message "Hello World!")
-
 (use-package markdown-mode
   :straight t
   :commands (markdown-mode gfm-mode)
