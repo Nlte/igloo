@@ -82,6 +82,8 @@
 (require 'ig-lang-elisp)
 (require 'ig-lang-bison)
 (require 'ig-lang-python)
+(require 'ig-lang-cpp)
+(require 'ig-lang-markdown)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
