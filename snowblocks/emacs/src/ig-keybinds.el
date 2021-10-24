@@ -128,7 +128,8 @@ all hooks after it are ignored.")
   ("Project"
    (("p" projectile-switch-project)
     ("d" projectile-remove-known-project)
-    ("a" projectile-add-known-project))))
+    ("a" projectile-add-known-project)
+    ("i" projectile-invalidate-cache))))
 
 (pretty-hydra-define ig-hydra-insert
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
@@ -140,6 +141,11 @@ all hooks after it are ignored.")
   ("Open"
    (("t" vterm)
     ("e" eshell))))
+
+(pretty-hydra-define ig-hydra-compile
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  ("Compile"
+   (("c" projectile-compile-project))))
 
 
 (use-package general
@@ -162,7 +168,8 @@ all hooks after it are ignored.")
   "b" 'ig-hydra-buffer/body
   "i" 'ig-hydra-insert/body
   "s" 'ig-hydra-search/body
-  "o" 'ig-hydra-open/body)
+  "o" 'ig-hydra-open/body
+  "c" 'ig-hydra-compile/body)
 
 
 

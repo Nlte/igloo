@@ -1,7 +1,9 @@
 ;;; ig-lang-cpp.el --- summary -*- lexical-binding: t -*-
 
 (use-package cmake-mode
-  :straight t)
+  :straight t
+  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
+         ("\\.cmake\\'" . cmake-mode)))
 
 
 (provide 'ig-lang-cpp)
