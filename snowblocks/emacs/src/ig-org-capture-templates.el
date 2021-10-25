@@ -74,11 +74,19 @@
           (ig-ledger-account-string)))
 
 (defun ig-org-template-ledger-expense-cash ()
-  "Template for cash withdrawal"
+  "Template for expenses withdrawal"
   (format "%%(org-read-date) * Cash Withdrawal
     Expenses:Cash                                           %%^{Amount} %%^{%s}
     Assets:%%^{%s}" (ig-ledger-currency-string) (ig-ledger-account-string)))
 
+(defun ig-org-template-ledger-bank-transfer ()
+  "Template for bank transfers"
+  (format "%%(org-read-date) * Bank Transfer
+    Assets:%%^{%s}                                           %%^{Amount} %%^{%s}
+    Assets:%%^{%s}"
+          ((lambda () (string-join (append '("To") *ig-ledger-accounts*) "|")))
+          (ig-ledger-currency-string)
+          ((lambda () (string-join (append '("From") *ig-ledger-accounts*) "|")))))
 
 (setq org-capture-templates
 '(
@@ -111,6 +119,10 @@
 ("le" "Expenses" plain
  (file *ig-ledger-file*)
  (function ig-org-template-ledger-expense-normal))
+
+("lt" "Transfer" plain
+ (file *ig-ledger-file*)
+ (function ig-org-template-ledger-bank-transfer))
 
 ("lc" "Cash" plain
  (file *ig-ledger-file*)
