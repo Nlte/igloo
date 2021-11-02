@@ -2,6 +2,9 @@
 ;; Igloo emacs
 
 ;; GarbageCollection
+(setq gc-cons-threshold 134217728) ; 128mb
+(setq read-process-output-max (* 10 1024 1024)) ;; 10mb
+                        
 ;; (defvar igloo-gc-cons-threshold 134217728 ; 128mb
 ;;   "The default value to use for `gc-cons-threshold'.
 ;;   gc-cons-threshold determines how many bytes can be allocated without triggering a garbage collection.
@@ -77,7 +80,12 @@
 ;; Ledger
 (require 'ig-ledger)
 
+;; Docker
+(require 'ig-docker)
+
 ;; Languages
+(require 'ig-lsp)
+
 (require 'ig-lang-org)
 (require 'ig-lang-elisp)
 (require 'ig-lang-bison)
@@ -91,7 +99,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("dff67645a672aa16487a7bb64520bc39895ad5315c11d112820a8a7b0d9ee3b1" default))
+   '("835868dcd17131ba8b9619d14c67c127aa18b90a82438c8613586331129dda63" "1704976a1797342a1b4ea7a75bdbb3be1569f4619134341bd5a4c1cfb16abad4" "dff67645a672aa16487a7bb64520bc39895ad5315c11d112820a8a7b0d9ee3b1" default))
  '(package-selected-packages
    '(persp-projectile nano-theme counsel-projectile projectile nano-sidebar evil-commentary-mode evil-commentary evil-commentary: magit frame perspective org-bullets evil-org quelpa ctrlf selectrum-prescient prescient selectrum evil-collection use-package)))
 (custom-set-faces

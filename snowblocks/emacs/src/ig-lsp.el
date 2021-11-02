@@ -1,18 +1,26 @@
-;;; lsp.el --- -*- lexical-binding: t -*-
+;;; ig-lsp.el --- -*- lexical-binding: t -*-
 
-;; (use-package lsp-mode
-;;   :straight t
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :hook ((python-mode . lsp)
-;;          ;; if you want which-key integration
-;;          (lsp-mode . lsp-enable-which-key-integration))
-;;   :commands lsp)
+(use-package lsp-mode
+  :straight t
+  :init
+  :hook ((python-mode . lsp))
+  :config
+  (setq lsp-completion-provider :company-capf
+        lsp-ui nil
+        lsp-idle-delay 0.5))
 
-(use-package eglot
-  :straight t)
+(use-package company
+  :straight t
+  :defer 2
+  :diminish
+  :init
+  (add-hook 'after-init-hook 'global-company-mode))
 
+(use-package company-box
+  :straight t
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
 
-(provide 'lsp)
-;;; lsp.el ends here
+(provide 'ig-lsp)
+;;; ig-lsp.el ends here

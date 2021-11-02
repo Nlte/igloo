@@ -25,6 +25,10 @@
             "$HOME/.emacs.d/src": {
                 "create": true,
                 "path": "src"
+            },
+            "$HOME/.emacs.d/snippets": {
+                "create": true,
+                "path": "snippets"
             }
         }
     }

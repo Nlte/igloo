@@ -140,7 +140,8 @@ all hooks after it are ignored.")
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Open"
    (("t" vterm)
-    ("e" eshell))))
+    ("e" eshell)
+    ("p" neotree-toggle))))
 
 (pretty-hydra-define ig-hydra-compile
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))

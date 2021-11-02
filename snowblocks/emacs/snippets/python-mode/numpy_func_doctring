@@ -1,0 +1,30 @@
+# -*- mode: snippet -*-
+# name: numpy func docstring 
+# key: <numpyfuncdoc
+# --
+"""Short summary.
+
+Extended description.
+
+Parameters
+----------
+x: type
+   Description of parameter `x`.
+y
+   Description of parameter `y` (with type not specified).
+   
+Returns
+-------
+int
+    Description of integer return value.
+    
+Yields
+------
+err_msg: str or None
+    Human readable error message, None on success.
+    
+Raises
+------
+LinAlgException
+    If the matrix is not numerically invertible.
+"""
