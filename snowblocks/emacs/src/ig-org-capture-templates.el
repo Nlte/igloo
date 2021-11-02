@@ -22,6 +22,7 @@
     "Utilities:Garbage"
     "Utilities:Phones"
     "Utilities:Internet"
+    "Utilities:Banking"
     "Clothing"
     "Medical"
     "Medical:Primary care"
