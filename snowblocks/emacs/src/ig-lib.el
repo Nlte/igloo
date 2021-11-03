@@ -1,4 +1,4 @@
-
+;;; ig-lib.el --- summary -*- lexical-binding: t -*-
 
 (defun igloo/arrayify (start end quote)
     "Turn strings on newlines into a QUOTEd, comma-separated one-liner."
@@ -10,4 +10,6 @@
       (delete-region start end)
       (insert insertion)))
 
-(provide 'lib)
+(provide 'ig-lib)
+
+;;; ig-lib.el ends here

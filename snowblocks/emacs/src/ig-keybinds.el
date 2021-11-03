@@ -146,7 +146,8 @@ all hooks after it are ignored.")
 (pretty-hydra-define ig-hydra-compile
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Compile"
-   (("c" projectile-compile-project))))
+   (("c" projectile-compile-project)
+    ("f" consult-flymake))))
 
 
 (use-package general

@@ -42,6 +42,9 @@
 ; Core of emacs is now loaded, we can use-package to configure additional
 ; functionalities
 
+;; Custom functions
+(require 'ig-lib)
+
 ;; Editor
 (require 'ig-editor)
 
