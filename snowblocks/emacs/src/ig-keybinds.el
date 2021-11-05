@@ -103,7 +103,8 @@ all hooks after it are ignored.")
 
   "Resize"
    (("q" evil-quit "quit window")
-   ("=" balance-windows "resize windows"))))
+    ("=" balance-windows "resize windows")
+    ("r" window-swap-states "swap windows"))))
 
 (pretty-hydra-define ig-hydra-git
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
@@ -121,7 +122,7 @@ all hooks after it are ignored.")
    (("b" projectile-switch-to-buffer "switch workspace buffer")
     ("B" switch-to-buffer "switch buffer")
     ("d" kill-current-buffer "kill buffer")
-    ("k" kill-current-buffer "kill buffer"))))
+    ("K" kill-all-buffers "kill all buffers"))))
 
 (pretty-hydra-define ig-hydra-project
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))

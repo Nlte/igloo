@@ -10,6 +10,10 @@
       (delete-region start end)
       (insert insertion)))
 
+(defun kill-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+
 (provide 'ig-lib)
 
 ;;; ig-lib.el ends here

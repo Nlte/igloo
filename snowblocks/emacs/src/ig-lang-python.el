@@ -21,5 +21,8 @@
     (("f" nil "function")))))
 
 
+(setq python-shell-interpreter "python3")
+
+
 (provide 'ig-lang-python)
 ;;; ig-lang-python.el ends here

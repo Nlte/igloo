@@ -7,9 +7,11 @@
   :config
   (setq lsp-completion-provider :company-capf
         ;; lsp-ui nil
-        lsp-idle-delay 0.1
+        ;; lsp-idle-delay 0.0
         lsp-headerline-breadcrumb-enable nil
         lsp-ui-doc-show-with-mouse nil))
+
+(setq lsp-idle-delay 0.1)
 
 (use-package company
   :straight t
@@ -18,7 +20,9 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (setq company-format-margin-function nil))
+  (setq company-format-margin-function nil
+        company-idle-delay 0.1
+        ))
 
 (use-package company-box
   :straight t
