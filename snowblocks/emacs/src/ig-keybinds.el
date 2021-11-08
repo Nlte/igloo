@@ -75,7 +75,7 @@ all hooks after it are ignored.")
 
 (defun ig-find-file-in-private-directory ()
   (interactive)
-  (find-file "~/igloo/snowblocks/emacs/"))
+  (ido-find-file-in-dir "~/igloo/snowblocks/emacs/"))
 
 (pretty-hydra-define ig-hydra-find
  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
