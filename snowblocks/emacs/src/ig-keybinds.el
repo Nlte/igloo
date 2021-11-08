@@ -124,6 +124,13 @@ all hooks after it are ignored.")
     ("d" kill-current-buffer "kill buffer")
     ("K" kill-all-buffers "kill all buffers"))))
 
+
+(pretty-hydra-define ig-hydra-workspace
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  ("Workspace"
+   (("TAB" +workspace/display "display workspace")
+    ("n" +workspace/new "new workspace"))))
+
 (pretty-hydra-define ig-hydra-project
   (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
   ("Project"
@@ -172,7 +179,8 @@ all hooks after it are ignored.")
   "i" 'ig-hydra-insert/body
   "s" 'ig-hydra-search/body
   "o" 'ig-hydra-open/body
-  "c" 'ig-hydra-compile/body)
+  "c" 'ig-hydra-compile/body
+  "TAB" 'ig-hydra-workspace/body)
 
 
 
