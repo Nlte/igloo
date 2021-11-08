@@ -18,7 +18,10 @@
      ("f" python-pytest-file "python-pytest-file")
      ("F" python-pytest-file-dwim "python-pytest-file"))
     "Doc"
-    (("f" nil "function")))))
+    (("f" nil "function"))))
+  :custom
+  (python-indent-offset 4)
+  )
 
 
 (setq python-shell-interpreter "python3")
