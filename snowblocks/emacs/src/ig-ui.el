@@ -2,7 +2,13 @@
 
 ;; (straight-use-package '(nano-theme :type git :host github
 ;;                                    :repo "rougier/nano-theme"))
-;; (load-theme 'nano t)
+;; (load-theme 'nano-light t)
+
+(use-package all-the-icons
+  :straight t)
+
+(use-package neotree
+  :straight t)
 
 (use-package doom-themes
   :straight t
@@ -26,13 +32,6 @@
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
 (add-hook 'text-mode-hook #'display-line-numbers-mode)
 (add-hook 'conf-mode-hook #'display-line-numbers-mode)
-
-(use-package all-the-icons
-  :straight t)
-
-(use-package neotree
-  :straight t)
-
 
 
 (provide 'ig-ui)
