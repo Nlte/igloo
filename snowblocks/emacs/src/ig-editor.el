@@ -46,6 +46,9 @@
 (setq-default indent-tabs-mode nil
               tab-width 4)
 
+;; Auto indent on newline
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
 ;; Only indent the line when at BOL or in a line's indentation. Anywhere else,
 ;; insert literal indentation.
 (setq-default tab-always-indent nil)
