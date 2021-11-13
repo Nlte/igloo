@@ -1,6 +1,6 @@
 ;;; ig-org-capture-templates.el --- summary -*- lexical-binding: t -*-
 
-(defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut"))
+(defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut" "Boursorama"))
 (defconst *ig-ledger-currencies* '("EUR"))
 
 (defconst *ig-ledger-expense-categories*
