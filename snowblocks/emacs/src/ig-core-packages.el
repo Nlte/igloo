@@ -13,5 +13,8 @@
   (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize)))
 
+(use-package interaction-log
+  :straight t)
+
 (provide 'ig-core-packages)
 ;;; ig-core-packages.el ends here
