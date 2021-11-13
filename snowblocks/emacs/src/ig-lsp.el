@@ -5,8 +5,7 @@
   :init
   :hook ((python-mode . lsp))
   :config
-  (setq flymake-mode -1
-        lsp-completion-provider :company-capf
+  (setq lsp-completion-provider :company-capf
         ;; lsp-ui nil
         ;; lsp-idle-delay 0.0
         lsp-keep-workspace-alive nil
@@ -15,7 +14,9 @@
         lsp-headerline-breadcrumb-enable nil
         lsp-ui-doc-show-with-mouse nil))
 
-(setq lsp-idle-delay 0.1)
+(setq
+ lsp-idle-delay 0.1
+ flymake-mode nil)
 
 (use-package company
   :straight t
