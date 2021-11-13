@@ -27,6 +27,12 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
+(use-package smart-mode-line
+  :straight t
+  :config
+  (setq sml/theme 'respectful)
+  (sml/setup))
+
 (setq ring-bell-function 'ignore)
 
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)

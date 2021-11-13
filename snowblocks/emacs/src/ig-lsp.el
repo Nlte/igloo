@@ -7,16 +7,12 @@
   :config
   (setq lsp-completion-provider :company-capf
         ;; lsp-ui nil
-        ;; lsp-idle-delay 0.0
+        lsp-idle-delay 0.1
         lsp-keep-workspace-alive nil
         lsp-enable-file-watchers nil
         lsp-prefer-flymake nil
         lsp-headerline-breadcrumb-enable nil
         lsp-ui-doc-show-with-mouse nil))
-
-(setq
- lsp-idle-delay 0.1
- flymake-mode nil)
 
 (use-package company
   :straight t
@@ -34,6 +30,10 @@
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 (provide 'ig-lsp)
 ;;; ig-lsp.el ends here
