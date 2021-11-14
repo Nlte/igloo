@@ -10,6 +10,13 @@
       (delete-region start end)
       (insert insertion)))
 
+(defun igloo/fill-to-end ()
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (while (< (current-column) 80)
+      (insert-char ?-))))
+
 (defun kill-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))

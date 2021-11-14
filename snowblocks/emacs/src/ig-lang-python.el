@@ -19,12 +19,10 @@
      ("F" python-pytest-file-dwim "python-pytest-file"))
     "Doc"
     (("f" nil "function"))))
-  :custom
-  (python-indent-offset 4)
-  )
-
-
-(setq python-shell-interpreter "python3")
+  :init
+  (setq python-indent-offset 4
+        python-shell-interpreter "ipython"
+        python-shell-interpreter-args "--simple-prompt -i"))
 
 
 (provide 'ig-lang-python)
