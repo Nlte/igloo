@@ -5,11 +5,11 @@
 ;;; Code:
 
 
-;; (require 'ig-theme)
-;; (load-theme 'ig t)
+(require 'ig-theme)
+(load-theme 'ig t)
 
-(require 'ig-nord-theme)
-(load-theme 'ig-nord t)
+;; (require 'ig-nord-theme)
+;; (load-theme 'ig-nord t)
 
 (require 'ig-modeline)
 (ig-modeline)
