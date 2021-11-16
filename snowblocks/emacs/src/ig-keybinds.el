@@ -72,27 +72,35 @@ all hooks after it are ignored.")
 (use-package major-mode-hydra
   :straight t)
 
+;; (use-package pretty-hydra
+;;   :straight t
+;;   :init
+;;   (setq pretty-hydra-separator ""))
+
 
 (defun ig-find-file-in-private-directory ()
   (interactive)
-  (ido-find-file-in-dir "~/igloo/snowblocks/emacs/"))
+  (counsel-find-file "~/igloo/snowblocks/emacs/"))
+
 
 (pretty-hydra-define ig-hydra-find
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+ (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
  ("Find"
   (("f" find-file "find file")
    ("p" ig-find-file-in-private-directory "open config"))))
 
+
 (pretty-hydra-define ig-hydra-search
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+ (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
  ("Search"
-  (("b" consult-line "search buffer")
-   ("i" consult-imenu "consult imenu")
-   ("g" consult-ripgrep "consult ripgrep"))))
+  (("b" swiper "search buffer")
+   ("i" counsel-imenu "imenu")
+   ("g" igloo/counsel-rg-project "ripgrep")
+   ("p" igloo/counsel-rg-project-at-point "ripgrep at point"))))
 
 
 (pretty-hydra-define ig-hydra-window
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("<escape>"))
+ (:foreign-keys warn :color teal :idle 1.0 :quit-key ("<escape>") :separator " ")
  ("Window"
   (("l" evil-window-right "select right window")
    ("h" evil-window-left "select left window")
@@ -106,8 +114,9 @@ all hooks after it are ignored.")
     ("=" balance-windows "resize windows")
     ("r" window-swap-states "swap windows"))))
 
+
 (pretty-hydra-define ig-hydra-git
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+ (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
  ("Git"
   (("g" magit-status "magit status")
    ("b" magit-branch-checkout "magit switch branch")
@@ -117,7 +126,7 @@ all hooks after it are ignored.")
 
 
 (pretty-hydra-define ig-hydra-buffer
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Buffer"
    (("b" projectile-switch-to-buffer "switch workspace buffer")
     ("B" switch-to-buffer "switch buffer")
@@ -126,33 +135,37 @@ all hooks after it are ignored.")
 
 
 (pretty-hydra-define ig-hydra-workspace
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Workspace"
    (("TAB" +workspace/display "display workspace")
     ("n" +workspace/new "new workspace"))))
 
+
 (pretty-hydra-define ig-hydra-project
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Project"
    (("p" projectile-switch-project)
     ("d" projectile-remove-known-project)
     ("a" projectile-add-known-project)
     ("i" projectile-invalidate-cache))))
 
+
 (pretty-hydra-define ig-hydra-insert
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Insert"
    (("s" yas-insert-snippet))))
 
+
 (pretty-hydra-define ig-hydra-open
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Open"
    (("t" vterm)
     ("e" eshell)
     ("p" neotree-toggle))))
 
+
 (pretty-hydra-define ig-hydra-compile
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>"))
+  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
   ("Compile"
    (("c" projectile-compile-project)
     ("f" consult-flymake))))
@@ -160,6 +173,7 @@ all hooks after it are ignored.")
 
 (use-package general
   :straight t)
+
 
 (general-define-key
   :states '(emacs normal hybrid motion visual operator)

@@ -44,22 +44,34 @@ Returns nil if not in a project."
           (if (file-remote-p default-directory) ""
             (projectile-default-mode-line))))
   :config
-  (projectile-mode 1)
+  (projectile-mode)
   ;; In the interest of performance, we reduce the number of project root marker
   ;; files/directories projectile searches for when resolving the project root.
   (setq projectile-project-root-files-bottom-up
         (append '(".projectile"  ; projectile's root marker
                   ".git")        ; Git VCS root dir
                 (when (executable-find "hg")
-                  '(".hg"))      ; Mercurial VCS root dir
-                (when (executable-find "bzr")
-                  '(".bzr")))    ; Bazaar VCS root dir
+                  '(".hg")))      ; Mercurial VCS root dir
         ;; This will be filled by other modules. We build this list manually so
         ;; projectile doesn't perform so many file checks every time it resolves
         ;; a project's root -- particularly when a file has no project.
         projectile-project-root-files '()
         projectile-project-root-files-top-down-recurring '("Makefile"))
 )
+
+
+(use-package counsel-projectile
+  :straight t
+  :init
+  (setq projectile-completion-system 'ivy)
+  :config
+  (defun igloo/counsel-rg-project-at-point ()
+    (interactive)
+    (counsel-rg (thing-at-point 'symbol) (projectile-project-root)))
+  (defun igloo/counsel-rg-project ()
+    (interactive)
+    (counsel-rg "" (projectile-project-root))))
+
 
 ;; Makefile
 (use-package makefile-executor
@@ -74,6 +86,7 @@ Returns nil if not in a project."
 (defun ig-make-run-last ()
   (interactive)
   (makefile-executor-execute-last))
+
 
 (provide 'ig-project)
 ;;; ig-project.el ends here

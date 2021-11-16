@@ -1,11 +1,15 @@
 ;;; ig-ui.el --- UI configuration -*- lexical-binding: t -*-
 
-;; (straight-use-package '(nano-theme :type git :host github
-;;                                    :repo "rougier/nano-theme"))
-;; (load-theme 'nano-light t)
+;;; Commentary:
+
+;;; Code:
+
 
 (require 'ig-theme)
 (load-theme 'ig t)
+
+(require 'ig-modeline)
+(ig-modeline)
 
 (use-package all-the-icons
   :straight t)

@@ -1,59 +1,67 @@
 ;;; ig-theme.el --- summary -*- lexical-binding: t -*-
-(deftheme ig 
-  "Igloo theme")
 
+;;; Commentary:
 
 ;; References:
 ;; https://yeun.github.io/open-color/
 ;; https://github.com/rougier/igloo-theme
+;; https://github.com/rougier/igloo-emacs
 
+;; Code:
+
+
+(deftheme ig 
+  "Igloo theme")
 
 (defcustom igloo-foreground "#37474F" ;; Blue Grey / L800
   "Default foreground color"
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-background "#FFFFFF" ;; White
   "Default background color"
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-highlight "#FAFAFA" ;; Very Light Grey
   "Highlight color is used to highlight part of the screen."
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-subtle "#ECEFF1" ;; Blue Grey / L50
   "Subtle color is used to suggest a physical area on the screen."
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-faded "#B0BEC5" ;; Blue Grey / L200
   "Faded face is for information that are less important."
-  :type 'color)
+  :type 'color :group nil)
 
 ;; (defcustom igloo-salient "#673AB7" ;; Deep Purple / L500
 ;;   "Salient color is used for information that are important."
-;;   :type 'color)
-;; (defcustom igloo-salient "#B197FC" ;; Light purple 
+;;   :type 'color :group nil)
+;; (defcustom igloo-salient "#9775FA" ;; Mid Violet
 ;;   "Salient color is used for information that are important."
-;;   :type 'color)
-(defcustom igloo-salient "#9775FA" ;; Mid Purple
+;;   :type 'color :group nil)
+(defcustom igloo-salient "#1864AB" ;; Deep Blue
   "Salient color is used for information that are important."
-  :type 'color)
+  :type 'color :group nil)
 
+(defcustom igloo-salient "#7048E8" ;; Deep Violet
+  "Salient color is used for information that are important."
+  :type 'color :group nil)
 
 (defcustom igloo-strong "#263238" ;; Blue Grey / L900
   "Strong color is used for information of a structural nature."
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-popout "#FFAB91" ;; Deep Orange / L200
   "Popout colour is used for information that needs attention."
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-string "#74B816" ;; Lime 
   "Popout colour is used for strings."
-  :type 'color)
+  :type 'color :group nil)
 
 (defcustom igloo-critical "#FF6F00" ;; Amber / L900
   "Critical face is for information that requires immediate action."
-  :type 'color)
+  :type 'color :group nil)
 
 (defface igloo-critical nil
   "Critical face is for information that requires immediate action.
@@ -94,6 +102,10 @@ directory, etc."
   :group nil)
 
 (defface igloo-strong-i nil
+  "Strong face inversed."
+  :group nil)
+
+(defface igloo-strong-hi nil
   "Strong face inversed."
   :group nil)
 
@@ -139,6 +151,16 @@ background color that is barely perceptible."
   "Default face inversed."
   :group nil)
 
+(defun set-face (face style)
+  "Reset FACE and make it inherit STYLE."
+  (set-face-attribute face nil
+                      :foreground 'unspecified :background 'unspecified
+                      :family     'unspecified :slant      'unspecified
+                      :weight     'unspecified :height     'unspecified
+                      :underline  'unspecified :overline   'unspecified
+                      :box        'unspecified :inherit    style))
+
+
 
 (let ((class '((class color) (min-colors 89))))
   (custom-theme-set-faces
@@ -171,9 +193,14 @@ background color that is barely perceptible."
    `(igloo-salient-i ((,class (:foreground ,igloo-background
                               :background ,igloo-salient))))
 
+   `(igloo-strong ((,class (:weight normal))))
+
    `(igloo-strong-i ((,class (:foreground ,igloo-background
                              :background ,igloo-strong
                              :weight normal))))
+
+   `(igloo-strong-hi ((,class (:foreground ,igloo-strong
+                             :background ,igloo-faded))))
 
    `(igloo-popout ((,class (:foreground ,igloo-popout))))
 
@@ -190,6 +217,7 @@ background color that is barely perceptible."
 
    `(igloo-critical-i ((,class (:foreground ,igloo-critical))))
 
+
    ;; Structural ---------------------------------------------------------------
    '(bold                        ((t (:inherit igloo-strong))))
    '(italic                      ((t (:inherit igloo-faded))))
@@ -202,7 +230,7 @@ background color that is barely perceptible."
    '(fixed-pitch-serif           ((t (:inherit default))))
 
    ;; Window divider -----------------------------------------------------------
-   `(window-divider                ((,class (:foreground ,igloo-background))))
+   `(window-divider                ((,class (:foreground ,igloo-foreground))))
    '(window-divider-first-pixel    ((t (:inherit window-divider))))
    '(window-divider-last-pixel     ((t (:inherit window-divider))))
    `(vertical-border               ((,class (:foreground ,igloo-background))))
@@ -213,6 +241,15 @@ background color that is barely perceptible."
    '(tab-bar-tab-inactive          ((t (:inherit igloo-faded))))
    '(tab-line                      ((t (:inherit default))))
 
+   ;; Mode line ----------------------------------------------------------------
+   `(mode-line ((,class (:foreground ,igloo-foreground
+                         :background ,igloo-subtle))))
+   `(mode-line-highlight ((t (:inherit igloo-popout))))
+   `(mode-line-buffer-id ((t (:weight regular))))
+   `(mode-line-emphasis  ((t (:weight regular))))
+               
+   `(mode-line-inactive ((,class (:foreground ,igloo-foreground
+                                  :background ,igloo-highlight))))
 
    ;; Semantic -----------------------------------------------------------------
    '(shadow                        ((t (:inherit igloo-faded))))
@@ -354,8 +391,6 @@ background color that is barely perceptible."
    '(org-footnote                            ((t (:inherit igloo-faded))))
    '(org-formula                             ((t (:inherit igloo-faded))))
    '(org-headline-done                       ((t (:inherit igloo-faded))))
-   ;; '(org-hide                                ((t (:inherit igloo-subtle-i))))
-   ;; '(org-indent                              ((t (:inherit igloo-subtle-i))))
    '(org-latex-and-related                   ((t (:inherit igloo-faded))))
    '(org-level-1                             ((t (:inherit igloo-strong))))
    '(org-level-2                             ((t (:inherit igloo-strong))))
@@ -501,12 +536,41 @@ background color that is barely perceptible."
 
     '(magit-tag                              ((t (:inherit igloo-default-i))))
 
-   ))
+    ;; Ledger ------------------------------------------------------------------
+    '(ledger-font-xact-highlight-face        ((t (:inherit igloo-default))))
+    '(ledger-font-report-clickable-face      ((t (:inherit igloo-default))))
 
-;; ;;;###autoload
+    ;; Ivy ---------------------------------------------------------------------
+    '(ivy-action                             ((t (:inherit igloo-faded))))
+    '(ivy-completions-annotations            ((t (:inherit igloo-popout))))
+    '(ivy-confirm-face                       ((t (:inherit igloo-faded))))
+    '(ivy-current-match                      ((t (:inherit igloo-strong-hi))))
+    '(ivy-cursor                             ((t (:inherit igloo-strong))))
+    '(ivy-grep-info                          ((t (:inherit igloo-strong))))
+    '(ivy-grep-line-number                   ((t (:inherit igloo-faded))))
+    '(ivy-highlight-face                     ((t (:inherit igloo-strong))))
+    '(ivy-match-required-face                ((t (:inherit igloo-faded))))
+    '(ivy-minibuffer-match-face-1            ((t (:inherit igloo-faded))))
+    '(ivy-minibuffer-match-face-2            ((t (:inherit igloo-faded))))
+    '(ivy-minibuffer-match-face-3            ((t (:inherit igloo-faded))))
+    '(ivy-minibuffer-match-face-4            ((t (:inherit igloo-faded))))
+    '(ivy-minibuffer-match-highlight         ((t (:inherit igloo-strong))))
+    '(ivy-modified-buffer                    ((t (:inherit igloo-popout))))
+    '(ivy-modified-outside-buffer            ((t (:inherit igloo-strong))))
+    '(ivy-org                                ((t (:inherit igloo-faded))))
+    '(ivy-prompt-match                       ((t (:inherit igloo-faded))))
+    '(ivy-remote                             ((t (:inherit igloo-default))))
+    '(ivy-separator                          ((t (:inherit igloo-faded))))
+    '(ivy-subdir                             ((t (:inherit igloo-faded))))
+    '(ivy-virtual                            ((t (:inherit igloo-faded))))
+    '(ivy-yanked-word                        ((t (:inherit igloo-faded))))))
+
+
+;;;###autoload
 (when (and (boundp 'custom-theme-load-path) load-file-name)
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
+
 
 (provide-theme 'ig)
 
