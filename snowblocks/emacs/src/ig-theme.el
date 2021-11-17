@@ -21,6 +21,10 @@
   "Default background color"
   :type 'color :group nil)
 
+;; (defcustom igloo-background "#ECEFF4" ;; White
+;;   "Default background color"
+;;   :type 'color :group nil)
+
 (defcustom igloo-highlight "#FAFAFA" ;; Very Light Grey
   "Highlight color is used to highlight part of the screen."
   :type 'color :group nil)
@@ -33,17 +37,7 @@
   "Faded face is for information that are less important."
   :type 'color :group nil)
 
-;; (defcustom igloo-salient "#673AB7" ;; Deep Purple / L500
-;;   "Salient color is used for information that are important."
-;;   :type 'color :group nil)
-;; (defcustom igloo-salient "#9775FA" ;; Mid Violet
-;;   "Salient color is used for information that are important."
-;;   :type 'color :group nil)
-(defcustom igloo-salient "#1864AB" ;; Deep Blue
-  "Salient color is used for information that are important."
-  :type 'color :group nil)
-
-(defcustom igloo-salient "#7048E8" ;; Deep Violet
+(defcustom igloo-salient "#845ef7" ;; Deep Violet
   "Salient color is used for information that are important."
   :type 'color :group nil)
 
@@ -51,11 +45,11 @@
   "Strong color is used for information of a structural nature."
   :type 'color :group nil)
 
-(defcustom igloo-popout "#FFAB91" ;; Deep Orange / L200
+(defcustom igloo-popout "#FAB005" ;; Deep Orange / L200
   "Popout colour is used for information that needs attention."
   :type 'color :group nil)
 
-(defcustom igloo-string "#74B816" ;; Lime 
+(defcustom igloo-string "#74b816" ;; Lime 
   "Popout colour is used for strings."
   :type 'color :group nil)
 
