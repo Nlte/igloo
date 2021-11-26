@@ -1,14 +1,13 @@
 ;;; ig-keybinds.el --- Keybindings configuration -*- lexical-binding: t -*-
 
-(defvar igloo-leader-key "SPC"
+(defvar ig-leader-key "SPC"
   "The leader prefix key.")
 
-(defvar igloo-leader-alt-key "M-SPC"
+(defvar ig-leader-alt-key "M-SPC"
   "An alternative leader prefix key, used for Insert and Emacs states.")
 
-(defvar igloo-localleader-key "SPC m"
+(defvar ig-localleader-key "SPC m"
   "The localleader prefix key, for major-mode specific commands.")
-
 
 (cond
  (IS-MAC
@@ -43,13 +42,13 @@
 ;; you press ESC/C-g two or three times on some occasions to reach
 ;; `keyboard-quit', but this is much more intuitive.
 
-(defvar igloo-escape-hook nil
+(defvar ig-escape-hook nil
   "A hook run when C-g is pressed (or ESC in normal mode, for evil users).
-More specifically, when `igloo/escape' is pressed. If any hook returns non-nil,
+More specifically, when `ig/escape' is pressed. If any hook returns non-nil,
 all hooks after it are ignored.")
 
-(defun igloo/escape (&optional interactive)
-  "Run `igloo-escape-hook'."
+(defun ig/escape (&optional interactive)
+  "Run `ig-escape-hook'."
   (interactive (list 'interactive))
   (cond ((minibuffer-window-active-p (minibuffer-window))
          ;; quit the minibuffer if open.
@@ -57,7 +56,7 @@ all hooks after it are ignored.")
            (setq this-command 'abort-recursive-edit))
          (abort-recursive-edit))
         ;; Run all escape hooks. If any returns non-nil, then stop there.
-        ((run-hook-with-args-until-success 'igloo-escape-hook))
+        ((run-hook-with-args-until-success 'ig-escape-hook))
         ;; don't abort macros
         ((or defining-kbd-macro executing-kbd-macro) nil)
         ;; Back to the default
@@ -65,42 +64,206 @@ all hooks after it are ignored.")
            (when interactive
              (setq this-command 'keyboard-quit))))))
 
-(global-set-key [remap keyboard-quit] #'igloo/escape)
+(global-set-key [remap keyboard-quit] #'ig/escape)
 (global-set-key (kbd "<escape>")      'keyboard-escape-quit)
 
 
+(use-package hydra
+             :straight t)
+
 (use-package major-mode-hydra
-  :straight t)
+   :straight t)
 
-;; (use-package pretty-hydra
-;;   :straight t
-;;   :init
-;;   (setq pretty-hydra-separator ""))
+(use-package pretty-hydra
+   :straight t)
 
 
-(defun ig-find-file-in-private-directory ()
+(defgroup ig-hydra nil
+  "Customization for `ig-hydra'."
+  :tag "ig-hydra")
+
+
+;;* ig-hydra utilities
+
+;; Lexical closure to encapsulate the stack variable.
+(let ((ig-hydra-stack '()))
+  (defun ig-hydra-push (expr)
+    "Push an EXPR onto the stack."
+    (push expr ig-hydra-stack))
+
+  (defun ig-hydra-pop ()
+    "Pop an expression off the stack and call it."
+    (interactive)
+    (let ((x (pop ig-hydra-stack)))
+      (when x
+	(call-interactively x))))
+
+  (defun ig-hydra ()
+    "Show the current stack."
+    (interactive)
+    (with-help-window (help-buffer)
+      (princ "Ig-hydra-stack\n")
+      (pp ig-hydra-stack)))
+
+  (defun ig-hydra-reset ()
+    "Reset the stack to empty."
+    (interactive)
+    (setq ig-hydra-stack '())))
+
+(defmacro ig-open-hydra (hydra)
+  "Push current HYDRA to a stack.
+This is a macro so I don't have to quote the hydra name."
+  `(progn
+     (ig-hydra-push hydra-curr-body-fn)
+     (call-interactively ',hydra)))
+
+(defun ig-hydra-help ()
+  "Show help buffer for current hydra."
   (interactive)
-  (counsel-find-file "~/igloo/snowblocks/emacs/"))
+  (with-help-window (help-buffer)
+    ;; (with-current-buffer (help-buffer)
+    ;;   (unless (featurep 'emacs-keybinding-command-tooltip-mode)
+	;; (require 'emacs-keybinding-command-tooltip-mode))
+      ;; (emacs-keybinding-command-tooltip-mode +1))
+    (let ((s (format "Help for %s\n" hydra-curr-body-fn)))
+      (princ s)
+      (princ (make-string (length s) ?-))
+      (princ "\n"))
+
+    (princ (mapconcat
+	    (lambda (head)
+	      (format "%s%s"
+		      ;;  key
+		      (s-pad-right 10 " " (car head))
+		      ;; command
+		      (let* ((hint (if (stringp (nth 2 head))
+				       (concat " " (nth 2 head))
+				     ""))
+			     (cmd (cond
+				   ;; quit
+				   ((null (nth 1 head))
+				    "")
+				   ;; a symbol
+				   ((symbolp (nth 1 head))
+				    (format "`%s'" (nth 1 head)))
+				   ((and (listp (nth 1 head))
+					 (eq 'ig-open-hydra (car (nth 1 head))))
+				    (format "`%s'" (nth 1 (nth 1 head))))
+				   ((listp (nth 1 head))
+				    (with-temp-buffer
+				      (pp (nth 1 head) (current-buffer))
+				      (let ((fill-prefix (make-string 10 ? )))
+					(indent-code-rigidly
+					 (save-excursion
+					   (goto-char (point-min))
+					   (forward-line)
+					   (point))
+					 (point-max) 10))
+				      (buffer-string)))
+				   (t
+				    (format "%s" (nth 1 head)))))
+			     (l1 (format "%s%s" (s-pad-right 50 " " (car (split-string cmd "\n"))) hint))
+			     (s (s-join "\n" (append (list l1) (cdr (split-string cmd "\n"))))))
+			(s-pad-right 50 " " s))))
+	    (symbol-value
+	     (intern
+	      (replace-regexp-in-string
+	       "/body$" "/heads"
+	       (symbol-name  hydra-curr-body-fn))))
+	    "\n"))))
 
 
-(pretty-hydra-define ig-hydra-find
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
- ("Find"
-  (("f" find-file "find file")
-   ("p" ig-find-file-in-private-directory "open config"))))
+(defhydra ig-base (:color teal)
+  "base"
+  ("," ig-hydra-pop "back" :color teal)
+  (":" counsel-M-x "M-x")
+  ("?" ig-hydra-help "Menu help")
+  ("m" major-mode-hydra "Major mode hydra")) 
+
+;;* ig hydra
+
+;; (pretty-hydra-define ig (:color teal :inherit (ig-base/heads)
+;;                        :columns 4 :body-pre (ig-hydra-reset)
+;;                         :quit-key ("q" "<escape>")
+;;                          :idle 0.3)
 
 
-(pretty-hydra-define ig-hydra-search
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
- ("Search"
-  (("b" swiper "search buffer")
-   ("i" counsel-imenu "imenu")
-   ("g" igloo/counsel-rg-project "ripgrep")
-   ("p" igloo/counsel-rg-project-at-point "ripgrep at point"))))
+(pretty-hydra-define ig-hydra
+    (:idle 0.3
+    :title "Igloo"
+    :color teal
+    :body-pre (ig-hydra-reset)
+    :quit-key ("q" "<escape>")
+    :inherit (ig-base/heads)
+    :separator " ")
+  ("Search"
+  (("f" (ig-open-hydra ig-hydra-find/body) "Find")
+   ("p" (ig-open-hydra ig-hydra-project/body) "Project")
+   ("s" (ig-open-hydra ig-hydra-search/body) "Search"))
+
+   "Application"
+   (("o" (ig-open-hydra ig-hydra-open/body) "Open")
+    ("g" (ig-open-hydra ig-hydra-git/body) "Git")
+    ("c" (ig-open-hydra ig-hydra-compile/body) "Compile")
+    ("X" org-capture "Org capture"))
+
+   "Emacs"
+   (("i" (ig-open-hydra ig-hydra-insert/body) "Insert")
+    ("b" (ig-open-hydra ig-hydra-buffer/body) "Buffer")
+    ("w" (ig-open-hydra ig-hydra-windows/body) "Window"))
+  ))
 
 
-(pretty-hydra-define ig-hydra-window
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("<escape>") :separator " ")
+;;** applications
+
+(defun ig-app-hints ()
+  "Calculate some variables for the applications hydra."
+  (setq elfeed-count
+	(s-pad-right 12 " "
+		     (if (get-buffer "*elfeed-search*")
+			 (format "RSS(%s)"
+				 (car (s-split "/" (with-current-buffer "*elfeed-search*"
+						     (elfeed-search--count-unread)))))
+		       "RSS(?)"))))
+
+;; Open ----------------------------------------------------------------
+
+(pretty-hydra-define ig-hydra-open (:hint nil
+				     :pre (ig-app-hints)
+				     :color teal
+                     :quit-key ("q" "<escape>")
+				     :inherit (ig-base/heads)
+                     :idle 0.3
+                     :separator " ")
+  ("Emacs"
+
+  (("t" vterm "VTerm")
+  ("e"  eshell)
+  ("r"  elfeed "elfeed"))
+  
+  "OS"
+  (("b" bash "bash")
+  ("f" finder "Finder"))
+
+  "Web"
+  (("c" google-calendar "Calendar")
+  ("g" google "Google")
+  ("o" (ig-open-hydra ig-office/body) "MS Office")
+  ("G" (ig-open-hydra ig-gsuite/body) "GSuite")
+  ("s" slack/body "Slack")  
+  ("k" package-list-packages "List packages")
+  ("m" compose-mail "Compose mail"))))
+
+
+;; Windows ---------------------------------------------------------------------
+
+(pretty-hydra-define ig-hydra-windows 
+  (:idle 0.3
+    :color teal
+    :body-pre (ig-hydra-reset)
+    :quit-key ("<escape>")
+    :inherit (ig-base/heads)
+    :separator " ")
  ("Window"
   (("l" evil-window-right "select right window")
    ("h" evil-window-left "select left window")
@@ -108,41 +271,80 @@ all hooks after it are ignored.")
    ("j" evil-window-down "switch down window")
    ("s" evil-window-split "horizontal split")
    ("v" evil-window-vsplit "vertical split"))
-
   "Resize"
    (("q" evil-quit "quit window")
     ("=" balance-windows "resize windows")
     ("r" window-swap-states "swap windows"))))
 
 
-(pretty-hydra-define ig-hydra-git
- (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
- ("Git"
-  (("g" magit-status "magit status")
-   ("b" magit-branch-checkout "magit switch branch")
-   ("B" magit-blame "magit blame")
-   ("F" magit-fetch "magit fetch")
-   ("L" magit-log "magit log"))))
+;; Find ------------------------------------------------------------------------
+(defun ig-find-file-in-private-directory ()
+  (interactive)
+  (counsel-find-file "~/igloo/snowblocks/emacs/"))
+
+(pretty-hydra-define ig-hydra-find 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+ ("Find"
+  (("f" find-file "find file")
+   ("p" ig-find-file-in-private-directory "open config"))))
 
 
-(pretty-hydra-define ig-hydra-buffer
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
-  ("Buffer"
-   (("b" projectile-switch-to-buffer "switch workspace buffer")
+;; Buffer ----------------------------------------------------------------------
+
+(pretty-hydra-define ig-hydra-buffer 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+("Buffer"
+   (("b" projectile-switch-to-buffer "switch project buffer")
     ("B" switch-to-buffer "switch buffer")
     ("d" kill-current-buffer "kill buffer")
     ("K" kill-all-buffers "kill all buffers"))))
 
+;; Git -------------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-git 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+    ("Git"
+    (("g" magit-status "magit status")
+    ("b" magit-branch-checkout "magit switch branch")
+    ("B" magit-blame "magit blame")
+    ("F" magit-fetch "magit fetch")
+    ("L" magit-log "magit log"))))
 
-(pretty-hydra-define ig-hydra-workspace
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
-  ("Workspace"
-   (("TAB" +workspace/display "display workspace")
-    ("n" +workspace/new "new workspace"))))
+
+;; Insert ----------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-insert 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+    ("Insert"
+    (("s" yas-insert-snippet))))
 
 
-(pretty-hydra-define ig-hydra-project
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
+;; Project ---------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-project 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
   ("Project"
    (("p" projectile-switch-project)
     ("d" projectile-remove-known-project)
@@ -150,26 +352,31 @@ all hooks after it are ignored.")
     ("i" projectile-invalidate-cache))))
 
 
-(pretty-hydra-define ig-hydra-insert
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
-  ("Insert"
-   (("s" yas-insert-snippet))))
+;; Compile ---------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-compile 
+  (:idle 0.3
+         :color teal
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+    ("Compile"
+    (("c" projectile-compile-project)
+     ("f" counsel-flycheck))))
 
-
-(pretty-hydra-define ig-hydra-open
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
-  ("Open"
-   (("t" vterm)
-    ("e" eshell)
-    ("p" neotree-toggle))))
-
-
-(pretty-hydra-define ig-hydra-compile
-  (:foreign-keys warn :color teal :idle 1.0 :quit-key ("q" "<escape>") :separator " ")
-  ("Compile"
-   (("c" projectile-compile-project)
-    ("f" consult-flymake))))
-
+;; Search ----------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-search 
+    (:idle 0.3
+        :color teal
+        :body-pre (ig-hydra-reset)
+        :quit-key ("q" "<escape>")
+        :inherit (ig-base/heads)
+        :separator " ")
+    ("Search"
+    (("b" swiper "search buffer")
+    ("i" counsel-imenu "imenu")
+    ("g" igloo/counsel-rg-project "ripgrep")
+    ("p" igloo/counsel-rg-project-at-point "ripgrep at point"))))
 
 (use-package general
   :straight t)
@@ -178,24 +385,7 @@ all hooks after it are ignored.")
 (general-define-key
   :states '(emacs normal hybrid motion visual operator)
   :keymaps 'override
-  :prefix "SPC"
-  "!" 'shell-command
-  "SPC" 'projectile-find-file
-  "X" 'org-capture
-  ":" 'execute-extended-command
-  "," 'projectile-switch-to-buffer
-  "m" 'major-mode-hydra
-  "f" 'ig-hydra-find/body
-  "w" 'ig-hydra-window/body
-  "g" 'ig-hydra-git/body
-  "p" 'ig-hydra-project/body
-  "b" 'ig-hydra-buffer/body
-  "i" 'ig-hydra-insert/body
-  "s" 'ig-hydra-search/body
-  "o" 'ig-hydra-open/body
-  "c" 'ig-hydra-compile/body
-  "TAB" 'ig-hydra-workspace/body)
-
+  ig-leader-key 'ig-hydra/body)
 
 
 (provide 'ig-keybinds)

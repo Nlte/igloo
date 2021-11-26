@@ -1,0 +1,12 @@
+# key: <hydra
+# name: pretty-hydra-define
+# --
+(pretty-hydra-define ig-hydra-${1:name} 
+    (:idle 0.3
+    :color blue
+    :body-pre (ig-hydra-reset)
+    :quit-key ("q" "<escape>")
+    :inherit (ig-base/heads)
+    :separator " ")
+  ("Column"
+  (("key" nil "name"))))
