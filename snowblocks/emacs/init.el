@@ -72,6 +72,9 @@
 ;; Docker
 (require 'ig-docker)
 
+;; Email
+(require 'ig-email)
+
 ;; Languages
 (require 'ig-lsp)
 
