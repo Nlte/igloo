@@ -227,7 +227,8 @@ background color that is barely perceptible."
    `(window-divider                ((,class (:foreground ,igloo-foreground))))
    '(window-divider-first-pixel    ((t (:inherit window-divider))))
    '(window-divider-last-pixel     ((t (:inherit window-divider))))
-   `(vertical-border               ((,class (:foreground ,igloo-background))))
+   ;; `(vertical-border               ((,class (:foreground ,igloo-background))))
+   '(vertical-border               ((t (:inherit igloo-faded))))
 
    ;; Tab bar ------------------------------------------------------------------
    '(tab-bar                       ((t (:inherit default))))
@@ -533,6 +534,32 @@ background color that is barely perceptible."
     ;; Ledger ------------------------------------------------------------------
     '(ledger-font-xact-highlight-face        ((t (:inherit igloo-default))))
     '(ledger-font-report-clickable-face      ((t (:inherit igloo-default))))
+
+    ;; Term / VTerm ------------------------------------------------------------
+    '(term-bold                              ((t (:inherit igloo-strong))))
+    '(term-color-white                       ((t (:inherit igloo-default))))
+    `(term-color-blue                        ((,class (:foreground "#42A5F5"
+                                                       :background "#BBDEFB"))))
+    `(term-color-cyan                        ((,class (:foreground "#26C6DA"
+                                                       :background "#B2EBF2"))))
+    `(term-color-green                       ((,class (:foreground "#66BB6A"
+                                                       :background "#C8E6C9"))))
+    `(term-color-magenta                     ((,class (:foreground "#AB47BC"
+                                                       :background "#E1BEE7"))))
+    `(term-color-red                         ((,class (:foreground "#EF5350"
+                                                       :background "#FFCDD2"))))
+    `(term-color-yellow                      ((,class (:foreground "#FFEE58"
+                                                       :background "#FFF9C4"))))
+
+    '(vterm-color-white                      ((t (:inherit igloo-default))))
+
+    ;; Eshell ------------------------------------------------------------------
+    '(eshell-prompt                          ((t (:inherit igloo-salient))))
+
+    ;; Hydra -------------------------------------------------------------------
+    '(hydra-face-blue                        ((t (:inherit igloo-salient))))
+    '(hydra-face-teal                        ((t (:inherit igloo-salient))))
+    
 
     ;; Ivy ---------------------------------------------------------------------
     '(ivy-action                             ((t (:inherit igloo-faded))))
