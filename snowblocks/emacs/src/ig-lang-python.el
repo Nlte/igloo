@@ -25,5 +25,12 @@
         python-shell-interpreter-args "--simple-prompt -i"))
 
 
+(use-package python-black
+  :straight t
+  :after python
+  ;; :hook (python-mode . python-black-on-save-mode-enable-dwim))
+  )
+
+
 (provide 'ig-lang-python)
 ;;; ig-lang-python.el ends here
