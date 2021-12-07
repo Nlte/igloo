@@ -1,5 +1,8 @@
 ;;; ig-lang-org.el --- -*- lexical-binding: t -*-
 
+;; Custom lib
+(require 'ig-org-lib)
+
 ;; Faces
 (custom-declare-face '+org-todo-active  '((t (:inherit (bold font-lock-constant-face org-todo)))) "")
 (custom-declare-face '+org-todo-onhold  '((t (:inherit (bold warning org-todo)))) "")
@@ -58,11 +61,35 @@
 ;;         ("a" "Archive" entry (file "~/org/archive.org")
 ;;          "* %U %?\n")))
 
-(major-mode-hydra-define org-mode
-  (:title "Org mode" :color teal :idle 0.5 :quit-key ("q" "<escape>"))
-  ("Eval"
-   (("p" nil "no-op"))))
+(pretty-hydra-define ig-hydra-org-table 
+  (:idle 0.3
+    :color blue
+    :body-pre (ig-hydra-reset)
+    :quit-key ("q" "<escape>")
+    :inherit (ig-base/heads)
+    :separator " ")
+  ("Table"
+   (("t" org-table-create "Create table")
+    ("e" org-table-edit-formulas "Edit formulas")
+    ("c" org-table-insert-column "Insert column")
+    ("r" org-table-insert-row "Insert row")
+    ("l" org-table-move-column-right "Move column right")
+    ("h" org-table-move-column-left "Move column left"))))
 
+
+(major-mode-hydra-define org-mode
+  (:idle 0.3
+    :color blue
+    :body-pre (ig-hydra-reset)
+    :quit-key ("q" "<escape>")
+    :inherit (ig-base/heads)
+    :separator " ")
+  ("Org"
+   (("t" (ig-open-hydra ig-hydra-org-table/body) "Table"))))
+
+
+(use-package org-web-tools
+  :straight t)
 
 (provide 'ig-lang-org)
 ;;; ig-lang-org.el ends here

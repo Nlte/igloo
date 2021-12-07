@@ -16,5 +16,8 @@
 (use-package interaction-log
   :straight t)
 
+(use-package which-key
+  :straight t)
+
 (provide 'ig-core-packages)
 ;;; ig-core-packages.el ends here

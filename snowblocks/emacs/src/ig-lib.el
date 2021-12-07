@@ -21,6 +21,14 @@
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
 
+(defun igloo/org-days-between (start end)
+  "Number of days between START and END.
+This includes START and END."
+  (1+ (- (calendar-absolute-from-gregorian (org-date-to-gregorian end))
+         (calendar-absolute-from-gregorian (org-date-to-gregorian start)))))
+
+
+
 (provide 'ig-lib)
 
 ;;; ig-lib.el ends here

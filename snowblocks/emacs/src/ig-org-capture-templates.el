@@ -35,6 +35,7 @@
     "Supplies:Cleaning"
     "Supplies:Tools"
     "Personal"
+    "Personal:Clothing"
     "Personal:Gym"
     "Personal:Hairsalon"
     "Personal:Cosmetics"
@@ -89,6 +90,32 @@
           (ig-ledger-currency-string)
           ((lambda () (string-join (append '("From") *ig-ledger-accounts*) "|")))))
 
+(defun ig-org-capture-prompt-heading ()
+  "Capture function to dynamically add an Org entry to an heading that you want to"
+  (interactive)
+  ;; declare function local variables.
+  (let ((header-org-file)(name)(org-tree)(choices))
+    (setq org-tree (org-element-parse-buffer))
+    (setq choices (igloo-org-yield-first-level-headlines-names org-tree))
+    ;; ask user for header name and same the input to local variable "name"
+    (setq name (completing-read "Headline:" choices))
+    (beginning-of-buffer)
+    ;; avoid missing a search result because a headline is collapsed
+    ;; (widen)
+    ;; set RegEx search string
+    (setq header-org-file (concat "^\*.* " name))
+    ;; search for proper position
+    (re-search-forward header-org-file)))
+
+
+(defun ig-org-template-listing ()
+  (interactive)
+  (let (url)
+    (setq url (read-string "URL:"))
+    (message (format "url is %s" url))
+  ))
+
+
 (setq org-capture-templates
 '(
 ;; Tasks
@@ -109,13 +136,20 @@
  "* %t  %?"
  :empty-lines 0)
 
+("ap" "Listing apt" entry (file+function "~/org/appartments.org" ig-org-capture-prompt-heading)
+      "* %?" :empty-lines-after 1)
+
+;; ("i" "Interactively insert subheading" entry
+;;                (file+function "~/org/sandbox.org" ig-org-capture-prompt-heading)
+;;                "* %?" :empty-lines-after 1)
+
+("x" "Todo" entry
+              (file+function "~/org/sandbox.org" ig-org-get-target-headline)
+             "* TODO %?")
 
 ;; Ledger
 
 ("l" "Ledger")
-
-;; (defconst ig-ledger-accounts
-;;   '("CE"))
 
 ("le" "Expenses" plain
  (file *ig-ledger-file*)
@@ -128,7 +162,6 @@
 ("lc" "Cash" plain
  (file *ig-ledger-file*)
  (function ig-org-template-ledger-expense-cash))
-
 
 
 ))

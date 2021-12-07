@@ -199,7 +199,9 @@ This is a macro so I don't have to quote the hydra name."
   ("Search"
   (("f" (ig-open-hydra ig-hydra-find/body) "Find")
    ("p" (ig-open-hydra ig-hydra-project/body) "Project")
-   ("s" (ig-open-hydra ig-hydra-search/body) "Search"))
+   ("s" (ig-open-hydra ig-hydra-search/body) "Search")
+   ("," counsel-projectile-switch-to-buffer "Switch to project buffer")
+   ("SPC" projectile-find-file "Find in project"))
 
    "Application"
    (("o" (ig-open-hydra ig-hydra-open/body) "Open")
@@ -210,8 +212,7 @@ This is a macro so I don't have to quote the hydra name."
    "Emacs"
    (("i" (ig-open-hydra ig-hydra-insert/body) "Insert")
     ("b" (ig-open-hydra ig-hydra-buffer/body) "Buffer")
-    ("w" (ig-open-hydra ig-hydra-windows/body) "Window"))
-  ))
+    ("w" (ig-open-hydra ig-hydra-windows/body) "Window"))))
 
 
 ;;** applications
