@@ -97,12 +97,9 @@
   (let ((header-org-file)(name)(org-tree)(choices))
     (setq org-tree (org-element-parse-buffer))
     (setq choices (igloo-org-yield-first-level-headlines-names org-tree))
-    ;; ask user for header name and same the input to local variable "name"
     (setq name (completing-read "Headline:" choices))
     (beginning-of-buffer)
-    ;; avoid missing a search result because a headline is collapsed
-    ;; (widen)
-    ;; set RegEx search string
+    ;; Set RegEx search string
     (setq header-org-file (concat "^\*.* " name))
     ;; search for proper position
     (re-search-forward header-org-file)))
@@ -112,7 +109,8 @@
   (interactive)
   (let (url)
     (setq url (read-string "URL:"))
-    (message (format "url is %s" url))
+    (message (ig-web-realestate-parse-price url))
+    ;; (message (format "url is %s" url))
   ))
 
 
