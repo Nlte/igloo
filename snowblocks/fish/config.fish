@@ -39,6 +39,7 @@ alias python=python3
 # direnv
 eval (direnv hook fish)
 
+# PATH
 fish_add_path /usr/local/opt/ruby/bin
 fish_add_path /usr/local/opt/openssl@1.1/bin
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
@@ -46,4 +47,9 @@ export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
 
+# local environment variables
+set FILE "$HOME/.config/fish/local.fish" && test -f $FILE && source $FILE
+
+
+# Activate vi mode
 fish_vi_key_bindings
