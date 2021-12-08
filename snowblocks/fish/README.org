@@ -1,0 +1,8 @@
+#+TITLE: Fish configuration
+
+* Local environment variables
+Create a file ~/.config/fish/local.fish where you can export credentials and private envvars:
+#+begin_src sh
+export TODOIST_TOKEN="XXXXX"
+#+end_src
+This file is loaded by config.fish if it exists. It is not version controlled.

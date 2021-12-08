@@ -75,6 +75,9 @@
 ;; Email
 (require 'ig-email)
 
+;; Todo
+(require 'ig-todo)
+
 ;; Languages
 (require 'ig-lsp)
 

@@ -32,7 +32,7 @@
   :hook (company-mode . company-box-mode))
 
 (use-package flycheck
-  :ensure t
+  :straight t
   :init (global-flycheck-mode))
 
 (provide 'ig-lsp)
