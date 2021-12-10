@@ -284,7 +284,7 @@ class Copy(snowsaw.Plugin):
             )
         elif self._is_copy(copy_name) and self._copy_destination(copy_name) != source:
             self._log.warning(
-                "Incorrect link {} -> {}".format(
+                "File already exists for copy {} -> {}".format(
                     copy_name, self._copy_destination(copy_name)
                 )
             )
