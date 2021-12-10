@@ -239,8 +239,9 @@ This is a macro so I don't have to quote the hydra name."
   ("Emacs"
 
   (("t" vterm "VTerm")
-  ("e"  eshell)
-  ("r"  elfeed "elfeed"))
+  ("e"  eshell "Eshell")
+  ("a"  org-agenda "Agenda")
+  ("u"  mu4e "Email"))
   
   "OS"
   (("b" bash "bash")

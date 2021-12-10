@@ -1,0 +1,37 @@
+[
+    {
+        "clean": ["$IGLOO_PATH_USER_CONFIG/offlineimap"]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v offlineimap >/dev/null 2>&1 || echo 'offlineimap not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v notmuch >/dev/null 2>&1 || echo 'notmuch not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "copy":{
+            "$IGLOO_PATH_USER_CONFIG/offlineimap/config": {
+                "create": true,
+                "path": "offlineimaprc"
+            },
+            "$IGLOO_PATH_USER_CONFIG/offlineimap/postsync.sh": {
+                "create": true,
+                "path": "postsync.sh"
+            }
+        }
+    }
+]

@@ -75,13 +75,12 @@
 ;; Email
 (require 'ig-email)
 
-;; Todo
-(require 'ig-todo)
+;; Org
+(require 'ig-org)
 
 ;; Languages
 (require 'ig-lsp)
 
-(require 'ig-lang-org)
 (require 'ig-lang-elisp)
 (require 'ig-lang-bison)
 (require 'ig-lang-python)

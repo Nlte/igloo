@@ -113,6 +113,11 @@
     ;; (message (format "url is %s" url))
   ))
 
+(defun org-capture-email ()
+  (interactive)
+  (call-interactively 'org-store-link)
+  (org-capture nil "@"))
+
 
 (setq org-capture-templates
 '(
@@ -136,6 +141,18 @@
 
 ("ap" "Listing apt" entry (file+function "~/org/appartments.org" ig-org-capture-prompt-heading)
       "* %?" :empty-lines-after 1)
+
+("i" "Inbox" entry  (file "inbox.org")
+     "* TODO  %?\n/Entered on %U/")
+
+("@" "Inbox [mu4e]" entry (file "inbox.org")
+     "* TODO Process mail \"%a\" %?\n/Entered on %U/")
+
+("m" "Meeting" entry  (file+headline "agenda.org" "Future")
+     "* %? :meeting:\n<%<%Y-%m-%d %a %H:00>>")
+
+("n" "Note" entry  (file "notes.org")
+     "* Note (%a)\n/Entered on %U/\n" "\n" "%?")
 
 ;; ("i" "Interactively insert subheading" entry
 ;;                (file+function "~/org/sandbox.org" ig-org-capture-prompt-heading)

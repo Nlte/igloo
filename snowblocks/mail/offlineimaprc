@@ -1,0 +1,26 @@
+[general]
+accounts = Gmail 
+maxsyncaccounts = 1
+
+[Account Gmail]
+localrepository = Gmail-Local
+remoterepository = Gmail-Remote
+synclabels = yes
+
+postsynchook = ~/.config/offlineimap/postsync.sh
+
+[Repository Gmail-Local]
+type = GmailMaildir
+localfolders = ~/Maildir/Gmail
+
+[Repository Gmail-Remote]
+type = Gmail
+remoteuser = usename@gmail.com
+remotepass = password
+# MacOS
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+# Linux
+# sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+folderfilter = lambda foldername: foldername in ['[Gmail]/All Mail']
+nametrans = lambda foldername: re.sub('^\[Gmail\]/All Mail$', 'all',foldername)
