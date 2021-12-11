@@ -146,7 +146,7 @@
      "* TODO  %?\n/Entered on %U/")
 
 ("@" "Inbox [mu4e]" entry (file "inbox.org")
-     "* TODO Process mail \"%a\" %?\n/Entered on %U/")
+     "* TODO Process email \"%a\" %?\n/Entered on %U/")
 
 ("m" "Meeting" entry  (file+headline "agenda.org" "Future")
      "* %? :meeting:\n<%<%Y-%m-%d %a %H:00>>")
