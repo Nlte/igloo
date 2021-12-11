@@ -173,6 +173,7 @@ This is a macro so I don't have to quote the hydra name."
 	    "\n"))))
 
 
+;; Base hydra to inherit from
 (defhydra ig-base (:color teal)
   "base"
   (":" counsel-M-x "M-x")
@@ -180,14 +181,8 @@ This is a macro so I don't have to quote the hydra name."
   ("m" major-mode-hydra "Major mode hydra")
   ("-" popper-toggle-latest "Popup"))
 
-;;* ig hydra
 
-;; (pretty-hydra-define ig (:color teal :inherit (ig-base/heads)
-;;                        :columns 4 :body-pre (ig-hydra-reset)
-;;                         :quit-key ("q" "<escape>")
-;;                          :idle 0.3)
-
-
+;; Main hydra - SPC
 (pretty-hydra-define ig-hydra
     (:idle 0.3
     :title "Igloo"
