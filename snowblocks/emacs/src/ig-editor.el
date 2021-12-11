@@ -42,6 +42,9 @@
             (list ".*" auto-save-list-file-prefix t)))
 
 
+;; Turn on auto-revert, emacs will reload buffer where files changed on the disk
+(global-auto-revert-mode 1)
+
 ;; Formatting
 (setq-default indent-tabs-mode nil
               tab-width 4)
