@@ -48,18 +48,40 @@
 ;; Popup rules -----------------------------------------------------------------
 (use-package popper
   :straight t
-  :bind (("C-`"   . popper-toggle-latest)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
+  :bind (("C--"   . popper-toggle-latest)
+         ("M--"   . popper-cycle)
+         ("C-M--" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
           "\\*Async Shell Command\\*"
+          "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
+          "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
+          "^\\*term.*\\*$"   term-mode   ;term as a popup
+          "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
           help-mode
           compilation-mode))
+  (setq popper-group-function #'popper-group-by-project) ;; project.el
+  ;; (setq popper-group-function #'popper-group-by-projectile) ; projectile projects
   (popper-mode +1)
   (popper-echo-mode +1))
+
+
+;; (setq display-buffer-alist
+;; '(
+;;     ("*Org Select*"
+;;     (display-buffer-same-window))
+;; ))
+
+;; (use-package shackle
+;;     :straight t
+;;     :diminish shackle-mode  ; hide name in mode-line
+;;     :config
+;;     (setq shackle-rules
+;;           '(("*Org Agenda*" :align below :select t)
+;;             (" *Org todo*" :align below :select t)))
+;;     (shackle-mode t))
 
 (provide 'ig-ui)
 ;;; ig-ui.el ends here
