@@ -2,7 +2,7 @@
 # name:project 
 # key:<proj 
 # --
-** ${1:project-name}
+** ${1:project-name} [/]
 :PROPERTIES:
 :CATEGORY:
 :VISIBILITY: hide
