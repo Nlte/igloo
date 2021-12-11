@@ -175,10 +175,10 @@ This is a macro so I don't have to quote the hydra name."
 
 (defhydra ig-base (:color teal)
   "base"
-  ("," ig-hydra-pop "back" :color teal)
   (":" counsel-M-x "M-x")
   ("?" ig-hydra-help "Menu help")
-  ("m" major-mode-hydra "Major mode hydra")) 
+  ("m" major-mode-hydra "Major mode hydra")
+  ("-" popper-toggle-latest "Popup"))
 
 ;;* ig hydra
 
