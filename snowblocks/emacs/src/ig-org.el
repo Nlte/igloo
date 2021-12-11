@@ -27,18 +27,18 @@
 ;;;###autoload
 (defun igloo-org-yield-first-level-headlines (tree)
   "Return the first headlines of the org parse tree TREE."
-    (org-element-map tree 'headline
+  (org-element-map tree 'headline
     (lambda (head)
-        (let ((parent (org-element-property :parent head)))
+      (let ((parent (org-element-property :parent head)))
         (if (not (eq (org-element-type parent) 'headline))
             head)))))
 
 ;;;###autoload
 (defun igloo-org-yield-first-level-headlines-names (tree)
   "Return the first headlines of the org parse tree TREE."
-    (org-element-map tree 'headline
+  (org-element-map tree 'headline
     (lambda (head)
-        (let ((parent (org-element-property :parent head)))
+      (let ((parent (org-element-property :parent head)))
         (if (not (eq (org-element-type parent) 'headline))
             (org-element-property :raw-value head))))))
 
@@ -48,23 +48,23 @@
   (org-element-map tree 'headline
     (lambda (head)
       (if (equal (org-element-property :raw-value head) name)
-       head))))
+          head))))
 
 (defun igloo-org-get-keyword-key-value (kwd)
-     (let ((data (cadr kwd)))
-       (list (plist-get data :key)
-             (plist-get data :value))))
+  (let ((data (cadr kwd)))
+    (list (plist-get data :key)
+          (plist-get data :value))))
 
 (defun igloo-org-current-buffer-get-pay ()
-    (nth 1
-    (assoc "PAY"
-    (org-element-map (org-element-parse-buffer 'greater-element)
-        '(keyword)
-        #'igloo-org-get-keyword-key-value))))
+  (nth 1
+       (assoc "PAY"
+              (org-element-map (org-element-parse-buffer 'greater-element)
+                  '(keyword)
+                #'igloo-org-get-keyword-key-value))))
 
 (defun igloo-org-file-get-pay (file)
-    (with-current-buffer (find-file-noselect file)
-            (igloo-org-current-buffer-get-pay)))
+  (with-current-buffer (find-file-noselect file)
+    (igloo-org-current-buffer-get-pay)))
 
 (defun igloo-org-file-get-rent (file)
   (with-current-buffer (find-file-noselect file)
@@ -72,10 +72,10 @@
 
 (defun igloo-org-current-buffer-get-rent ()
   (nth 1
-   (assoc "RENT"
-          (org-element-map (org-element-parse-buffer 'greater-element)
-              '(keyword)
-            #'igloo-org-get-keyword-key-value))))
+       (assoc "RENT"
+              (org-element-map (org-element-parse-buffer 'greater-element)
+                  '(keyword)
+                #'igloo-org-get-keyword-key-value))))
 
 (defun igloo-org-get-property-by-name (name)
   (org-entry-get (point) name))
@@ -139,56 +139,48 @@ subtree and whole document."
 (setq org-startup-folded t
       org-hide-leading-stars t
       org-startup-indented t
+      org-return-follows-link t
       org-enforce-todo-dependencies t
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
 
 ;; Environment
-(setq org-directory "~/org"
-      org-agenda-files (list "inbox.org" "agenda.org"))
+(setq org-directory "~/org")
 
 ;; Keywords
 (setq org-todo-keywords
       '((sequence
-         "TODO(t)"  ; A task that needs doing & is ready to do
-         "PROJ(p)"  ; A project, which usually contains other tasks
-         "LOOP(r)"  ; A recurring task
+         "TODO(t)"  ; Task that needs doing & is ready to do
+         "NEXT(n)"  ; Next task to be completed
+         "HOLD(h)"  ; Task is paused/on hold
+         "DONE(d)"  ; Task successfully completed
+         "PROJ(p)"  ; Project contains other tasks cf. jira epic
          "STRT(s)"  ; A task that is in progress
-         "WAIT(w)"  ; Something external is holding up this task
-         "HOLD(h)"  ; This task is paused/on hold because of me
          "IDEA(i)"  ; An unconfirmed and unapproved task or notion
          "|"
-         "DONE(d)"  ; Task successfully completed
-         "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
-        (sequence
-         "[ ](T)"   ; A task that needs doing
-         "[-](S)"   ; Task is in progress
-         "[?](W)"   ; Task is being held up or paused
-         "|"
-         "[X](D)")  ; Task was completed
-        (sequence
-         "|"
-         "OKAY(o)"
-         "YES(y)"
-         "NO(n)"))
+         "KILL(k)") ; Task cancelled or is no longer applicable
+        )
       org-todo-keyword-faces
-      '(("[-]"  . +org-todo-active)
-        ("STRT" . +org-todo-active)
-        ("[?]"  . +org-todo-onhold)
-        ("WAIT" . +org-todo-onhold)
+      '(("STRT" . +org-todo-active)
         ("HOLD" . +org-todo-onhold)
         ("PROJ" . +org-todo-project)
-        ("NO"   . +org-todo-cancel)
         ("KILL" . +org-todo-cancel)))
+
+(defun igloo-org-log-todo-next-date (&rest ignore)
+  "Log NEXT creation time in the property drawer under the key 'ACTIVATED'"
+  (when (and (string= (org-get-todo-state) "NEXT")
+             (not (org-entry-get nil "STRT")))
+    (org-entry-put nil "STRT" (format-time-string "[%Y-%m-%d]"))))
+(add-hook 'org-after-todo-state-change-hook #'igloo-org-log-todo-next-date)
 
 
 
 (pretty-hydra-define ig-hydra-org-table 
   (:idle 0.3
-    :color blue
-    :body-pre (ig-hydra-reset)
-    :quit-key ("q" "<escape>")
-    :inherit (ig-base/heads)
-    :separator " ")
+         :color blue
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
   ("Table"
    (("t" org-table-create "Create table")
     ("e" org-table-edit-formulas "Edit formulas")
@@ -200,24 +192,35 @@ subtree and whole document."
 
 (major-mode-hydra-define org-mode
   (:idle 0.3
-    :color blue
-    :body-pre (ig-hydra-reset)
-    :quit-key ("q" "<escape>")
-    :inherit (ig-base/heads)
-    :separator " ")
+         :color blue
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
   ("Org"
    (("c" org-ctrl-c-ctrl-c "C-c C-c")
     ("t" (ig-open-hydra ig-hydra-org-table/body) "Table")
-    ("e" org-set-effort "Set effort")
-    ("p" org-set-property "Set property")
+    )
+   " "
+    (("e" org-set-effort "Set effort")
+     ("p" org-set-property "Set property")
+     ("d" org-deadline "Set deadline")
+     ("s" org-schedule "Set schedule"))
+   " "
+   (("o" org-open-at-point "Open at point")
     ("r" org-refile "Refile"))))
 
 
-;; Refile ----------------------------------------------------------------------
-(setq org-refile-targets
-      '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
-(setq org-refile-use-outline-path 'file)
-(setq org-outline-path-complete-in-steps nil)
+(major-mode-hydra-define org-agenda-mode
+  (:idle 0.3
+         :color blue
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+  ("Org"
+   (("c" org-ctrl-c-ctrl-c "C-c C-c")
+    ("r" org-refile "Refile"))))
 
 
 ;; Change org-cycle to only cycle in subtrees
@@ -226,14 +229,66 @@ subtree and whole document."
 
 
 ;; Org agenda ------------------------------------------------------------------
+(setq org-agenda-files (list "inbox.org" "agenda.org" "projects.org"))
 (setq org-agenda-hide-tags-regexp ".")
+(setq org-agenda-window-setup 'current-window)
+(setq org-agenda-restore-windows-after-quit t)
 (setq org-agenda-prefix-format
       '((agenda . " %i %-12:c%?-12t% s")
         (todo   . " %i %-12:c")
         (tags   . " %i %-12:c")
         (search . " %i %-12:c")))
 
+
+(defun igloo-org-save-agenda-buffers ()
+  "Save `org-agenda-files' buffers without user confirmation.
+See also `org-save-all-org-buffers'"
+  (interactive)
+  (message "Saving org-agenda-files buffers...")
+  (save-some-buffers t (lambda () 
+                         (when (member (buffer-file-name) org-agenda-files) 
+                           t)))
+  (message "Saving org-agenda-files buffers... done"))
+
+;; Add it after refile
+(advice-add 'org-refile :after
+            (lambda (&rest _)
+              (igloo-org-save-agenda-buffers)))
+
+(setq org-agenda-custom-commands
+      '(("g" "GTD"
+         ((agenda ""
+                  ((org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'deadline))
+                   (org-deadline-warning-days 0)))
+          (todo "NEXT"
+                ((org-agenda-skip-function
+                  '(org-agenda-skip-entry-if 'deadline))
+                 (org-agenda-prefix-format "  %i %-12:c [%e] ")
+                 (org-agenda-overriding-header "\nTasks\n")))
+          (agenda nil
+                  ((org-agenda-entry-types '(:deadline))
+                   (org-agenda-format-date "")
+                   (org-deadline-warning-days 7)
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'notregexp "\\* NEXT"))
+                   (org-agenda-overriding-header "\nDeadlines")))
+          (tags-todo "inbox"
+                     ((org-agenda-prefix-format "  %?-12t% s")
+                      (org-agenda-overriding-header "\nInbox\n")))
+          (tags "CLOSED>=\"<today>\""
+                ((org-agenda-overriding-header "\nCompleted today\n")))))))
+
+;; Refile ----------------------------------------------------------------------
+(setq org-refile-targets
+      '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
+(setq org-refile-use-outline-path 'file)
+(setq org-outline-path-complete-in-steps nil)
+;; (setq org-refile-use-cache t)
+
+
 ;; Org capture
+(add-hook 'org-capture-mode-hook 'delete-other-windows)
 (require 'ig-org-capture-templates)
 
 
