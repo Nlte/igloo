@@ -364,7 +364,7 @@ background color that is barely perceptible."
 
    ;; Org ----------------------------------------------------------------------
    '(org-archived                            ((t (:inherit igloo-faded))))
-   '(org-block                               ((t (:inherit highlight))))
+   '(org-block                               ((t (:inherit igloo-subtle))))
    '(org-block-begin-line                    ((t (:inherit igloo-faded))))
    '(org-block-end-line                      ((t (:inherit igloo-faded))))
    '(org-checkbox                            ((t (:inherit igloo-faded))))
