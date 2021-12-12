@@ -147,15 +147,20 @@ subtree and whole document."
 
 ;; Keywords
 (setq org-todo-keywords
-      '((sequence
+      '(
+        ;; Main task states
+        (sequence
          "TODO(t)"  ; Task that needs doing & is ready to do
          "NEXT(n)"  ; Next task to be completed
-         "HOLD(h)"  ; Task is paused/on hold
-         "DONE(d)"  ; Task successfully completed
-         "PROJ(p)"  ; Project contains other tasks cf. jira epic
          "STRT(s)"  ; A task that is in progress
-         "IDEA(i)"  ; An unconfirmed and unapproved task or notion
+         "HOLD(h)"  ; Task is paused/on hold
          "|"
+         "DONE(d)"  ; Task successfully completed
+         )
+        ;; Additional task states
+         (sequence
+         "PROJ(p)"  ; Project contains other tasks cf. jira epic
+         "IDEA(i)"  ; An unconfirmed and unapproved task or notion
          "KILL(k)") ; Task cancelled or is no longer applicable
         )
       org-todo-keyword-faces
