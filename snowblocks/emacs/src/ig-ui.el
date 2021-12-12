@@ -20,6 +20,9 @@
 (use-package neotree
   :straight t)
 
+(use-package svg-lib
+  :straight t)
+
 ;; (use-package doom-themes
 ;;   :straight t
 ;;   :config
