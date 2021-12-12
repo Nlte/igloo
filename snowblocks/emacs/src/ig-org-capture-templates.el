@@ -1,5 +1,7 @@
 ;;; ig-org-capture-templates.el --- summary -*- lexical-binding: t -*-
 
+(require 'org)
+
 (defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut" "Boursorama"))
 (defconst *ig-ledger-currencies* '("EUR"))
 
@@ -113,11 +115,10 @@
     ;; (message (format "url is %s" url))
   ))
 
-(defun org-capture-email ()
+(defun igloo-org-capture-email ()
   (interactive)
   (call-interactively 'org-store-link)
   (org-capture nil "@"))
-
 
 (setq org-capture-templates
 '(
@@ -180,7 +181,6 @@
 
 
 ))
-
 
 (provide 'ig-org-capture-templates)
 

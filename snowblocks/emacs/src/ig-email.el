@@ -87,7 +87,7 @@
     :inherit (ig-base/heads)
     :separator " ")
   ("Email"
-   (("c" org-capture-email "Capture email"))))
+   (("c" igloo-org-capture-email "Capture email"))))
 
 (major-mode-hydra-define mu4e-view-mode
   (:idle 0.3
@@ -97,7 +97,7 @@
     :inherit (ig-base/heads)
     :separator " ")
   ("Email"
-   (("c" org-capture-email "Capture email"))))
+   (("c" igloo-org-capture-email "Capture email"))))
 
 (define-key mu4e-headers-mode-map (kbd "C-c C-c") 'mu4e-org-store-and-capture)
 (define-key mu4e-view-mode-map    (kbd "C-c C-c") 'mu4e-org-store-and-capture)

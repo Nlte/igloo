@@ -33,6 +33,7 @@
 
 ;; Custom functions
 (require 'ig-lib)
+(require 'ig-web)
 
 ;; Editor
 (require 'ig-editor)

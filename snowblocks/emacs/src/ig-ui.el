@@ -62,7 +62,6 @@
           "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
           help-mode
           compilation-mode))
-  (setq popper-group-function #'popper-group-by-project) ;; project.el
   ;; (setq popper-group-function #'popper-group-by-projectile) ; projectile projects
   (popper-mode +1)
   (popper-echo-mode +1))

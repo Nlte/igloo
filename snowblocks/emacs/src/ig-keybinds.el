@@ -202,7 +202,7 @@ This is a macro so I don't have to quote the hydra name."
    (("o" (ig-open-hydra ig-hydra-open/body) "Open")
     ("g" (ig-open-hydra ig-hydra-git/body) "Git")
     ("c" (ig-open-hydra ig-hydra-compile/body) "Compile")
-    ("X" org-capture "Org capture"))
+    ("X" counsel-org-capture "Org capture"))
 
    "Emacs"
    (("i" (ig-open-hydra ig-hydra-insert/body) "Insert")

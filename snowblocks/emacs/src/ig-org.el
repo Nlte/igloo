@@ -142,6 +142,9 @@ subtree and whole document."
       org-enforce-todo-dependencies t
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
 
+;; (setq org-goto-interface 'outline-path-completion
+;;       org-goto-max-level 10)
+
 ;; Environment
 (setq org-directory "~/org")
 
@@ -212,7 +215,8 @@ subtree and whole document."
      ("s" org-schedule "Set schedule"))
    " "
    (("o" org-open-at-point "Open at point")
-    ("r" org-refile "Refile"))))
+    ("r" org-refile "Refile")
+    ("j" counsel-outline "Jump to heading"))))
 
 
 (major-mode-hydra-define org-agenda-mode
