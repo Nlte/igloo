@@ -15,8 +15,7 @@
 ;;;###autoload
 (defun igloo-org-parse-current-buffer ()
   "Return the org parse tree for the current buffer."
-  (with-current-buffer
-      (org-element-parse-buffer)))
+      (org-element-parse-buffer))
 
 ;;;###autoload
 (defun igloo-org-yield-headlines (tree)
