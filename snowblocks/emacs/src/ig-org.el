@@ -154,6 +154,7 @@ subtree and whole document."
         ("PROJ" . +org-todo-project)
         ("KILL" . +org-todo-cancel)))
 
+;; Log -----------------------------------------------------------------------
 (defun igloo-org-log-todo-next-date (&rest ignore)
   "Log NEXT creation time in the property drawer under the key 'ACTIVATED'"
   (when (and (string= (org-get-todo-state) "NEXT")
@@ -161,8 +162,9 @@ subtree and whole document."
     (org-entry-put nil "STRT" (format-time-string "[%Y-%m-%d]"))))
 (add-hook 'org-after-todo-state-change-hook #'igloo-org-log-todo-next-date)
 
+(setq org-log-done 'time)
 
-
+;; Hydra ----------------------------------------------------------------------
 (pretty-hydra-define ig-hydra-org-table 
   (:idle 0.3
          :color blue
@@ -211,11 +213,6 @@ subtree and whole document."
   ("Org"
    (("c" org-ctrl-c-ctrl-c "C-c C-c")
     ("r" org-refile "Refile"))))
-
-
-;; Change org-cycle to only cycle in subtrees
-;; (with-eval-after-load 'org
-;;   (defalias 'org-cycle-internal-local '+org-cycle-only-current-subtree-h))
 
 
 ;; Org agenda ------------------------------------------------------------------
@@ -268,6 +265,7 @@ See also `org-save-all-org-buffers'"
                       (org-agenda-overriding-header "\nInbox\n")))
           (tags "CLOSED>=\"<today>\""
                 ((org-agenda-overriding-header "\nCompleted today\n")))))))
+
 
 ;; Refile ----------------------------------------------------------------------
 (setq org-refile-targets
