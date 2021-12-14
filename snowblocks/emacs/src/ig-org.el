@@ -19,7 +19,7 @@
 ;;;###autoload
 (defun igloo-org-parse-current-buffer ()
   "Return the org parse tree for the current buffer."
-      (org-element-parse-buffer))
+  (org-element-parse-buffer))
 
 ;;;###autoload
 (defun igloo-org-yield-headlines (tree)
@@ -153,7 +153,7 @@ subtree and whole document."
          "DONE(d)"  ; Task successfully completed
          )
         ;; Additional task states
-         (sequence
+        (sequence
          "PROJ(p)"  ; Project contains other tasks cf. jira epic
          "IDEA(i)"  ; An unconfirmed and unapproved task or notion
          "KILL(k)") ; Task cancelled or is no longer applicable
@@ -203,10 +203,10 @@ subtree and whole document."
     ("t" (ig-open-hydra ig-hydra-org-table/body) "Table")
     )
    " "
-    (("e" org-set-effort "Set effort")
-     ("p" org-set-property "Set property")
-     ("d" org-deadline "Set deadline")
-     ("s" org-schedule "Set schedule"))
+   (("e" org-set-effort "Set effort")
+    ("p" org-set-property "Set property")
+    ("d" org-deadline "Set deadline")
+    ("s" org-schedule "Set schedule"))
    " "
    (("o" org-open-at-point "Open at point")
     ("r" org-refile "Refile")
@@ -277,7 +277,7 @@ See also `org-save-all-org-buffers'"
                 ((org-agenda-overriding-header "\nCompleted today\n")))))))
 
 
-;; Refile ----------------------------------------------------------------------
+;; Org refile ------------------------------------------------------------------
 (setq org-refile-targets
       '(("projects.org" :regexp . "\\(?:\\(?:Note\\|Task\\)s\\)")))
 (setq org-refile-use-outline-path 'file)
@@ -285,12 +285,14 @@ See also `org-save-all-org-buffers'"
 ;; (setq org-refile-use-cache t)
 
 
-;; Org capture
+;; Org capture -----------------------------------------------------------------
 ;; Make org capture open in full window and restore previous arrangement when done.
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
+
 (require 'ig-org-capture-templates)
 
-;; Keymap ----------------------------------------------------------------------
+;; Org keymap ------------------------------------------------------------------
+;; Override TAB key to use custom org-cycle function
 (evil-define-key 'normal org-mode-map (kbd "<tab>") #'igloo-org-cycle)
 
 

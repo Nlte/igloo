@@ -239,6 +239,19 @@ This is a macro so I don't have to quote the hydra name."
 
 ;; Open ----------------------------------------------------------------
 
+;; Hydra org agenda (replaces the *Agenda Commands* with a hydra)
+(pretty-hydra-define ig-hydra-org-agenda 
+  (:idle 0.3
+         :color blue
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+  ("Org Agenda"
+   (("a" org-agenda-list "Weekly agenda")
+    ("t" org-todo-list "org-todo-list"))))
+
+
 (pretty-hydra-define ig-hydra-open (:hint nil
 				     :pre (ig-app-hints)
 				     :color teal
@@ -250,7 +263,7 @@ This is a macro so I don't have to quote the hydra name."
 
   (("t" vterm "VTerm")
   ("e"  eshell "Eshell")
-  ("a"  org-agenda "Agenda")
+  ("a"  (ig-open-hydra ig-hydra-org-agenda/body) "Agenda")
   ("u"  mu4e "Email")
   ("p"  igloo-org-open-projects "Projects"))
   
