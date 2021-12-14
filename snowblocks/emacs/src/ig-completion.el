@@ -52,6 +52,7 @@
 
 (use-package ivy-prescient
   :straight t
+  :after counsel
   :config
   (ivy-prescient-mode))
 
