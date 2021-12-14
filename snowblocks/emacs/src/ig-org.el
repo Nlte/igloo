@@ -99,32 +99,14 @@ subtree and whole document."
           (org-cycle-internal-local)
           t)))))
 
-;; ;;;###autoload
-;; (defun +org-cycle-only-current-subtree-h (&optional arg)
-;;   "Toggle the local fold at the point.
-;; `org-cycle's standard behavior is to cycle between three levels: collapsed,
-;; subtree and whole document."
-;;   (interactive "P")
-;;   (unless (eq this-command 'org-shifttab)
-;;     (save-excursion
-;;       (org-beginning-of-line)
-;;       (let (invisible-p)
-;;         (when (and (org-at-heading-p)
-;;                    (or org-cycle-open-archived-trees
-;;                        (not (member org-archive-tag (org-get-tags))))
-;;                    (or (not arg)
-;;                        (setq invisible-p (outline-invisible-p (line-end-position)))))
-;;           (unless invisible-p
-;;             (setq org-cycle-subtree-status 'subtree))
-;;           (org-cycle-internal-local)
-;;           t)
-;;         (when (org-at-property-block-p)
-;;           (message "at property")
-;;           (unless invisible-p
-;;             (setq org-cycle-subtree-status 'subtree))
-;;           (org-cycle-hide-drawers)
-;;           t)
-;;         ))))
+
+;;;###autoload
+(defun igloo-org-cycle (&optional arg)
+  (interactive "P")
+  (if (org-at-heading-p)
+      (+org-cycle-only-current-subtree-h)
+    (org-cycle)))
+
 
 ;; Config ----------------------------------------------------------------------
 
@@ -296,8 +278,12 @@ See also `org-save-all-org-buffers'"
 
 
 ;; Org capture
+;; Make org capture open in full window and restore previous arrangement when done.
 (add-hook 'org-capture-mode-hook 'delete-other-windows)
 (require 'ig-org-capture-templates)
+
+;; Keymap ----------------------------------------------------------------------
+(evil-define-key 'normal org-mode-map (kbd "<tab>") #'igloo-org-cycle)
 
 
 (provide 'ig-org)
