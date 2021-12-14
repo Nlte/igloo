@@ -207,7 +207,8 @@ This is a macro so I don't have to quote the hydra name."
    "Emacs"
    (("i" (ig-open-hydra ig-hydra-insert/body) "Insert")
     ("b" (ig-open-hydra ig-hydra-buffer/body) "Buffer")
-    ("w" (ig-open-hydra ig-hydra-windows/body) "Window"))))
+    ("w" (ig-open-hydra ig-hydra-windows/body) "Window")
+    ("h" (ig-open-hydra ig-hydra-help/body) "Help"))))
 
 
 ;;** applications
@@ -221,6 +222,20 @@ This is a macro so I don't have to quote the hydra name."
 				 (car (s-split "/" (with-current-buffer "*elfeed-search*"
 						     (elfeed-search--count-unread)))))
 		       "RSS(?)"))))
+
+;; Help ------------------------------------------------------------------------
+(pretty-hydra-define ig-hydra-help 
+  (:idle 0.3
+         :color blue
+         :body-pre (ig-hydra-reset)
+         :quit-key ("q" "<escape>")
+         :inherit (ig-base/heads)
+         :separator " ")
+  ("Help"
+   (("f" counsel-describe-function "Describe function")
+    ("v" counsel-describe-variable "Describe variable")
+    ("k" describe-key "Describe key"))))
+
 
 ;; Open ----------------------------------------------------------------
 
