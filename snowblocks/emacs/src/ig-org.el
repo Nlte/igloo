@@ -3,6 +3,10 @@
 (require 'org)
 (require 'major-mode-hydra)
 
+;; Definitions -----------------------------------------------------------------
+(defvar igloo-org-projects-file "~/org/projects.org"
+  "Projects org file.")
+
 ;; Lib -------------------------------------------------------------------------
 
 ;;;###autoload
@@ -106,6 +110,12 @@ subtree and whole document."
   (if (org-at-heading-p)
       (+org-cycle-only-current-subtree-h)
     (org-cycle)))
+
+(defun igloo-org-open-projects ()
+  (interactive)
+  (if (not (file-exists-p igloo-org-projects-file))
+      (error (format "File not found: %s" igloo-org-projects-file)))
+  (find-file igloo-org-projects-file))
 
 
 ;; Config ----------------------------------------------------------------------

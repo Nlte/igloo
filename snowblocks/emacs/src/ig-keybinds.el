@@ -251,7 +251,8 @@ This is a macro so I don't have to quote the hydra name."
   (("t" vterm "VTerm")
   ("e"  eshell "Eshell")
   ("a"  org-agenda "Agenda")
-  ("u"  mu4e "Email"))
+  ("u"  mu4e "Email")
+  ("p"  igloo-org-open-projects "Projects"))
   
   "OS"
   (("b" bash "bash")
