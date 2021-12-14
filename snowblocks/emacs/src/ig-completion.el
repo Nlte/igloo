@@ -51,7 +51,9 @@
   (ivy-mode))
 
 (use-package ivy-prescient
-  :straight t)
+  :straight t
+  :config
+  (ivy-prescient-mode))
 
 (use-package counsel
   :straight t
