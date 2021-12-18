@@ -296,5 +296,31 @@ See also `org-save-all-org-buffers'"
 (evil-define-key 'normal org-mode-map (kbd "<tab>") #'igloo-org-cycle)
 
 
+;; Org babel -------------------------------------------------------------------
+(use-package org-babel
+  :defer t
+  :init
+  ;; Don't ask to eval code in SRC blocks.
+  (setq org-confirm-babel-evaluate nil))
+
+;; Avoid `org-babel-do-load-languages' since it does an eager require.
+
+;; Part of org stdlib
+(use-package ob-python
+  :defer t
+  :commands
+  (org-babel-execute:python))
+
+;; Part of org stdlib
+(use-package ob-shell
+  :defer t
+  :commands
+  (org-babel-execute:sh
+   org-babel-expand-body:sh
+   org-babel-execute:bash
+   org-babel-expand-body:bash))
+
+
+
 (provide 'ig-org)
 ;;; ig-org.el ends here

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name:src_python
+# key:<s_py
+# --
+#+begin_src python
+#+end_src
