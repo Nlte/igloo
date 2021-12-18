@@ -15,7 +15,11 @@
 (ig-modeline)
 
 (use-package all-the-icons
+  :if (display-graphic-p)
   :straight t)
+
+(use-package nerd-fonts
+  :straight (:host github :repo "twlz0ne/nerd-fonts.el"))
 
 (use-package neotree
   :straight t)
@@ -70,20 +74,48 @@
   (popper-echo-mode +1))
 
 
-;; (setq display-buffer-alist
-;; '(
-;;     ("*Org Select*"
-;;     (display-buffer-same-window))
-;; ))
+;; Fixes
+(defun his-tracing-function (orig-fun &rest args)
+  (let ((original-modeline-format mode-line-format))
+    (message "org-tag called with args %S" args)
+    (message "removing modeline")
+    (setq mode-line-format nil)
+    (force-mode-line-update)
+    (message "redrawing")
+    (redraw-display)
+    (let ((res (apply orig-fun args)))
+      (message "restoring modeline")
+      (setq mode-line-format original-modeline-format)
+        (message "org-tag returned %S" res)
+        res))
+    )
 
-;; (use-package shackle
-;;     :straight t
-;;     :diminish shackle-mode  ; hide name in mode-line
-;;     :config
-;;     (setq shackle-rules
-;;           '(("*Org Agenda*" :align below :select t)
-;;             (" *Org todo*" :align below :select t)))
-;;     (shackle-mode t))
+
+;; Disable modeline for org fast tag selection (we can't see everything otherwise)
+(advice-add 'org-fast-tag-selection :around #'his-tracing-function)
+
+(defun igloo-hide-mode-line ()
+  (setq mode-line-format nil))
+
+
+;; Buffer display alist
+(setq display-buffer-alist nil)
+;; (add-to-list 'display-buffer-alist
+;;                '("\\*Org tags\\*"
+;;                  (display-buffer-in-direction)
+;;                  (direction . bottom)
+;;                  (window-width . fit-window-to-buffer)
+;;                  (window-height . 300))
+;;                )
+;; (add-to-list 'display-buffer-alist
+;;              '("\\*mu4e-headers\\*"
+;;                (display-buffer-in-side-window)
+;;                ))
+(add-to-list 'display-buffer-alist
+               '("*mu4e-headers*"
+                 (display-buffer-in-side-window)
+                 (side                . right)
+                 ))
 
 (provide 'ig-ui)
 ;;; ig-ui.el ends here

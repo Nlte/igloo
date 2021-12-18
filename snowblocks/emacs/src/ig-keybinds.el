@@ -1,4 +1,5 @@
 ;;; ig-keybinds.el --- Keybindings configuration -*- lexical-binding: t -*-
+(require 'org)
 
 (defvar ig-leader-key "SPC"
   "The leader prefix key.")
@@ -249,7 +250,7 @@ This is a macro so I don't have to quote the hydra name."
          :separator " ")
   ("Org Agenda"
    (("a" org-agenda-list "Weekly agenda")
-    ("t" org-todo-list "org-todo-list"))))
+    ("t" org-todo-list "Todo list"))))
 
 
 (pretty-hydra-define ig-hydra-open (:hint nil

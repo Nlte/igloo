@@ -70,15 +70,6 @@
     )
 
 
-(use-package svg-tag-mode 
-  :straight (:host github :repo "rougier/svg-tag-mode"))
-
-(use-package mu4e-thread-folding
-  :straight (:host github :repo "rougier/mu4e-thread-folding"))
-
-(use-package mu4e-dashboard
-  :straight (:host github :repo "rougier/mu4e-dashboard"))
-
 (major-mode-hydra-define mu4e-headers-mode
   (:idle 0.3
     :color blue
@@ -102,6 +93,56 @@
 (define-key mu4e-headers-mode-map (kbd "C-c C-c") 'mu4e-org-store-and-capture)
 (define-key mu4e-view-mode-map    (kbd "C-c C-c") 'mu4e-org-store-and-capture)
 
+;; Dashboard
+(use-package svg-tag-mode 
+  :straight (:host github :repo "rougier/svg-tag-mode"))
+
+(use-package mu4e-thread-folding
+  :straight (:host github :repo "rougier/mu4e-thread-folding"))
+
+(use-package mu4e-dashboard
+  :straight (:host github :repo "rougier/mu4e-dashboard"))
+
+;; Dashboard -------------------------------------------------------------------
+(require 'mu4e)
+
+;; Navigations functions -------------------------------------------------------
+(defun igloo-agenda-close ()
+  (interactive)
+  (kill-buffer "*igloo-email*"))
+
+(define-minor-mode igloo-email-mode
+  "Minor mode for igloo-email."
+  :init nil
+  :lighter "Email"
+  :keymap (make-sparse-keymap)
+  (when igloo-email-mode
+    (setq buffer-read-only t)
+    (setq cursor-type nil)))
+
+;; Display functions -----------------------------------------------------------
+(defun igloo-email-sidebar ()
+  (igloo-email-sidebar-mailbox-header))
+
+(defun igloo-email-sidebar-mailbox-header ()
+  "Sidebar: Header line for mailboxes."
+  (concat (all-the-icons-material "mail") " Mailboxes"))
+
+
+;; Main display ----------------------------------------------------------------
+(defun igloo-email ()
+  (interactive)
+  (with-current-buffer (get-buffer-create "*igloo-email*")
+    (switch-to-buffer "*igloo-email*")
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (set-window-margins nil 1)
+
+      (setq header-line-format nil)
+
+      (insert "\n")
+      (insert (igloo-email-sidebar))
+      )))
 
 (provide 'ig-email)
 ;;; ig-email.el ends here

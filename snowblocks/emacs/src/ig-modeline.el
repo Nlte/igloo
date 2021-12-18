@@ -79,7 +79,7 @@
 
 
 
-;; prog-mode -------------------------------------------------------------------
+;; Modeline formats ------------------------------------------------------------
 (defun ig-modeline-prog-mode-p ()
   (derived-mode-p 'prog-mode))
 
@@ -99,6 +99,17 @@
                                      ")" )
                              position)))
 
+(defun ig-modeline-org-fast-selection-p ()
+  (if (eq (buffer-name) "*Org tags*")
+      ((message "buffer is org tags")
+       t)
+    nil
+    ))
+
+(defun ig-modeline-hidden ()
+  "Hide modline"
+  "")
+
 
 (defun ig-modeline ()
   "Install a header line whose content is dependend on the major mode"
@@ -107,6 +118,7 @@
   '((:eval
      (cond ((ig-modeline-prog-mode-p)            (ig-modeline-default-mode))
            ((ig-modeline-text-mode-p)            (ig-modeline-default-mode))
+           ((ig-modeline-org-fast-selection-p)   (ig-modeline-hidden))
            (t                                    (ig-modeline-default-mode))))))
   (setq-default mode-line-format bottom-line-format))
 
