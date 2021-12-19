@@ -107,10 +107,11 @@
 (require 'mu4e)
 
 ;; Navigations functions -------------------------------------------------------
-(defun igloo-agenda-close ()
+(defun igloo-email-close ()
   (interactive)
   (kill-buffer "*igloo-email*"))
 
+;; Minor Mode / Keymaps --------------------------------------------------------
 (define-minor-mode igloo-email-mode
   "Minor mode for igloo-email."
   :init nil
@@ -120,13 +121,97 @@
     (setq buffer-read-only t)
     (setq cursor-type nil)))
 
+(evil-define-key '(normal visual replace operator motion emacs)
+  'igloo-email-mode "q" #'igloo-email-close)
+
 ;; Display functions -----------------------------------------------------------
 (defun igloo-email-sidebar ()
-  (igloo-email-sidebar-mailbox-header))
+  (igloo-email-sidebar-mailboxes)
+  (insert "\n\n\n\n")
+  (igloo-email-sidebar-mailbox-times)
+  (insert "\n\n")
+  (igloo-email-sidebar-mailbox-additionals)
+  )
+
+
+;; Mailboxes -------------------------------------------------------------------
+(defun igloo-email-sidebar-mailboxes ()
+  "Mailbox section of the sidebar."
+  (insert (igloo-email-sidebar-mailbox-header))
+  (insert "\n")
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-inbox))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-flagged))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-drafts))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-sent))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-archive)))
 
 (defun igloo-email-sidebar-mailbox-header ()
   "Sidebar: Header line for mailboxes."
-  (concat (all-the-icons-material "mail") " Mailboxes"))
+  (concat (all-the-icons-material "mail") " Unread"))
+
+(defun igloo-email-sidebar-mailbox-inbox ()
+  "Sidebar inbox mailbox."
+  (concat (all-the-icons-material "inbox") " Inbox"))
+
+(defun igloo-email-sidebar-mailbox-flagged ()
+  "Sidebar flagged mailbox."
+  (concat (all-the-icons-material "flag") " Flagged"))
+
+(defun igloo-email-sidebar-mailbox-drafts ()
+  "Sidebar drafts mailbox."
+  (concat (all-the-icons-material "line_weight") " Drafts"))
+
+(defun igloo-email-sidebar-mailbox-sent ()
+  "Sidebar drafts mailbox."
+  (concat (all-the-icons-material "play_arrow") " Sent"))
+
+(defun igloo-email-sidebar-mailbox-archive ()
+  "Sidebar drafts mailbox."
+  (concat (all-the-icons-material "archive") " Archive"))
+
+;; Mailbox Times ---------------------------------------------------------------
+(defun igloo-email-sidebar-mailbox-times ()
+  "Time mailbox section of the sidebar."
+  (insert (igloo-email-sidebar-mailbox-today))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-yesterday))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-last-week))
+  (insert "\n")
+  (insert (igloo-email-sidebar-mailbox-last-month))
+  )
+
+(defun igloo-email-sidebar-mailbox-today ()
+  "Sidebar today mailbox."
+  (concat (all-the-icons-material "album") " Today"))
+
+(defun igloo-email-sidebar-mailbox-yesterday ()
+  "Sidebar yesterday mailbox."
+  (concat (all-the-icons-material "today") " Today"))
+
+(defun igloo-email-sidebar-mailbox-last-week ()
+  "Sidebar last week mailbox."
+  (concat (all-the-icons-material "today") " Last week"))
+
+(defun igloo-email-sidebar-mailbox-last-month ()
+  "Sidebar last month mailbox."
+  (concat (all-the-icons-material "today") " Last month"))
+
+
+;; Mailbox attachments ---------------------------------------------------------
+(defun igloo-email-sidebar-mailbox-additionals ()
+  "Mailbox additionals section of the sidebar."
+  (insert (igloo-email-sidebar-mailbox-attachments)))
+
+(defun igloo-email-sidebar-mailbox-attachments ()
+  "Sidebar attachments mailbox."
+  (concat (all-the-icons-material "attach_file") " Attachments"))
+
 
 
 ;; Main display ----------------------------------------------------------------
@@ -139,10 +224,10 @@
       (set-window-margins nil 1)
 
       (setq header-line-format nil)
-
       (insert "\n")
-      (insert (igloo-email-sidebar))
-      )))
+      (igloo-email-sidebar)
+      )
+    (igloo-email-mode 1)))
 
 (provide 'ig-email)
 ;;; ig-email.el ends here

@@ -1,9 +1,13 @@
 ;;; ig-lang-python.el --- -*- lexical-binding: t -*-
 
 
+;; Lib -------------------------------------------------------------------------
+
+
+
+;; Config ----------------------------------------------------------------------
 (use-package python-pytest
   :straight t)
-
 
 (use-package python-mode
   :mode-hydra
