@@ -262,7 +262,7 @@ This is a macro so I don't have to quote the hydra name."
                      :separator " ")
   ("Emacs"
 
-  (("t" vterm "VTerm")
+  (("t" term "Term")
   ("e"  eshell "Eshell")
   ("a"  (ig-open-hydra ig-hydra-org-agenda/body) "Agenda")
   ("u"  mu4e "Email")

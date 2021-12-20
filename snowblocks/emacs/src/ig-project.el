@@ -8,6 +8,8 @@
   (cl-find-if #'executable-find (list "fdfind" "fd"))
   "Find binary (fdfind on ubuntu, debian) and fd on other distribution")
 
+;; Compilation follows stdout
+(setq compilation-scroll-output t)
 
 ;;;###autoload
 (defun igloo-project-root (&optional dir)

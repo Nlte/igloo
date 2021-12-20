@@ -1,0 +1,5 @@
+# key: <src_c
+# name: src_c
+# --
+#+begin_src C
+#+end_src

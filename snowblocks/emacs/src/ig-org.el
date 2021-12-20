@@ -344,6 +344,7 @@ subtree and whole document."
       org-startup-indented t
       org-return-follows-link t
       org-enforce-todo-dependencies t
+      org-edit-src-content-indentation 0
       org-fast-tag-selection-single-key 'expert
       org-list-demote-modify-bullet '(("+" . "-") ("-" . "+") ("*" . "+") ("1." . "a.")))
 
@@ -530,6 +531,12 @@ See also `org-save-all-org-buffers'"
    org-babel-execute:bash
    org-babel-expand-body:bash))
 
+;; Part of org stdlib
+(use-package ob-C
+  :defer t
+  :commands
+  (org-babel-execute:C
+   org-babel-expand-body:C))
 
 
 (provide 'ig-org)
