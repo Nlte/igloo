@@ -49,7 +49,11 @@
   "Popout colour is used for information that needs attention."
   :type 'color :group nil)
 
-(defcustom igloo-string "#74b816" ;; Lime 
+;; (defcustom igloo-string "#74b816" ;; Lime 
+;;   "Popout colour is used for strings."
+;;   :type 'color :group nil)
+
+(defcustom igloo-string "#FAB005" ;; Lime 
   "Popout colour is used for strings."
   :type 'color :group nil)
 
