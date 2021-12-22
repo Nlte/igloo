@@ -192,7 +192,7 @@
 
 (defun igloo-email-sidebar-mailbox-yesterday ()
   "Sidebar yesterday mailbox."
-  (concat (all-the-icons-material "today") " Today"))
+  (concat (all-the-icons-material "today") " Yesterday"))
 
 (defun igloo-email-sidebar-mailbox-last-week ()
   "Sidebar last week mailbox."
