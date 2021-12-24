@@ -79,6 +79,9 @@
 ;; Org
 (require 'ig-org)
 
+;; Dashboard
+(require 'ig-dashboard)
+
 ;; Languages
 (require 'ig-lsp)
 

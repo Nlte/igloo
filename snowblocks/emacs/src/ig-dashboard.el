@@ -4,6 +4,8 @@
 
 ;;; Code:
 
+(require 'evil)
+
 
 ;;;###autoload
 (defmacro igloo-dashboard-define-minor-mode (name)
@@ -16,14 +18,26 @@
      (when ,name
        (read-only-mode))))
 
+
+;;;###autoload
+;; (defmacro igloo-dashboard-define-key (key action)
+;;   "Macro to define a key for the dashboard."
+;;   (if (bound-and-true-p evil-mode)
+;;       (evil-define-key '(normal visual replace operator motion emacs)
+;;   modename key action)
+;;   ))
+
+
 ;;;###autoload
 (defmacro igloo-dashboard-define-key (key action)
   "Macro to define a key for the dashboard."
   (if (bound-and-true-p evil-mode)
-      (evil-define-key '(normal visual replace operator motion emacs)
-  'igloo-dashboard-mode "q" #'igloo-email-close)
-    (message "evil-mode is on")
-  (message "evil-mode is off")))
+        `(evil-local-set-key
+        'normal
+        (kbd ,key)
+        (eval (car (read-from-string
+                    (format "(lambda () (interactive) (%s))" ,action)))))
+  ))
 
 
 ;;;###autoload
@@ -73,12 +87,32 @@
 (defun igloo-dashboard-open (filename)
   "Opens a dashboard file and configures mode and keybindings."
   (find-file filename)
-  (let* ((modename (igloo-dashboard-parse-modename))
+  (let* ((modename (intern (nth 0 (igloo-dashboard-parse-modename))))
          (keymap (igloo-dashboard-parse-keymap)))
     (if (not modename)
         (error (format "+MODE: undefined in dashboard '%s'" filename)))
-    (message modename)))
-    ;; (message keymap)
+    (message (format "Creating dashboard minor mode: %s" modename))
+    (igloo-dashboard-define-minor-mode modename)
+    (modename)
+    (dolist (x keymap)
+        (let* ((key (nth 0 x))
+               (action (nth 1 x)))
+            (message (format "ig-dashboard.el: binding %s to %s" key action))
+            (igloo-dashboard-define-key key action))
+        )
+    ))
+
+
+;; Config ----------------------------------------------------------------------
+(defun igloo-dashboard-open-email ()
+  "Open email dashboard."
+  (interactive)
+  (igloo-dashboard-open "~/org/mu4e-dashboard-main.org"))
+
+(defun igloo-dashboard-open-test ()
+  "Open test dashboard."
+  (interactive)
+  (igloo-dashboard-open "~/org/dashboard-test.org"))
 
 
 (provide 'ig-dashboard)
