@@ -396,7 +396,9 @@ subtree and whole document."
   ("Table"
    (("t" org-table-create "Create table")
     ("e" org-table-edit-formulas "Edit formulas")
-    ("c" org-table-insert-column "Insert column")
+    ("u" org-table-recalculate "Recalculate"))
+   ""
+    (("c" org-table-insert-column "Insert column")
     ("r" org-table-insert-row "Insert row")
     ("l" org-table-move-column-right "Move column right")
     ("h" org-table-move-column-left "Move column left"))))
