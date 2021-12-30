@@ -27,6 +27,10 @@ This includes START and END."
   (1+ (- (calendar-absolute-from-gregorian (org-date-to-gregorian end))
          (calendar-absolute-from-gregorian (org-date-to-gregorian start)))))
 
+(defun igloo/open-current-file-directory ()
+  "Call `open` in the current file directory."
+  (interactive)
+  (shell-command "open ."))
 
 
 (provide 'ig-lib)

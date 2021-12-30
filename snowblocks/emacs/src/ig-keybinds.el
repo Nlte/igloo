@@ -270,7 +270,7 @@ This is a macro so I don't have to quote the hydra name."
   
   "OS"
   (("b" bash "bash")
-  ("f" finder "Finder"))
+   ("f" igloo/open-current-file-directory "Open dir"))
 
   "Web"
   (("c" google-calendar "Calendar")
