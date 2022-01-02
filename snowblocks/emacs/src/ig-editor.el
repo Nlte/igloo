@@ -89,6 +89,9 @@
 ;; modes, even if hard wrapping is more performant.
 (add-hook 'text-mode-hook #'visual-line-mode)
 
+;; Hightlight current line
+(global-hl-line-mode)
+
 ;;
 ;;; Clipboard / kill-ring
 
