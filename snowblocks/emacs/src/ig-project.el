@@ -1,5 +1,6 @@
 ;;; ig-project.el --- Project management -*- lexical-binding: t -*-
 
+;; Constants and lib -----------------------------------------------------------
 (defvar igloo-projectile-cache-limit 10000)
 
 (defvar igloo-projectile-cache-blacklist '("~" "/tmp" "/"))
@@ -28,18 +29,19 @@ Returns nil if not in a project."
        t))
 
 
+;; Projectile ------------------------------------------------------------------
 (use-package projectile
   :straight t
   :init
   (setq projectile-cache-file (concat igloo-cache-dir "projectile.cache")
-	projectile-auto-discover nil
-	projectile-globally-ignored-files '(".DS_Store" "TAGS")
-	projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
-	projectile-known-projects-file (concat igloo-cache-dir "projectile.projects")
-	projectile-project-search-path '("~/github/" "~/")
-	projectile-ignored-projects '("~/")
+	    projectile-auto-discover nil
+	    projectile-globally-ignored-files '(".DS_Store" "TAGS")
+	    projectile-globally-ignored-file-suffixes '(".elc" ".pyc" ".o")
+	    projectile-known-projects-file (concat igloo-cache-dir "projectile.projects")
+	    projectile-project-search-path '("~/github/" "~/")
+	    projectile-ignored-projects '("~/")
 
-;; The original `projectile-default-mode-line' can be expensive over
+        ;; The original `projectile-default-mode-line' can be expensive over
         ;; TRAMP, so we gimp it in remote buffers.
         projectile-mode-line-function
         (lambda ()
@@ -59,7 +61,7 @@ Returns nil if not in a project."
         ;; a project's root -- particularly when a file has no project.
         projectile-project-root-files '()
         projectile-project-root-files-top-down-recurring '("Makefile"))
-)
+  )
 
 
 (use-package counsel-projectile
@@ -75,7 +77,7 @@ Returns nil if not in a project."
     (counsel-rg "" (projectile-project-root))))
 
 
-;; Makefile
+;; Makefile --------------------------------------------------------------------
 (use-package makefile-executor
   :straight t
   :config
