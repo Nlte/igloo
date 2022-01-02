@@ -119,6 +119,13 @@
   (smartparens-global-mode))
 
 
+;;; Aggressive indent mode
+(use-package aggressive-indent
+  :straight t
+  :config
+  (global-aggressive-indent-mode 1))
+
+
 (provide 'ig-editor)
 
 ;;; ig-editor.el ends here
