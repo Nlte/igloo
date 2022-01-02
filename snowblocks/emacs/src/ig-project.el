@@ -92,5 +92,19 @@ Returns nil if not in a project."
   (makefile-executor-execute-last))
 
 
+;; Envrc -----------------------------------------------------------------------
+(defconst direnv-command "direnv"
+  "Direnv command.")
+
+(if (not (executable-find direnv-command))
+    (warn (format "ig-project.el: %s command not found" direnv-command)))
+
+(use-package envrc
+  :straight t
+  :config
+  (envrc-global-mode)
+  (advice-add 'lsp :before (lambda (&optional n) (envrc--update))))
+
+
 (provide 'ig-project)
 ;;; ig-project.el ends here
