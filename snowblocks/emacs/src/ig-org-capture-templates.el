@@ -3,7 +3,7 @@
 (require 'org)
 
 (defconst *ig-ledger-accounts* '("CE" "Bunq" "Revolut" "Boursorama"))
-(defconst *ig-ledger-currencies* '("EUR"))
+(defconst *ig-ledger-currencies* '("EUR" "GBP"))
 
 (defconst *ig-ledger-expense-categories*
   '(

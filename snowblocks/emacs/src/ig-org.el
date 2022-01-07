@@ -329,6 +329,13 @@ subtree and whole document."
       (error (format "File not found: %s" igloo-org-projects-file)))
   (find-file igloo-org-projects-file))
 
+;;;###autoload
+(defun igloo-org-recalculate-table ()
+  (interactive)
+  ;; Call org recalc twice to refresh the entire table.
+  (org-table-recalculate)
+  (org-table-recalculate))
+
 
 ;; Config ----------------------------------------------------------------------
 
@@ -396,9 +403,9 @@ subtree and whole document."
   ("Table"
    (("t" org-table-create "Create table")
     ("e" org-table-edit-formulas "Edit formulas")
-    ("u" org-table-recalculate "Recalculate"))
+    ("u" igloo-org-recalculate-table "Recalculate"))
    ""
-    (("c" org-table-insert-column "Insert column")
+   (("c" org-table-insert-column "Insert column")
     ("r" org-table-insert-row "Insert row")
     ("l" org-table-move-column-right "Move column right")
     ("h" org-table-move-column-left "Move column left"))))
