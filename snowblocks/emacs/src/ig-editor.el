@@ -128,6 +128,12 @@
   :config
   (global-aggressive-indent-mode 1))
 
+;; Expand region
+;; Auto hilighting with smart rules
+(use-package expand-region
+  :straight t
+  :config 
+  (global-set-key (kbd "S-SPC") #'er/expand-region))
 
 (provide 'ig-editor)
 
