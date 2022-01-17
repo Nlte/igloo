@@ -4,8 +4,8 @@
 
 ;;; Code:
 
-(require 'evil)
 
+(require 'org)
 
 ;;;###autoload
 (defmacro igloo-dashboard-define-minor-mode (name)
@@ -20,24 +20,15 @@
 
 
 ;;;###autoload
-;; (defmacro igloo-dashboard-define-key (key action)
-;;   "Macro to define a key for the dashboard."
-;;   (if (bound-and-true-p evil-mode)
-;;       (evil-define-key '(normal visual replace operator motion emacs)
-;;   modename key action)
-;;   ))
-
-
-;;;###autoload
 (defmacro igloo-dashboard-define-key (key action)
   "Macro to define a key for the dashboard."
   (if (bound-and-true-p evil-mode)
-        `(evil-local-set-key
+      `(evil-local-set-key
         'normal
         (kbd ,key)
         (eval (car (read-from-string
                     (format "(lambda () (interactive) (%s))" ,action)))))
-  ))
+    ))
 
 
 ;;;###autoload
@@ -77,13 +68,13 @@
   "Parse an org file for keybindings."
   (org-element-map (org-element-parse-buffer) 'keyword
     (lambda (k)
-        (when (string= (org-element-property :key k) "KEYMAP")
+      (when (string= (org-element-property :key k) "KEYMAP")
         (let* ((value (org-element-property :value k))
                (key   (string-trim (nth 0 (split-string value "|"))))
                (call  (string-trim (nth 1 (split-string value "|")))))
           (list key call))))))
 
-
+;;;###autoload
 (defun igloo-dashboard-open (filename)
   "Opens a dashboard file and configures mode and keybindings."
   (find-file filename)
@@ -95,12 +86,18 @@
     (igloo-dashboard-define-minor-mode modename)
     (modename)
     (dolist (x keymap)
-        (let* ((key (nth 0 x))
-               (action (nth 1 x)))
-            (message (format "ig-dashboard.el: binding %s to %s" key action))
-            (igloo-dashboard-define-key key action))
-        )
+      (let* ((key (nth 0 x))
+             (action (nth 1 x)))
+        (message (format "ig-dashboard.el: binding %s to %s" key action))
+        (igloo-dashboard-define-key key action))
+      )
     ))
+
+;;;###autoload
+(defun igloo-dashboard-close ()
+  "Closes a dashboard (kill buffer and close window)."
+  (kill-current-buffer)
+  (delete-window))
 
 
 ;; Config ----------------------------------------------------------------------
@@ -112,6 +109,8 @@
 (defun igloo-dashboard-open-test ()
   "Open test dashboard."
   (interactive)
+  (split-window-horizontally)
+  (other-window 1)
   (igloo-dashboard-open "~/org/dashboard-test.org"))
 
 
