@@ -166,7 +166,8 @@ background color that is barely perceptible."
    'ig
 
    ;; Base ---------------------------------------------------------------------
-   `(default ((,class :background ,igloo-background :foreground ,igloo-foreground)))
+   `(default ((,class :background ,igloo-background :foreground ,igloo-foreground
+                      :family "Roboto Mono")))
    `(cursor ((,class :foreground ,igloo-foreground)))
    `(mouse ((,class :background ,igloo-background :foreground ,igloo-foreground)))
    `(highlight ((,class :background ,igloo-highlight)))
@@ -178,40 +179,40 @@ background color that is barely perceptible."
    `(igloo-faded ((,class  (:foreground ,igloo-faded))))
 
    `(igloo-faded-i ((,class (:foreground ,igloo-background
-                            :background ,igloo-faded))))
+                                         :background ,igloo-faded))))
    
    `(igloo-default ((,class  (:foreground ,igloo-foreground))))
 
    `(igloo-default-i ((,class (:foreground ,igloo-background
-                              :background ,igloo-foreground))))
+                                           :background ,igloo-foreground))))
 
    
    `(igloo-salient ((,class (:foreground ,igloo-salient))))
 
    `(igloo-salient-i ((,class (:foreground ,igloo-background
-                              :background ,igloo-salient))))
+                                           :background ,igloo-salient))))
 
    `(igloo-strong ((,class (:weight normal))))
 
    `(igloo-strong-i ((,class (:foreground ,igloo-background
-                             :background ,igloo-strong
-                             :weight normal))))
+                                          :background ,igloo-strong
+                                          :weight normal))))
 
    `(igloo-strong-hi ((,class (:foreground ,igloo-strong
-                             :background ,igloo-faded))))
+                                           :background ,igloo-faded))))
 
    `(igloo-popout ((,class (:foreground ,igloo-popout))))
 
    `(igloo-popout-i ((,class (:foreground ,igloo-background
-                             :background ,igloo-popout))))
+                                          :background ,igloo-popout))))
 
    `(igloo-string ((,class (:foreground ,igloo-string))))
 
    `(igloo-string-i ((,class (:foreground ,igloo-background
-                             :background ,igloo-string))))
+                                          :background ,igloo-string))))
    
    `(igloo-critical ((,class (:foreground ,igloo-background
-                             :background ,igloo-critical))))
+                                          :background ,igloo-critical))))
 
    `(igloo-critical-i ((,class (:foreground ,igloo-critical))))
 
@@ -242,13 +243,13 @@ background color that is barely perceptible."
 
    ;; Mode line ----------------------------------------------------------------
    `(mode-line ((,class (:foreground ,igloo-foreground
-                         :background ,igloo-subtle))))
+                                     :background ,igloo-subtle))))
    `(mode-line-highlight ((t (:inherit igloo-popout))))
    `(mode-line-buffer-id ((t (:weight regular))))
    `(mode-line-emphasis  ((t (:weight regular))))
-               
+   
    `(mode-line-inactive ((,class (:foreground ,igloo-foreground
-                                  :background ,igloo-highlight))))
+                                              :background ,igloo-highlight))))
 
    ;; Semantic -----------------------------------------------------------------
    '(shadow                        ((t (:inherit igloo-faded))))
@@ -318,17 +319,17 @@ background color that is barely perceptible."
 
    ;; Company ------------------------------------------------------------------
    '(company-tooltip                      ((t (:inherit igloo-subtle))))
-    '(company-tooltip-mouse                ((t (:inherit igloo-faded-i))))
-    '(company-tooltip-selection            ((t (:inherit igloo-salient-i))))
+   '(company-tooltip-mouse                ((t (:inherit igloo-faded-i))))
+   '(company-tooltip-selection            ((t (:inherit igloo-salient-i))))
 
-    '(company-scrollbar-fg                 ((t (:inherit igloo-default-i))))
-    '(company-scrollbar-bg                 ((t (:inherit igloo-faded-i))))
+   '(company-scrollbar-fg                 ((t (:inherit igloo-default-i))))
+   '(company-scrollbar-bg                 ((t (:inherit igloo-faded-i))))
 
-    '(company-tooltip-common               ((t (:inherit igloo-strong))))
-    '(company-tooltip-common-selection     ((t (:inherit igloo-salient-i
-                                                :weight normal))))
-    '(company-tooltip-annotation           ((t (:inherit igloo-default))))
-    '(company-tooltip-annotation-selection ((t (:inherit igloo-subtle))))
+   '(company-tooltip-common               ((t (:inherit igloo-strong))))
+   '(company-tooltip-common-selection     ((t (:inherit igloo-salient-i
+                                                        :weight normal))))
+   '(company-tooltip-annotation           ((t (:inherit igloo-default))))
+   '(company-tooltip-annotation-selection ((t (:inherit igloo-subtle))))
 
    ;; Diff ---------------------------------------------------------------------
    '(diff-header                    ((t (:inherit igloo-faded))))
@@ -341,7 +342,7 @@ background color that is barely perceptible."
                                                    igloo-strong)))))
    '(diff-refine-changed            ((t (:inherit igloo-popout))))
    '(diff-refine-removed            ((t (:inherit igloo-faded
-                                         :strike-through t))))
+                                                  :strike-through t))))
 
 
    ;; Org agenda ---------------------------------------------------------------
@@ -426,169 +427,169 @@ background color that is barely perceptible."
 
    ;; Magit --------------------------------------------------------------------
    '(magit-blame-highlight                  ((t (:inherit (highlight)))))
-    '(magit-diff-added-highlight             ((t (:inherit (highlight igloo-salient igloo-strong)))))
-    '(magit-diff-base-highlight              ((t (:inherit (highlight)))))
-    '(magit-diff-context-highlight           ((t (:inherit (highlight igloo-faded)))))
-    '(magit-diff-file-heading-highlight      ((t (:inherit (highlight igloo-strong)))))
-    '(magit-diff-hunk-heading-highlight      ((t (:inherit (igloo-default)))))
-    '(magit-diff-our-highlight               ((t (:inherit (highlight)))))
-    '(magit-diff-removed-highlight           ((t (:inherit (highlight igloo-popout igloo-strong)))))
-    '(magit-diff-revision-summary-highlight  ((t (:inherit ()))))
-    '(magit-diff-their-highlight             ((t (:inherit (highlight)))))
-    '(magit-section-highlight                ((t (:inherit (highlight)))))
+   '(magit-diff-added-highlight             ((t (:inherit (highlight igloo-salient igloo-strong)))))
+   '(magit-diff-base-highlight              ((t (:inherit (highlight)))))
+   '(magit-diff-context-highlight           ((t (:inherit (highlight igloo-faded)))))
+   '(magit-diff-file-heading-highlight      ((t (:inherit (highlight igloo-strong)))))
+   '(magit-diff-hunk-heading-highlight      ((t (:inherit (igloo-default)))))
+   '(magit-diff-our-highlight               ((t (:inherit (highlight)))))
+   '(magit-diff-removed-highlight           ((t (:inherit (highlight igloo-popout igloo-strong)))))
+   '(magit-diff-revision-summary-highlight  ((t (:inherit ()))))
+   '(magit-diff-their-highlight             ((t (:inherit (highlight)))))
+   '(magit-section-highlight                ((t (:inherit (highlight)))))
 
-    '(magit-blame-heading                    ((t (:inherit (igloo-subtle igloo-strong)))))
-    '(magit-diff-conflict-heading            ((t (:inherit (igloo-subtle igloo-strong)))))
-    '(magit-diff-file-heading                ((t (:inherit (igloo-strong)))))
-    '(magit-diff-hunk-heading                ((t (:inherit (igloo-subtle igloo-default)))))
-    '(magit-diff-lines-heading               ((t (:inherit (igloo-subtle igloo-strong)))))
-    '(magit-section-heading                  ((t (:inherit (igloo-salient igloo-strong)))))
+   '(magit-blame-heading                    ((t (:inherit (igloo-subtle igloo-strong)))))
+   '(magit-diff-conflict-heading            ((t (:inherit (igloo-subtle igloo-strong)))))
+   '(magit-diff-file-heading                ((t (:inherit (igloo-strong)))))
+   '(magit-diff-hunk-heading                ((t (:inherit (igloo-subtle igloo-default)))))
+   '(magit-diff-lines-heading               ((t (:inherit (igloo-subtle igloo-strong)))))
+   '(magit-section-heading                  ((t (:inherit (igloo-salient igloo-strong)))))
 
-    '(magit-bisect-bad                       ((t (:inherit igloo-default))))
-    '(magit-bisect-good                      ((t (:inherit igloo-default))))
-    '(magit-bisect-skip                      ((t (:inherit igloo-default))))
-    '(magit-blame-date                       ((t (:inherit igloo-default))))
-    '(magit-blame-dimmed                     ((t (:inherit igloo-default))))
-    '(magit-blame-hash                       ((t (:inherit igloo-faded))))
+   '(magit-bisect-bad                       ((t (:inherit igloo-default))))
+   '(magit-bisect-good                      ((t (:inherit igloo-default))))
+   '(magit-bisect-skip                      ((t (:inherit igloo-default))))
+   '(magit-blame-date                       ((t (:inherit igloo-default))))
+   '(magit-blame-dimmed                     ((t (:inherit igloo-default))))
+   '(magit-blame-hash                       ((t (:inherit igloo-faded))))
 
-    '(magit-blame-margin                     ((t (:inherit igloo-default))))
-    '(magit-blame-name                       ((t (:inherit igloo-default))))
-    '(magit-blame-summary                    ((t (:inherit igloo-default))))
+   '(magit-blame-margin                     ((t (:inherit igloo-default))))
+   '(magit-blame-name                       ((t (:inherit igloo-default))))
+   '(magit-blame-summary                    ((t (:inherit igloo-default))))
 
-    '(magit-branch-current                   ((t (:inherit (igloo-strong igloo-salient)))))
-    '(magit-branch-local                     ((t (:inherit igloo-salient))))
-    '(magit-branch-remote                    ((t (:inherit (igloo-salient)))))
-    '(magit-branch-remote-head               ((t (:inherit (igloo-salient)))))
-    '(magit-branch-upstream                  ((t (:inherit (igloo-salient)))))
+   '(magit-branch-current                   ((t (:inherit (igloo-strong igloo-salient)))))
+   '(magit-branch-local                     ((t (:inherit igloo-salient))))
+   '(magit-branch-remote                    ((t (:inherit (igloo-salient)))))
+   '(magit-branch-remote-head               ((t (:inherit (igloo-salient)))))
+   '(magit-branch-upstream                  ((t (:inherit (igloo-salient)))))
 
-    '(magit-cherry-equivalent                ((t (:inherit igloo-default))))
-    '(magit-cherry-unmatched                 ((t (:inherit igloo-default))))
+   '(magit-cherry-equivalent                ((t (:inherit igloo-default))))
+   '(magit-cherry-unmatched                 ((t (:inherit igloo-default))))
 
-    '(magit-diff-added                       ((t (:inherit (highlight igloo-salient igloo-strong)))))
-    '(magit-diff-base                        ((t (:inherit igloo-default))))
-    '(magit-diff-context                     ((t (:inherit (highlight igloo-faded)))))
-    '(magit-diff-file-heading-selection      ((t (:inherit igloo-default))))
-    '(magit-diff-hunk-heading-selection      ((t (:inherit igloo-default))))
-    '(magit-diff-hunk-region                 ((t (:inherit igloo-default))))
-    '(magit-diff-lines-boundary              ((t (:inherit igloo-default))))
-    '(magit-diff-our                         ((t (:inherit igloo-default))))
-    '(magit-diff-removed                     ((t (:inherit (highlight igloo-popout igloo-strong)))))
-    '(magit-diff-revision-summary            ((t (:inherit igloo-popout))))
-    '(magit-diff-their                       ((t (:inherit igloo-default))))
-    '(magit-diff-whitespace-warning          ((t (:inherit igloo-default))))
-    '(magit-diffstat-added                   ((t (:inherit igloo-default))))
-    '(magit-diffstat-removed                 ((t (:inherit igloo-default))))
+   '(magit-diff-added                       ((t (:inherit (highlight igloo-salient igloo-strong)))))
+   '(magit-diff-base                        ((t (:inherit igloo-default))))
+   '(magit-diff-context                     ((t (:inherit (highlight igloo-faded)))))
+   '(magit-diff-file-heading-selection      ((t (:inherit igloo-default))))
+   '(magit-diff-hunk-heading-selection      ((t (:inherit igloo-default))))
+   '(magit-diff-hunk-region                 ((t (:inherit igloo-default))))
+   '(magit-diff-lines-boundary              ((t (:inherit igloo-default))))
+   '(magit-diff-our                         ((t (:inherit igloo-default))))
+   '(magit-diff-removed                     ((t (:inherit (highlight igloo-popout igloo-strong)))))
+   '(magit-diff-revision-summary            ((t (:inherit igloo-popout))))
+   '(magit-diff-their                       ((t (:inherit igloo-default))))
+   '(magit-diff-whitespace-warning          ((t (:inherit igloo-default))))
+   '(magit-diffstat-added                   ((t (:inherit igloo-default))))
+   '(magit-diffstat-removed                 ((t (:inherit igloo-default))))
 
-    '(magit-dimmed                           ((t (:inherit igloo-faded))))
-    '(magit-filename                         ((t (:inherit igloo-default))))
-    '(magit-hash                             ((t (:inherit igloo-faded))))
-    '(magit-head                             ((t (:inherit igloo-default))))
-    '(magit-header-line                      ((t (:inherit igloo-default))))
-    '(magit-header-line-key                  ((t (:inherit igloo-default))))
-    '(magit-header-line-log-select           ((t (:inherit igloo-default))))
+   '(magit-dimmed                           ((t (:inherit igloo-faded))))
+   '(magit-filename                         ((t (:inherit igloo-default))))
+   '(magit-hash                             ((t (:inherit igloo-faded))))
+   '(magit-head                             ((t (:inherit igloo-default))))
+   '(magit-header-line                      ((t (:inherit igloo-default))))
+   '(magit-header-line-key                  ((t (:inherit igloo-default))))
+   '(magit-header-line-log-select           ((t (:inherit igloo-default))))
 
-    '(magit-keyword                          ((t (:inherit igloo-default))))
-    '(magit-keyword-squash                   ((t (:inherit igloo-default))))
+   '(magit-keyword                          ((t (:inherit igloo-default))))
+   '(magit-keyword-squash                   ((t (:inherit igloo-default))))
 
-    '(magit-log-author                       ((t (:inherit igloo-default))))
-    '(magit-log-date                         ((t (:inherit igloo-default))))
-    '(magit-log-graph                        ((t (:inherit igloo-default))))
+   '(magit-log-author                       ((t (:inherit igloo-default))))
+   '(magit-log-date                         ((t (:inherit igloo-default))))
+   '(magit-log-graph                        ((t (:inherit igloo-default))))
 
-    '(magit-mode-line-process                ((t (:inherit igloo-default))))
-    '(magit-mode-line-process-error          ((t (:inherit igloo-default))))
+   '(magit-mode-line-process                ((t (:inherit igloo-default))))
+   '(magit-mode-line-process-error          ((t (:inherit igloo-default))))
 
-    '(magit-process-ng                       ((t (:inherit igloo-default))))
-    '(magit-process-ok                       ((t (:inherit igloo-default))))
+   '(magit-process-ng                       ((t (:inherit igloo-default))))
+   '(magit-process-ok                       ((t (:inherit igloo-default))))
 
-    '(magit-reflog-amend                     ((t (:inherit igloo-default))))
-    '(magit-reflog-checkout                  ((t (:inherit igloo-default))))
-    '(magit-reflog-cherry-pick               ((t (:inherit igloo-default))))
-    '(magit-reflog-commit                    ((t (:inherit igloo-default))))
-    '(magit-reflog-merge                     ((t (:inherit igloo-default))))
-    '(magit-reflog-other                     ((t (:inherit igloo-default))))
-    '(magit-reflog-rebase                    ((t (:inherit igloo-default))))
-    '(magit-reflog-remote                    ((t (:inherit igloo-default))))
-    '(magit-reflog-reset                     ((t (:inherit igloo-default))))
-    '(magit-refname                          ((t (:inherit igloo-default))))
-    '(magit-refname-pullreq                  ((t (:inherit igloo-default))))
-    '(magit-refname-stash                    ((t (:inherit igloo-default))))
-    '(magit-refname-wip                      ((t (:inherit igloo-default))))
+   '(magit-reflog-amend                     ((t (:inherit igloo-default))))
+   '(magit-reflog-checkout                  ((t (:inherit igloo-default))))
+   '(magit-reflog-cherry-pick               ((t (:inherit igloo-default))))
+   '(magit-reflog-commit                    ((t (:inherit igloo-default))))
+   '(magit-reflog-merge                     ((t (:inherit igloo-default))))
+   '(magit-reflog-other                     ((t (:inherit igloo-default))))
+   '(magit-reflog-rebase                    ((t (:inherit igloo-default))))
+   '(magit-reflog-remote                    ((t (:inherit igloo-default))))
+   '(magit-reflog-reset                     ((t (:inherit igloo-default))))
+   '(magit-refname                          ((t (:inherit igloo-default))))
+   '(magit-refname-pullreq                  ((t (:inherit igloo-default))))
+   '(magit-refname-stash                    ((t (:inherit igloo-default))))
+   '(magit-refname-wip                      ((t (:inherit igloo-default))))
 
-    '(magit-section-heading-selection        ((t (:inherit igloo-default))))
-    '(magit-section-secondary-heading        ((t (:inherit igloo-default))))
-    '(magit-sequence-done                    ((t (:inherit igloo-default))))
-    '(magit-sequence-drop                    ((t (:inherit igloo-default))))
-    '(magit-sequence-exec                    ((t (:inherit igloo-default))))
-    '(magit-sequence-head                    ((t (:inherit igloo-default))))
-    '(magit-sequence-onto                    ((t (:inherit igloo-default))))
-    '(magit-sequence-part                    ((t (:inherit igloo-default))))
-    '(magit-sequence-pick                    ((t (:inherit igloo-default))))
-    '(magit-sequence-stop                    ((t (:inherit igloo-default))))
+   '(magit-section-heading-selection        ((t (:inherit igloo-default))))
+   '(magit-section-secondary-heading        ((t (:inherit igloo-default))))
+   '(magit-sequence-done                    ((t (:inherit igloo-default))))
+   '(magit-sequence-drop                    ((t (:inherit igloo-default))))
+   '(magit-sequence-exec                    ((t (:inherit igloo-default))))
+   '(magit-sequence-head                    ((t (:inherit igloo-default))))
+   '(magit-sequence-onto                    ((t (:inherit igloo-default))))
+   '(magit-sequence-part                    ((t (:inherit igloo-default))))
+   '(magit-sequence-pick                    ((t (:inherit igloo-default))))
+   '(magit-sequence-stop                    ((t (:inherit igloo-default))))
 
-    '(magit-signature-bad                    ((t (:inherit igloo-default))))
-    '(magit-signature-error                  ((t (:inherit igloo-default))))
-    '(magit-signature-expired                ((t (:inherit igloo-default))))
-    '(magit-signature-expired-key            ((t (:inherit igloo-default))))
-    '(magit-signature-good                   ((t (:inherit igloo-default))))
-    '(magit-signature-revoked                ((t (:inherit igloo-default))))
-    '(magit-signature-untrusted              ((t (:inherit igloo-default))))
+   '(magit-signature-bad                    ((t (:inherit igloo-default))))
+   '(magit-signature-error                  ((t (:inherit igloo-default))))
+   '(magit-signature-expired                ((t (:inherit igloo-default))))
+   '(magit-signature-expired-key            ((t (:inherit igloo-default))))
+   '(magit-signature-good                   ((t (:inherit igloo-default))))
+   '(magit-signature-revoked                ((t (:inherit igloo-default))))
+   '(magit-signature-untrusted              ((t (:inherit igloo-default))))
 
-    '(magit-tag                              ((t (:inherit igloo-default-i))))
+   '(magit-tag                              ((t (:inherit igloo-default-i))))
 
-    ;; Ledger ------------------------------------------------------------------
-    '(ledger-font-xact-highlight-face        ((t (:inherit igloo-default))))
-    '(ledger-font-report-clickable-face      ((t (:inherit igloo-default))))
+   ;; Ledger ------------------------------------------------------------------
+   '(ledger-font-xact-highlight-face        ((t (:inherit igloo-default))))
+   '(ledger-font-report-clickable-face      ((t (:inherit igloo-default))))
 
-    ;; Term / VTerm ------------------------------------------------------------
-    '(term-bold                              ((t (:inherit igloo-strong))))
-    '(term-color-white                       ((t (:inherit igloo-default))))
-    `(term-color-blue                        ((,class (:foreground "#42A5F5"
-                                                       :background "#BBDEFB"))))
-    `(term-color-cyan                        ((,class (:foreground "#26C6DA"
-                                                       :background "#B2EBF2"))))
-    `(term-color-green                       ((,class (:foreground "#66BB6A"
-                                                       :background "#C8E6C9"))))
-    `(term-color-magenta                     ((,class (:foreground "#AB47BC"
-                                                       :background "#E1BEE7"))))
-    `(term-color-red                         ((,class (:foreground "#EF5350"
-                                                       :background "#FFCDD2"))))
-    `(term-color-yellow                      ((,class (:foreground "#FFEE58"
-                                                       :background "#FFF9C4"))))
+   ;; Term / VTerm ------------------------------------------------------------
+   '(term-bold                              ((t (:inherit igloo-strong))))
+   '(term-color-white                       ((t (:inherit igloo-default))))
+   `(term-color-blue                        ((,class (:foreground "#42A5F5"
+                                                                  :background "#BBDEFB"))))
+   `(term-color-cyan                        ((,class (:foreground "#26C6DA"
+                                                                  :background "#B2EBF2"))))
+   `(term-color-green                       ((,class (:foreground "#66BB6A"
+                                                                  :background "#C8E6C9"))))
+   `(term-color-magenta                     ((,class (:foreground "#AB47BC"
+                                                                  :background "#E1BEE7"))))
+   `(term-color-red                         ((,class (:foreground "#EF5350"
+                                                                  :background "#FFCDD2"))))
+   `(term-color-yellow                      ((,class (:foreground "#FFEE58"
+                                                                  :background "#FFF9C4"))))
 
-    '(vterm-color-white                      ((t (:inherit igloo-default))))
+   '(vterm-color-white                      ((t (:inherit igloo-default))))
 
-    ;; Eshell ------------------------------------------------------------------
-    '(eshell-prompt                          ((t (:inherit igloo-salient))))
+   ;; Eshell ------------------------------------------------------------------
+   '(eshell-prompt                          ((t (:inherit igloo-salient))))
 
-    ;; Hydra -------------------------------------------------------------------
-    '(hydra-face-blue                        ((t (:inherit igloo-salient))))
-    '(hydra-face-teal                        ((t (:inherit igloo-salient))))
-    
+   ;; Hydra -------------------------------------------------------------------
+   '(hydra-face-blue                        ((t (:inherit igloo-salient))))
+   '(hydra-face-teal                        ((t (:inherit igloo-salient))))
+   
 
-    ;; Ivy ---------------------------------------------------------------------
-    '(ivy-action                             ((t (:inherit igloo-faded))))
-    '(ivy-completions-annotations            ((t (:inherit igloo-popout))))
-    '(ivy-confirm-face                       ((t (:inherit igloo-faded))))
-    '(ivy-current-match                      ((t (:inherit igloo-strong-hi))))
-    '(ivy-cursor                             ((t (:inherit igloo-strong))))
-    '(ivy-grep-info                          ((t (:inherit igloo-strong))))
-    '(ivy-grep-line-number                   ((t (:inherit igloo-faded))))
-    '(ivy-highlight-face                     ((t (:inherit igloo-strong))))
-    '(ivy-match-required-face                ((t (:inherit igloo-faded))))
-    '(ivy-minibuffer-match-face-1            ((t (:inherit igloo-faded))))
-    '(ivy-minibuffer-match-face-2            ((t (:inherit igloo-faded))))
-    '(ivy-minibuffer-match-face-3            ((t (:inherit igloo-faded))))
-    '(ivy-minibuffer-match-face-4            ((t (:inherit igloo-faded))))
-    '(ivy-minibuffer-match-highlight         ((t (:inherit igloo-strong))))
-    '(ivy-modified-buffer                    ((t (:inherit igloo-popout))))
-    '(ivy-modified-outside-buffer            ((t (:inherit igloo-strong))))
-    '(ivy-org                                ((t (:inherit igloo-faded))))
-    '(ivy-prompt-match                       ((t (:inherit igloo-faded))))
-    '(ivy-remote                             ((t (:inherit igloo-default))))
-    '(ivy-separator                          ((t (:inherit igloo-faded))))
-    '(ivy-subdir                             ((t (:inherit igloo-faded))))
-    '(ivy-virtual                            ((t (:inherit igloo-faded))))
-    '(ivy-yanked-word                        ((t (:inherit igloo-faded))))))
+   ;; Ivy ---------------------------------------------------------------------
+   '(ivy-action                             ((t (:inherit igloo-faded))))
+   '(ivy-completions-annotations            ((t (:inherit igloo-popout))))
+   '(ivy-confirm-face                       ((t (:inherit igloo-faded))))
+   '(ivy-current-match                      ((t (:inherit igloo-strong-hi))))
+   '(ivy-cursor                             ((t (:inherit igloo-strong))))
+   '(ivy-grep-info                          ((t (:inherit igloo-strong))))
+   '(ivy-grep-line-number                   ((t (:inherit igloo-faded))))
+   '(ivy-highlight-face                     ((t (:inherit igloo-strong))))
+   '(ivy-match-required-face                ((t (:inherit igloo-faded))))
+   '(ivy-minibuffer-match-face-1            ((t (:inherit igloo-faded))))
+   '(ivy-minibuffer-match-face-2            ((t (:inherit igloo-faded))))
+   '(ivy-minibuffer-match-face-3            ((t (:inherit igloo-faded))))
+   '(ivy-minibuffer-match-face-4            ((t (:inherit igloo-faded))))
+   '(ivy-minibuffer-match-highlight         ((t (:inherit igloo-strong))))
+   '(ivy-modified-buffer                    ((t (:inherit igloo-popout))))
+   '(ivy-modified-outside-buffer            ((t (:inherit igloo-strong))))
+   '(ivy-org                                ((t (:inherit igloo-faded))))
+   '(ivy-prompt-match                       ((t (:inherit igloo-faded))))
+   '(ivy-remote                             ((t (:inherit igloo-default))))
+   '(ivy-separator                          ((t (:inherit igloo-faded))))
+   '(ivy-subdir                             ((t (:inherit igloo-faded))))
+   '(ivy-virtual                            ((t (:inherit igloo-faded))))
+   '(ivy-yanked-word                        ((t (:inherit igloo-faded))))))
 
 
 ;;;###autoload
