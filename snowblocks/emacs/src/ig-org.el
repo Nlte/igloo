@@ -58,6 +58,13 @@
     (list (plist-get data :key)
           (plist-get data :value))))
 
+
+;;;###autoload
+(defun igloo-org-table-insert-row-below ()
+  (interactive)
+  (org-table-insert-row)
+  (org-table-move-row-down))
+
 ;;;###autoload
 (defun +org-cycle-only-current-subtree-h (&optional arg)
   "Toggle the local fold at the point.
@@ -169,7 +176,7 @@ subtree and whole document."
     ("u" igloo-org-recalculate-table "Recalculate"))
    ""
    (("c" org-table-insert-column "Insert column")
-    ("r" org-table-insert-row "Insert row")
+    ("r" igloo-org-table-insert-row-below "Insert row")
     ("l" org-table-move-column-right "Move column right")
     ("h" org-table-move-column-left "Move column left"))))
 
@@ -277,6 +284,11 @@ See also `org-save-all-org-buffers'"
 ;; Org keymap ------------------------------------------------------------------
 ;; Override TAB key to use custom org-cycle function
 (evil-define-key 'normal org-mode-map (kbd "<tab>") #'igloo-org-cycle)
+
+
+;; Org webtools ----------------------------------------------------------------
+(use-package org-web-tools
+  :straight t)
 
 
 ;; Org babel -------------------------------------------------------------------
