@@ -94,8 +94,6 @@
 (define-key mu4e-view-mode-map    (kbd "C-c C-c") 'mu4e-org-store-and-capture)
 
 ;; Dashboard
-(use-package svg-tag-mode 
-  :straight (:host github :repo "rougier/svg-tag-mode"))
 
 (use-package mu4e-thread-folding
   :straight (:host github :repo "rougier/mu4e-thread-folding"))
