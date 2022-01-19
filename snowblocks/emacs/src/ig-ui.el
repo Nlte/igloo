@@ -77,6 +77,7 @@
           ("NEXT" . ((lambda (tag) (svg-tag-make "NEXT" :face 'org-todo :inverse nil :margin 0))))
           ("STRT" . ((lambda (tag) (svg-tag-make "STRT" :face 'org-todo :inverse nil :margin 0))))
           ("HOLD" . ((lambda (tag) (svg-tag-make "HOLD" :face '+org-todo-onhold :inverse t :margin 0))))
+          ("KILL" . ((lambda (tag) (svg-tag-make "KILL" :face '+org-todo-onhold :inverse t :margin 0))))
           
           ;; Active date (without day name, with or without time)
           (,(format "\\(<%s>\\)" date-re) .
