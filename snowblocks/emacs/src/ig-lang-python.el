@@ -35,6 +35,9 @@
   ;; :hook (python-mode . python-black-on-save-mode-enable-dwim))
   )
 
+(use-package jupyter
+  :straight t)
+
 
 (provide 'ig-lang-python)
 ;;; ig-lang-python.el ends here
