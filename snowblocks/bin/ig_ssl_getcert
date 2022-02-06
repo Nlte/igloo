@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ $# -eq 0 ]
 then
-    echo "usage: get-cert.sh <domain>"
+    echo "usage: ig_ssl_getcert <domain>"
     exit 1
 fi
 
