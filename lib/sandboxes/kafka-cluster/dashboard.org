@@ -1,0 +1,63 @@
+#+COLUMNS: %20ITEM %35HOST %6PORT %6ALIVE
+* Kafka dashboard
+
+* Zookeeper 1
+:PROPERTIES:
+:VISIBILITY: hideall
+:HOST: localhost
+:PORT: 2181
+:ALIVE: +CALL: query_wk(HOST, PORT, "ruok")
+:END:
+
+** ruok
+#+CALL: query_zk(host, port, "ruok")
+
+* Configuration
+:PROPERTIES:
+:VISIBILITY: hideall
+:END:
+
+#+NAME: query_ruok
+#+begin_src sh :var host="localhost:2181"
+echo ruok | nc localhost 2181
+#+end_src
+
+#+RESULTS: query_ruok
+: imok
+
+
+#+NAME: query_zk
+#+begin_src sh :var host="localhost" port="2181" command="ruok" :results list raw
+echo $command | nc $host $port
+#+end_src
+
+#+RESULTS: query_zk
+- imok
+
+#+CALL: query_zk("localhost", 2181, "stat")
+
+#+RESULTS:
+- Zookeeper version: 3.8.0-5a02a05eddb59aee6ac762f7ea82e92a68eb9c0f, built on 2022-02-25 08:49 UTC
+- Clients:
+- /172.27.0.1:62230[0](queued=0,recved=1,sent=0)
+- Latency min/avg/max: 0/0.0/0
+- Received: 9
+- Sent: 8
+- Connections: 1
+- Outstanding: 0
+- Zxid: 0x0
+- Mode: follower
+- Node count: 5
+
+** My project 
+:PROPERTIES:
+:COLUMNS: %20ITEM %9Approved(Approved?){X} %Owner %11Status %10Time_Spent{:}
+:END:
+*** Item 1
+:PROPERTIES:
+:Owner:    Tammy
+:Time_spent:   1:45
+:Status:   Finished
+:END:
+
+

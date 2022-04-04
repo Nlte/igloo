@@ -33,7 +33,7 @@
 
 ;; Custom functions
 (require 'ig-lib)
-(require 'ig-web)
+; (require 'ig-web)
 
 ;; Editor
 (require 'ig-editor)
@@ -42,12 +42,12 @@
 (require 'ig-evil)
 
 ;; UI
-(require 'ig-ui)
+; (require 'ig-ui)
 
 ;;; Packages -------------------------------------------------------
 
 ;; Terminals
-(require 'ig-terminal)
+; (require 'ig-terminal)
 
 ;; Keybinds
 (require 'ig-keybinds)
@@ -56,10 +56,10 @@
 (require 'ig-completion)
 
 ;; Git
-(require 'ig-git)
+; (require 'ig-git)
 
 ;; Project management
-(require 'ig-project)
+; (require 'ig-project)
 
 ;; Workspaces
 ;; (require 'ig-workspaces)
@@ -68,28 +68,28 @@
 (require 'ig-snippets)
 
 ;; Ledger
-(require 'ig-ledger)
+; (require 'ig-ledger)
 
 ;; Docker
-(require 'ig-docker)
+; (require 'ig-docker)
 
 ;; Email
-(require 'ig-email)
+; (require 'ig-email)
 
 ;; Org
-(require 'ig-org)
+; (require 'ig-org)
 
 ;; Dashboard
-(require 'ig-dashboard)
+; (require 'ig-dashboard)
 
 ;; Languages
-(require 'ig-lsp)
+; (require 'ig-lsp)
 
-(require 'ig-lang-elisp)
-(require 'ig-lang-bison)
-(require 'ig-lang-python)
-(require 'ig-lang-cpp)
-(require 'ig-lang-markdown)
+; (require 'ig-lang-elisp)
+; (require 'ig-lang-bison)
+; (require 'ig-lang-python)
+; (require 'ig-lang-cpp)
+; (require 'ig-lang-markdown)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
