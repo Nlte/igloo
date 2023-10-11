@@ -18,6 +18,7 @@ set -gx RIPGREP_CONFIG_PATH $IGLOO_PATH_USER_CONFIG/ripgrep/config
 # path
 set PATH $HOME/igloo/snowblocks/bin $PATH
 set PATH $HOME/utils/binaries/ $PATH
+set PATH $HOME/opt/bin/ $PATH
 
 # alias
 alias vim=nvim
