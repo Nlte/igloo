@@ -14,28 +14,8 @@
 		"$IGLOO_PATH_USER_CONFIG/nvim"
 	],
 	"link": {
-		"$IGLOO_PATH_USER_CONFIG/nvim/init.vim": {
-			"path": "init.vim",
-			"create": true
-		},
-		"$IGLOO_PATH_USER_CONFIG/nvim/UltiSnips": {
-			"path": "UltiSnips",
-			"create": true
-		},
-		"$IGLOO_PATH_USER_CONFIG/nvim/nord_additional_syntax.vim": {
-			"path": "nord_additional_syntax.vim",
-			"create": true
-		},
-		"$IGLOO_PATH_USER_CONFIG/nvim/coc.vim": {
-			"path": "coc.vim",
-			"create": true
-		},
-		"$IGLOO_PATH_USER_CONFIG/nvim/coc-settings.json": {
-			"path": "coc-settings.json",
-			"create": true
-		},
-		"$IGLOO_PATH_USER_CONFIG/nvim/.tasks": {
-			"path": "tasks",
+		"$IGLOO_PATH_USER_CONFIG/nvim/init.lua": {
+			"path": "init.lua",
 			"create": true
 		}
 	}
