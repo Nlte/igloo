@@ -1,0 +1,23 @@
+[
+    {
+        "clean": ["$HOME/.pgclirc"]
+    },
+    {
+        "shell": [
+            {
+                "command": "command -v zellij >/dev/null 2>&1 || echo 'zellij not installed'; exit 0",
+                "stderr": true,
+                "stdin": true,
+                "stdout": true
+            }
+        ]
+    },
+    {
+        "link": {
+            "$HOME/.config/zellij/config.kdl": {
+                "create": true,
+                "path": "config.kdl"
+            }
+        }
+    }
+]

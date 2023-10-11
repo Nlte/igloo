@@ -27,5 +27,8 @@ alias python=python3
 # local environment variables
 set FILE "$HOME/.config/fish/local.fish" && test -f $FILE && source $FILE
 
+# source user functions
+source $HOME/.config/fish/userfunctions.fish
+
 # Activate vi mode
 fish_vi_key_bindings

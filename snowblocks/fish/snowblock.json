@@ -6,18 +6,6 @@
                 "stderr": true,
                 "stdin": true,
                 "stdout": true
-            },
-            {
-                "command": "command -v direnv >/dev/null 2>&1 || echo 'direnv not installed'; exit 0",
-                "stderr": true,
-                "stdin": true,
-                "stdout": true
-            },
-            {
-                "command": "command -v pyenv >/dev/null 2>&1 || echo 'pyenv not installed'; exit 0",
-                "stderr": true,
-                "stdin": true,
-                "stdout": true
             }
         ]
     },
@@ -34,6 +22,10 @@
             "$IGLOO_PATH_USER_CONFIG/fish/functions/fish_user_key_bindings.fish": {
                 "create": true,
                 "path": "fish_user_key_bindings.fish"
+            },
+            "$IGLOO_PATH_USER_CONFIG/fish/userfunctions.fish": {
+                "create": true,
+                "path": "userfunctions.fish"
             }
         }
     }
