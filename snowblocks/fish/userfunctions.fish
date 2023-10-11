@@ -251,9 +251,29 @@ function _ig_fzf_search_processes --description "Search all running processes. R
 end
 
 
-function _ig_fzf_search_commands --description "Search all commands"
-	ls $HOME/igloo/snowblocks/bin/ig_* | \
+function _ig_fzf_search_all_commands --description "Search all commands"
+	set -f command_selected (
+		begin; apropos -s 1 '' && ls $HOME/igloo/snowblocks/bin/ig_* | rev | cut -d'/' -f 1 | rev; end |
 		fzf
+	)
+
+	if test $status -eq 0
+		commandline --current-token --replace -- (string split -f1 ' ' $command_selected)
+	end
+
+	commandline --function repaint
+end
+
+
+function _ig_fzf_search_ig_commands --description "Search igloo commands"
+	set -f command_selected (
+		begin; ls $HOME/igloo/snowblocks/bin/ig_* | rev | cut -d'/' -f 1 | rev; end |
+		fzf
+	)
+
+	if test $status -eq 0
+		commandline --current-token --replace -- (string split -f1 ' ' $command_selected)
+	end
 
 	commandline --function repaint
 end
