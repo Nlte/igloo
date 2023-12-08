@@ -277,3 +277,31 @@ function _ig_fzf_search_ig_commands --description "Search igloo commands"
 
 	commandline --function repaint
 end
+
+
+function rr --description "Run command with previous command output"
+    set prev (history | head -n 1)
+    set prev_output (eval $prev)
+    set cmd $argv[1]
+    echo "Running '$cmd $prev_output'"
+    eval "$cmd $prev_output"
+end
+
+
+function qs --description "Ripgrep++"
+    if test (count $argv) -eq 0
+        echo "usage: qs <search term>"
+        return
+    end
+    set search $argv[1]
+    set f $(rg --files-with-matches --no-messages "$search" | fzf -0 -m --preview-window=up:50% --preview "bat --color=always {} | rg -N --color always --colors 'match:bg:yellow' --ignore-case --context 12 '$search' || bat --color=always {}")
+    if test -n "$f"
+        echo $(realpath "$f") > ~/.qs_last_file
+        echo "$f"
+    end
+end
+
+
+function qse --description "Edit qs selection"
+    hx $(cat ~/.qs_last_file)
+end

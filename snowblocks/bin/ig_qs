@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+
+[[ $# -eq 0 ]] && echo 'usage: qs <string>' && exit 0
+
+search=$1
+f=$(rg --files-with-matches --no-messages "$search" | fzf -0 -m --preview-window=up:50% --preview "bat --color=always {} | rg -N --color always --colors 'match:bg:yellow' --ignore-case --context 12 '$search' || bat --color=always {}")
+
+[[ $f != "" ]] && echo $(realpath $f) > ~/.qs_last_file
+echo $f
