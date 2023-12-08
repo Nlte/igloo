@@ -25,6 +25,7 @@ set PATH $HOME/.local/bin/ $PATH
 set PATH $HOME/igloo/snowblocks/bin $PATH
 set PATH $HOME/utils/binaries/ $PATH
 set PATH $HOME/opt/bin/ $PATH
+set PATH $HOME/.cargo/bin $PATH
 
 # alias
 alias vim=nvim

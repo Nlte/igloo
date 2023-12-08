@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+declare -a brokers=("localhost")
+
+kcat=~/opt/kcat/kcat
+unpack=~/igloo/snowblocks/bin/ig_msgunpack.py
+
+selected_broker=$(printf '%s\n' "${brokers[@]}" | fzf)
+if [[ -z "${selected_broker}" ]]; then
+  exit 1
+fi
+
+selected_topic=$($kcat -b $selected_broker -L | grep '  topic' | awk '{print $2}' | sed 's/"//g' | fzf)
+if [[ -z "${selected_topic}" ]]; then
+  exit 1
+fi
+
+$kcat -b $selected_broker -t $selected_topic -C -o -5 -e -q

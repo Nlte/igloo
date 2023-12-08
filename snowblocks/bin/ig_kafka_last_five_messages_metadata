@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+declare -a brokers=("localhost")
+
+kcat=~/opt/kcat/kcat
+unpack=~/igloo/snowblocks/bin/ig_msgunpack.py
+
+selected_broker=$(printf '%s\n' "${brokers[@]}" | fzf)
+if [[ -z "${selected_broker}" ]]; then
+  exit 1
+fi
+
+selected_topic=$($kcat -b $selected_broker -L | grep '  topic' | awk '{print $2}' | sed 's/"//g' | fzf)
+if [[ -z "${selected_topic}" ]]; then
+  exit 1
+fi
+
+
+format=$(cat << EOF
+--------------------------------------------------------------------------------\r\n
+Topic %t\r\n
+Partition %p\r\n
+Offset %o\r\n
+Timestamp %T\r\n
+Headers %h\r\n
+Key (%K bytes) %k\r\n
+Payload (%S bytes) %s\r\n
+--------------------------------------------------------------------------------\r\n
+EOF)
+$kcat -b $selected_broker -t $selected_topic -C -o -5 -e -q -f '$format'
