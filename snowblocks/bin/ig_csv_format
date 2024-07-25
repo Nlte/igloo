@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+if [ $# -lt 1 ]
+then
+    echo "usage: ig_man <csvfile>"
+    echo "example: ig_man example.csv"
+    echo "Format csv into columns for terminal"
+    exit 1
+fi
+
+csv_format() {
+    column -s, -t < $1
+}
+
+csv_format $@
