@@ -305,3 +305,19 @@ end
 function qse --description "Edit qs selection"
     hx $(cat ~/.qs_last_file)
 end
+
+
+function venv --description "Activate python virtualenv"
+	set selected_venv $(ls ~/pyenvs/ | fzf)
+    	if test -n "$selected_venv"
+		source ~/pyenvs/$selected_venv/bin/activate.fish
+	end
+end
+
+
+function spd --description "Go to project directory"
+	set selected $(ls ~/projects/ | fzf)
+    	if test -n "$selected"
+            cd ~/projects/$selected
+    	end
+end
