@@ -6,3 +6,13 @@ Create a file ~/.config/fish/local.fish where you can export credentials and pri
 export TODOIST_TOKEN="XXXXX"
 #+end_src
 This file is loaded by config.fish if it exists. It is not version controlled.
+
+
+WSL2 configuration to fish speed issue:
+https://github.com/fish-shell/fish-shell/issues/9574#issuecomment-1428053997
+
+Edit /etc/wsl.conf and add line
+[interop]
+appendWindowsPath = false
+
+then wsl --shutdown in win cmd to restart WSL
