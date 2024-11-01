@@ -40,3 +40,5 @@ source $HOME/.config/fish/userfunctions.fish
 
 # Activate vi mode
 fish_vi_key_bindings
+
+export DISPLAY=localhost:0.0
