@@ -27,6 +27,7 @@ set PATH $HOME/utils/binaries/ $PATH
 set PATH $HOME/opt/bin/ $PATH
 set PATH $HOME/.cargo/bin $PATH
 set PATH $HOME/opt/kafka_2.13-3.6.0/bin $PATH
+set PATH /home/ubuntu/opt/kafka_2.13-3.8.0/bin $PATH 
 
 # alias
 alias vim=nvim
