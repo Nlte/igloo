@@ -28,6 +28,7 @@ set PATH $HOME/opt/bin/ $PATH
 set PATH $HOME/.cargo/bin $PATH
 set PATH $HOME/opt/kafka_2.13-3.6.0/bin $PATH
 set PATH /home/ubuntu/opt/kafka_2.13-3.8.0/bin $PATH 
+set PATH /opt/nvim-linux64/bin $PATH
 
 # alias
 alias vim=nvim
@@ -42,4 +43,4 @@ source $HOME/.config/fish/userfunctions.fish
 # Activate vi mode
 fish_vi_key_bindings
 
-export DISPLAY=localhost:0.0
+#export DISPLAY=localhost:0.0

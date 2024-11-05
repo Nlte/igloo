@@ -123,7 +123,17 @@ vim.keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Window up" })
 vim.keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Window right" })
 
 -- Buffers
-vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete)
+vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete, { desc = "Delete buffer" } )
+vim.keymap.set("n", "<leader>bb", ":FzfLua buffers<CR>", { desc = "List buffers" } )
+
+-- Find
+vim.keymap.set("n", "<leader>ff", ":FzfLua files<CR>", { desc = "Find file" } )
+
+-- Config
+vim.keymap.set("n", "<leader>fp", ":e ~/.config/nvim/init.lua<CR>", { desc = "Open config" } )
+
+-- Search
+vim.keymap.set("n", "<leader>ss", ":FzfLua blines<CR>", { desc = "Search buffer" } )
 
 
 -- [[ Highlight on yank ]]
@@ -142,3 +152,4 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.cmd.colorscheme("nord")
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
