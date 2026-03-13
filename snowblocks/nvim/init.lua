@@ -1,30 +1,28 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+-- Leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- Install package manager
---    https://github.com/folke/lazy.nvim
---    `:help lazy.nvim.txt` for more info
-local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
+-- Install lazy.nvim
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system {
-    'git',
-    'clone',
-    '--filter=blob:none',
+  vim.fn.system({
+    'git','clone','--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=stable',
     lazypath,
-  }
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- Plugins
 require('lazy').setup({
 
-  { 'folke/which-key.nvim', opts = {} },
-  { 'gbprod/nord.nvim' },
-  { "NeogitOrg/neogit",
+  {'numToStr/Comment.nvim', opts = {}},
+  {'folke/which-key.nvim', opts = {}},
+  {'gbprod/nord.nvim'},
+
+  {
+    "NeogitOrg/neogit",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
@@ -33,123 +31,248 @@ require('lazy').setup({
     },
     config = true
   },
+
+  -- Autocompletion
+  {
+    "hrsh7th/nvim-cmp",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+    },
+    config = function()
+
+      local cmp = require("cmp")
+
+      cmp.setup({
+        snippet = {
+          expand = function(args)
+          end,
+        },
+
+        mapping = cmp.mapping.preset.insert({
+          ["<C-Space>"] = cmp.mapping.complete(),
+          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<Tab>"] = cmp.mapping.select_next_item(),
+          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+        }),
+
+        sources = cmp.config.sources({
+          { name = "nvim_lsp" },
+          { name = "buffer" },
+          { name = "path" },
+        }),
+      })
+    end
+  },
+
+  -- LSP
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    config = function()
+
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      -- Keymaps when LSP attaches
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local opts = {buffer = args.buf}
+
+          vim.keymap.set("n","gd",vim.lsp.buf.definition,opts)
+          vim.keymap.set("n","gD",vim.lsp.buf.declaration,opts)
+          vim.keymap.set("n","gi",vim.lsp.buf.implementation,opts)
+          vim.keymap.set("n","gr",vim.lsp.buf.references,opts)
+          vim.keymap.set("n","K",vim.lsp.buf.hover,opts)
+
+          vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,opts)
+          vim.keymap.set("n","<leader>ca",vim.lsp.buf.code_action,opts)
+          vim.keymap.set("n","<leader>e",vim.diagnostic.open_float,opts)
+          vim.keymap.set("n","[d",vim.diagnostic.goto_prev,opts)
+          vim.keymap.set("n","]d",vim.diagnostic.goto_next,opts)
+        end,
+      })
+
+      -- Server configs
+      vim.lsp.config("clangd", {
+        capabilities = capabilities
+      })
+
+      vim.lsp.config("lua_ls", {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = {"vim"}
+            }
+          }
+        }
+      })
+
+      -- Enable servers
+      vim.lsp.enable("clangd")
+
+    end
+  },
+
   {
     'gelguy/wilder.nvim',
     config = function()
       local wilder = require('wilder')
-      wilder.setup({modes = {':', '/', '?'}})
+
+      wilder.setup({ modes = {':','/','?'} })
       wilder.set_option('use_python_remote_plugin', 0)
 
-      wilder.set_option('pipeline', {
+      wilder.set_option('pipeline',{
         wilder.branch(
           wilder.cmdline_pipeline(),
           wilder.search_pipeline()
-        ),
+        )
       })
 
-      wilder.set_option('renderer', wilder.popupmenu_renderer(
-      wilder.popupmenu_border_theme({
-        highlighter = wilder.basic_highlighter(),
-        border = '',
-        min_width = '100%', -- minimum height of the popupmenu, can also be a number
-        min_height = '20%', -- to set a fixed height, set max_height to the same value
-        reverse = 0,        -- if 1, shows the candidates from bottom to top
-      })
-    ))
-
-    end,
+      wilder.set_option('renderer',
+        wilder.popupmenu_renderer(
+          wilder.popupmenu_border_theme({
+            highlighter = wilder.basic_highlighter(),
+            border = '',
+            min_width = '100%',
+            min_height = '20%',
+            reverse = 0,
+          })
+        )
+      )
+    end
   }
 
-}, {})
+},{})
 
--- [[ Setting options ]]
--- See `:help vim.o`
--- NOTE: You can change these options as you wish!
+-- Options
 
--- Set highlight on search
 vim.o.hlsearch = true
-
--- Make line numbers default
 vim.wo.number = true
-
--- Enable mouse mode
 vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
-
--- Enable break indent
 vim.o.breakindent = true
-
--- Save undo history
 vim.o.undofile = true
-
--- Case-insensitive searching UNLESS \C or capital in search
 vim.o.ignorecase = true
 vim.o.smartcase = true
-
--- Keep signcolumn on by default
 vim.wo.signcolumn = 'yes'
-
--- Decrease update time
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+-- Tabs
+vim.o.tabstop = 4
+vim.o.expandtab = true
+vim.o.softtabstop = 4
+vim.o.shiftwidth = 4
 
--- NOTE: You should make sure your terminal supports this
+vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
--- [[ Basic Keymaps ]]
+-- Disable automatic comment continuation
+vim.opt.formatoptions:remove({"r","o"})
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-
--- Window
-vim.keymap.set("n", "<leader>wv", vim.cmd.vsp, { desc = "Split window vertical" })
-vim.keymap.set("n", "<leader>ws", vim.cmd.sp, { desc = "Split window horizontal" })
-vim.keymap.set("n", "<leader>wq", vim.cmd.q, { desc = "Close window" })
-vim.keymap.set("n", "<leader>wh", "<C-w>h", { desc = "Window left" })
-vim.keymap.set("n", "<leader>wj", "<C-w>j", { desc = "Window down" })
-vim.keymap.set("n", "<leader>wk", "<C-w>k", { desc = "Window up" })
-vim.keymap.set("n", "<leader>wl", "<C-w>l", { desc = "Window right" })
-
--- Buffers
-vim.keymap.set("n", "<leader>bd", vim.cmd.bdelete, { desc = "Delete buffer" } )
-vim.keymap.set("n", "<leader>bb", ":FzfLua buffers<CR>", { desc = "List buffers" } )
-
--- Find
-vim.keymap.set("n", "<leader>ff", ":FzfLua files<CR>", { desc = "Find file" } )
-
--- Config
-vim.keymap.set("n", "<leader>fp", ":e ~/.config/nvim/init.lua<CR>", { desc = "Open config" } )
-
--- Search
-vim.keymap.set("n", "<leader>ss", ":FzfLua blines<CR>", { desc = "Search buffer" } )
-
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
+vim.api.nvim_create_autocmd("FileType",{
+  pattern="*",
+  callback=function()
+    vim.opt_local.formatoptions:remove({"r","o"})
+  end
 })
 
--- [[ Colors ]]
--- 
+-- Keymaps
+vim.keymap.set({'n','v'},'<Space>','<Nop>',{silent=true})
+
+vim.keymap.set('n','k',"v:count==0?'gk':'k'",{expr=true,silent=true})
+vim.keymap.set('n','j',"v:count==0?'gj':'j'",{expr=true,silent=true})
+
+-- Windows
+vim.keymap.set("n","<leader>wv",vim.cmd.vsp,{desc="Split window vertical"})
+vim.keymap.set("n","<leader>ws",vim.cmd.sp,{desc="Split window horizontal"})
+vim.keymap.set("n","<leader>wq",vim.cmd.q,{desc="Close window"})
+vim.keymap.set("n","<leader>wh","<C-w>h",{desc="Window left"})
+vim.keymap.set("n","<leader>wj","<C-w>j",{desc="Window down"})
+vim.keymap.set("n","<leader>wk","<C-w>k",{desc="Window up"})
+vim.keymap.set("n","<leader>wl","<C-w>l",{desc="Window right"})
+
+-- Buffers
+vim.keymap.set("n","<leader>bd",vim.cmd.bdelete,{desc="Delete buffer"})
+vim.keymap.set("n","<leader>bb",":FzfLua buffers<CR>",{desc="List buffers"})
+
+-- Find
+vim.keymap.set("n","<leader>ff",":FzfLua files<CR>",{desc="Find file"})
+
+-- Config
+vim.keymap.set("n","<leader>fp",":e ~/.config/nvim/init.lua<CR>",{desc="Open config"})
+
+-- Search
+vim.keymap.set("n","<leader>ss",":FzfLua blines<CR>",{desc="Search buffer"})
+
+-- git
+vim.keymap.set("n", "<leader>gg", ":Neogit<CR>", {desc="Open Neogit"})
+
+-- Highlight on yank
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight',{clear=true})
+
+vim.api.nvim_create_autocmd('TextYankPost',{
+  callback=function()
+    vim.highlight.on_yank()
+  end,
+  group=highlight_group,
+  pattern='*',
+})
+
+-- Compilation
+-- Floating terminal runner for Makefile commands
+
+local last_cmd = nil
+
+local function run_cmd(cmd)
+  last_cmd = cmd
+
+  local buf = vim.api.nvim_create_buf(false, true)
+
+  local width = math.floor(vim.o.columns * 0.8)
+  local height = math.floor(vim.o.lines * 0.8)
+
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  vim.api.nvim_open_win(buf, true, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = "minimal",
+    border = "rounded",
+  })
+
+  vim.fn.termopen(cmd)
+  vim.cmd("startinsert")
+end
+
+-- Compile
+vim.keymap.set("n", "<leader>cc", function()
+  run_cmd("make")
+end, { desc = "Compile project" })
+
+-- Compile + Run
+vim.keymap.set("n", "<leader>cr", function()
+  run_cmd("make run")
+end, { desc = "Compile and run" })
+
+-- Run tests
+vim.keymap.set("n", "<leader>ct", function()
+  run_cmd("make test")
+end, { desc = "Run tests" })
+
+-- Repeat last command
+vim.keymap.set("n", "<leader>cl", function()
+  if last_cmd then
+    run_cmd(last_cmd)
+  end
+end, { desc = "Repeat last build command" })
+
+
+-- Colorscheme
 vim.cmd.colorscheme("nord")
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
---
