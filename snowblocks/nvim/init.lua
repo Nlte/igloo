@@ -39,14 +39,18 @@ require('lazy').setup({
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
+      "L3MON4D3/LuaSnip",
+      "saadparwaiz1/cmp_luasnip",
     },
     config = function()
 
       local cmp = require("cmp")
+      local luasnip = require("luasnip")
 
       cmp.setup({
         snippet = {
           expand = function(args)
+              luasnip.lsp_expand(args.body)
           end,
         },
 
@@ -84,14 +88,41 @@ require('lazy').setup({
           vim.keymap.set("n","gi",vim.lsp.buf.implementation,opts)
           vim.keymap.set("n","gr",vim.lsp.buf.references,opts)
           vim.keymap.set("n","K",vim.lsp.buf.hover,opts)
+          vim.keymap.set("n", "gl", vim.diagnostic.open_float)
 
           vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,opts)
           vim.keymap.set("n","<leader>ca",vim.lsp.buf.code_action,opts)
-          vim.keymap.set("n","<leader>e",vim.diagnostic.open_float,opts)
+          vim.keymap.set("n", "<leader>e", vim.diagnostic.setloclist)
           vim.keymap.set("n","[d",vim.diagnostic.goto_prev,opts)
           vim.keymap.set("n","]d",vim.diagnostic.goto_next,opts)
+
+          vim.api.nvim_create_autocmd("FileType", {
+              pattern = { "qf", "loclist" },
+              callback = function()
+                vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
+              end,
+            })
         end,
       })
+
+        vim.diagnostic.config({
+          virtual_text = false, -- cleaner, no inline spam
+          signs = true,
+          underline = true,
+          update_in_insert = false,
+          severity_sort = true,
+        
+          float = {
+            border = "rounded",
+            source = "if_many",
+          },
+        })
+
+        vim.api.nvim_create_autocmd("CursorHold", {
+          callback = function()
+            vim.diagnostic.open_float(nil, { focusable = false })
+          end,
+        })
 
       -- Server configs
       vim.lsp.config("clangd", {
@@ -156,7 +187,7 @@ vim.o.breakindent = true
 vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.wo.signcolumn = 'yes'
+vim.o.signcolumn = 'yes'
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
@@ -199,7 +230,7 @@ vim.keymap.set("n","<leader>bd",vim.cmd.bdelete,{desc="Delete buffer"})
 vim.keymap.set("n","<leader>bb",":FzfLua buffers<CR>",{desc="List buffers"})
 
 -- Find
-vim.keymap.set("n","<leader>ff",":FzfLua files<CR>",{desc="Find file"})
+vim.keymap.set("n","<leader>ff",":FzfLua files<CR>", {desc="Find file"})
 
 -- Config
 vim.keymap.set("n","<leader>fp",":e ~/.config/nvim/init.lua<CR>",{desc="Open config"})
@@ -225,36 +256,60 @@ vim.api.nvim_create_autocmd('TextYankPost',{
 -- Floating terminal runner for Makefile commands
 
 local last_cmd = nil
-
 local function run_cmd(cmd)
   last_cmd = cmd
+  local height = math.floor(vim.o.lines * 0.3)
+  
+  -- 1. Find the terminal window if it exists
+  local win = term_buf and vim.fn.bufwinid(term_buf) or -1
 
-  local buf = vim.api.nvim_create_buf(false, true)
+  if win ~= -1 and vim.api.nvim_win_is_valid(win) then
+    -- If we are NOT in the terminal window, jump to it
+    if vim.api.nvim_get_current_win() ~= win then
+      vim.api.nvim_set_current_win(win)
+    end
+  else
+    -- If window doesn't exist, create it from the bottom of the WHOLE screen
+    vim.cmd("botright " .. height .. "split")
+  end
 
-  local width = math.floor(vim.o.columns * 0.8)
-  local height = math.floor(vim.o.lines * 0.8)
+  -- 2. Create the new buffer FIRST before deleting the old one
+  -- This prevents the window from closing/resizing when the old buffer vanishes
+  local new_buf = vim.api.nvim_create_buf(false, true)
+  
+  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
+    vim.api.nvim_buf_delete(term_buf, { force = true })
+  end
+  
+  term_buf = new_buf
+  vim.api.nvim_win_set_buf(0, term_buf)
 
-  local row = math.floor((vim.o.lines - height) / 2)
-  local col = math.floor((vim.o.columns - width) / 2)
-
-  vim.api.nvim_open_win(buf, true, {
-    relative = "editor",
-    width = width,
-    height = height,
-    row = row,
-    col = col,
-    style = "minimal",
-    border = "rounded",
-  })
-
+  -- 3. Options & Launch
+  vim.wo.number = false
+  vim.wo.relativenumber = false
+  vim.wo.signcolumn = "no"
+  vim.wo.winfixheight = true
+  
   vim.fn.termopen(cmd)
   vim.cmd("startinsert")
 end
+
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+
+-- Better navigation to jump OUT of the terminal split to your code
+vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
+vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
+vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
+vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
 
 -- Compile
 vim.keymap.set("n", "<leader>cc", function()
   run_cmd("make")
 end, { desc = "Compile project" })
+
+vim.keymap.set("n", "<leader>cC", function()
+  run_cmd("make clean")
+end, { desc = "Clean project" })
 
 -- Compile + Run
 vim.keymap.set("n", "<leader>cr", function()
