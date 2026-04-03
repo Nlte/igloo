@@ -1,0 +1,94 @@
+" .ideavimrc is a configuration file for IdeaVim plugin. It uses
+"   the same commands as the original .vimrc configuration.
+" You can find a list of commands here: https://jb.gg/h38q75
+" Find more examples here: https://jb.gg/share-ideavimrc
+
+" --- Enable IdeaVim plugins https://jb.gg/ideavim-plugins
+
+" Highlight copied text
+Plug 'machakann/vim-highlightedyank'
+" Commentary plugin
+Plug 'tpope/vim-commentary'
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+set incsearch
+set ignorecase
+set smartcase
+set multiple-cursors
+set clipboard+=unnamed
+set ideajoin
+set ideaput
+set number
+set surround
+set highlightedyank
+set noerrorbells
+set visualbell
+set t_vb=
+
+" which key
+set which-key
+set notimeout
+
+" Do incremental searching.
+set incsearch
+
+let mapleader = " "
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+" Window
+nnoremap <leader>wv :action SplitVertically<CR>
+nnoremap <leader>ws :action SplitHorizontally<CR>
+nnoremap <leader>wq :action CloseActiveTab<CR>
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+nnoremap <leader>wl <C-w>l
+
+" Run
+nmap <leader>rr <Action>(Run)
+nmap <leader>rc <Action>(RunClass)
+nmap <leader>ro <Action>(ChooseRunConfiguration)
+
+" Debug
+nmap <leader>rdr <Action>(Debug)
+nmap <leader>rdc <Action>(DebugClass)
+nmap <leader>rdo <Action>(ChooseDebugConfiguration)
+nmap <leader>rdb <Action>(ToggleLineBreakpoint)
+
+" Goto
+nmap <leader>: <Action>(GotoAction)
+nmap <leader>gt <Action>(GotoTest)
+nmap <leader>gd <Action>(GotoDeclaration)
+nmap <leader>gu <Action>(ShowUsages)
+nmap <leader>gi <Action>(GotoImplementation)
+nmap <leader>gek <Action>(GotoPreviousError)
+nmap <leader>gej <Action>(GotoNextError)
+nmap <leader>gmk <Action>(MethodUp)
+nmap <leader>gmj <Action>(MethodDown)
+
+" View Tool Window
+nmap <leader>vt <Action>(ActivateTerminalToolWindow)
+nmap <leader>vs <Action>(ActivateStructureToolWindow)
+nmap <leader>vp <Action>(ActivateProblemsViewToolWindow)
+nmap <leader>vr <Action>(ActivateRunToolWindow)
+
+" Reload
+nmap <leader>lr <Action>(IdeaVim.ReloadVimRc.reload)
+nmap <leader>lp <Action>(ExternalSystem.RefreshAllProjects)
+nmap <leader>ls <Action>(SynchronizeCurrentFile)
+
+" Organize
+nmap <leader>ff <Action>(GotoFile)
+nmap <leader>fc <Action>(GotoClass)

@@ -62,9 +62,9 @@ throws an error."
 error if NAME doesn't exist."
   (cl-check-type name string)
   (when-let (persp (persp-get-by-name name))
-    (cond ((+workspace-p persp) persp)
-          ((not noerror)
-           (error "No workspace called '%s' was found" name)))))
+    (unless noerror
+      (error "No workspace called '%s' was found" name))
+    persp))
 
 ;;;###autoload
 (defun +workspace-current-name ()
@@ -138,6 +138,20 @@ Otherwise return t on success, nil otherwise."
             (funcall persp-window-state-get-function (selected-frame))))
     persp))
 ;;;###autoload
+(defun +workspace-delete (name &optional _dont-confirm-p)
+  "Delete a workspace named NAME."
+  (let* ((current-name (+workspace-current-name))
+         (persp (get-current-persp))
+         (frame (selected-frame)))
+    (when (equal name current-name)
+      ;; Switch away first
+      (let ((names (delq name (+workspace-list-names))))
+        (if names
+            (+workspace-switch (car names))
+          (+workspace-switch +workspaces-main t))))
+    (persp-kill (persp-get-by-name name))))
+
+;;;###autoload
 (defun +workspace/delete (name)
   "Delete this workspace. If called with C-u, prompts you for the name of the
 workspace to delete."
@@ -150,28 +164,28 @@ workspace to delete."
                            nil nil nil nil current-name)
         current-name))))
   (condition-case-unless-debug ex
-      ;; REVIEW refactor me
       (let ((workspaces (+workspace-list-names)))
         (if (not (member name workspaces))
             (+workspace-message (format "'%s' workspace doesn't exist" name) 'warn)
-          (cond ((delq (selected-frame) (persp-frames-with-persp (get-frame-persp)))
-                 (user-error "Can't close workspace, it's visible in another frame"))
-                ((not (equal (+workspace-current-name) name))
-                 (+workspace-delete name))
-                ((cdr workspaces)
-                 (+workspace-delete name)
-                 (+workspace-switch
-                  (if (+workspace-exists-p +workspace--last)
-                      +workspace--last
-                    (car (+workspace-list-names))))
-                   (switch-to-buffer (doom-fallback-buffer)))
-                (t
-                 (+workspace-switch +workspaces-main t)
-                 (unless (string= (car workspaces) +workspaces-main)
-                   (+workspace-delete name))
-                 (doom/kill-all-buffers (doom-buffer-list))))
-          (+workspace-message (format "Deleted '%s' workspace" name) 'success)))
-    ('error (+workspace-error ex t))))
+          ;; Workspace exists, proceed with deletion
+          (if (equal (+workspace-current-name) name)
+              ;; Currently in this workspace, switch away first
+              (let ((other-workspaces (delq name workspaces)))
+                (if other-workspaces
+                    (progn
+                      (+workspace-delete name)
+                      (+workspace-switch (car other-workspaces))
+                      (+workspace-message (format "Deleted '%s' workspace" name) 'success))
+                  ;; No other workspaces, switch to main
+                  (progn
+                    (+workspace-delete name)
+                    (+workspace-switch +workspaces-main t)
+                    (+workspace-message (format "Deleted '%s' workspace" name) 'success))))
+            ;; Not in this workspace, just delete it
+            (progn
+              (+workspace-delete name)
+              (+workspace-message (format "Deleted '%s' workspace" name) 'success)))))
+    (error (+workspace-error ex t))))
 
 (defun +workspaces-init-first-workspace-h (&rest _)
   "Ensure main workspace exists."
@@ -201,7 +215,26 @@ workspace, otherwise the new workspace is blank."
             (t
              (+workspace-switch name t)
              (+workspace/display)))
-    ((debug error) (+workspace-error (cadr e) t))))
+    (error (+workspace-error (cadr e) t))))
+
+;;;###autoload
+(defun +workspace-rename (name)
+  "Rename the current workspace to NAME."
+  (interactive
+   (let ((current-name (+workspace-current-name)))
+     (list
+      (read-string (format "Rename workspace (current: %s) to: " current-name)
+                   nil nil current-name))))
+  (let ((current-name (+workspace-current-name)))
+    (if (equal current-name name)
+        (+workspace-message "No change to workspace name" 'warn)
+      (condition-case ex
+          (if (or (equal name persp-nil-name)
+                  (+workspace-exists-p name))
+              (+workspace-error (format "'%s' is not a valid workspace name" name))
+            (persp-rename name (get-current-persp))
+            (+workspace-message (format "Renamed '%s' to '%s'" current-name name) 'success))
+        (error (+workspace-error (cadr ex) t))))))
 
 
 (use-package persp-mode

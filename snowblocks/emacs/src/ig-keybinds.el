@@ -199,6 +199,9 @@ This is a macro so I don't have to quote the hydra name."
    ("," counsel-projectile-switch-to-buffer "Switch to project buffer")
    ("SPC" projectile-find-file "Find in project"))
 
+   "Workspaces"
+   (("TAB" (ig-open-hydra ig-hydra-workspace/body) "Workspaces"))
+
    "Application"
    (("o" (ig-open-hydra ig-hydra-open/body) "Open")
     ("g" (ig-open-hydra ig-hydra-git/body) "Git")
@@ -364,22 +367,117 @@ This is a macro so I don't have to quote the hydra name."
     (("s" yas-insert-snippet))))
 
 
-;; Project ---------------------------------------------------------------------
-(pretty-hydra-define ig-hydra-project 
+;; Workspaces ----------------------------------------------------------------
+;;; Workspace navigation helpers (Doom Emacs style)
+(defun ig/workspace-next ()
+  "Switch to the next workspace."
+  (interactive)
+  (let* ((names (+workspace-list-names))
+         (current (+workspace-current-name))
+         (idx (cl-position current names :test #'equal))
+         (next-idx (if idx (% (1+ idx) (length names)) 0)))
+    (+workspace-switch (nth next-idx names))
+    (+workspace/display)))
+
+(defun ig/workspace-prev ()
+  "Switch to the previous workspace."
+  (interactive)
+  (let* ((names (+workspace-list-names))
+         (current (+workspace-current-name))
+         (idx (cl-position current names :test #'equal))
+         (prev-idx (if idx (mod (1- idx) (length names)) 0)))
+    (+workspace-switch (nth prev-idx names))
+    (+workspace/display)))
+
+(defun ig/workspace-new ()
+  "Create a new workspace."
+  (interactive)
+  (+workspace/new)
+  (+workspace/display))
+
+(pretty-hydra-define ig-hydra-workspace
   (:idle 0.3
          :color teal
          :body-pre (ig-hydra-reset)
          :quit-key ("q" "<escape>")
          :inherit (ig-base/heads)
          :separator " ")
-  ("Project"
-   (("p" projectile-switch-project)
-    ("d" projectile-remove-known-project)
-    ("a" projectile-add-known-project)
-    ("i" projectile-invalidate-cache))))
+  ("Workspaces"
+   (("n" ig/workspace-new "new workspace")
+    ("d" +workspace/delete "delete workspace")
+    ("TAB" ig/workspace-next "next workspace")
+    ("]" ig/workspace-next "next workspace")
+    ("[" ig/workspace-prev "previous workspace")
+    ("l" +workspace/display "list workspaces")
+    ("r" +workspace-rename "rename workspace"))))
 
 
 ;; Compile ---------------------------------------------------------------------
+(defun ig/make-command (target)
+  "Run `make TARGET` in the current projectile project (or `default-directory`).
+
+Uses `compile` so output is shown in the compilation buffer.
+If no projectile project is detected, runs in `default-directory`.
+
+TARGET should not be nil.
+"  
+  (interactive "sMake target: ")
+  (let* ((root (or (ignore-errors (projectile-project-root))
+                   default-directory))
+         (cmd (string-join (list "make" target) " ")))
+    (let ((default-directory root))
+      (compile cmd))))
+
+(defun ig/make ()
+  "Run `make` (default make target)."  
+  (interactive)
+  (ig/make-command ""))
+
+(defun ig/make-test ()
+  "Run `make test`."  
+  (interactive)
+  (ig/make-command "test"))
+
+(defun ig/make-run ()
+  "Run `make run`."  
+  (interactive)
+  (ig/make-command "run"))
+
+(defun ig/make-clean ()
+  "Run `make clean`."  
+  (interactive)
+  (ig/make-command "clean"))
+
+(defun ig/make-select-target ()
+  "Prompt for a Makefile target and run it.
+
+Parses the Makefile in the project root and offers completion on targets.
+This mirrors the previous `my/projectile-compile-with-target` behavior."  
+  (interactive)
+  (let* ((root (or (ignore-errors (projectile-project-root))
+                   default-directory))
+         (makefile (expand-file-name "Makefile" root))
+         (targets (when (file-exists-p makefile)
+                    (with-temp-buffer
+                      (insert-file-contents makefile)
+                      (let (res)
+                        ;; Regex ignores lines starting with . (like .PHONY)
+                        (while (re-search-forward "^\([a-z0-9A-Z_-]+\):" nil t)
+                          (push (match-string 1) res))
+                        (delete-dups res))))))
+    (if targets
+        (let ((sel (completing-read "Select make target: " (reverse targets))))
+          (ig/make-command sel))
+      (message "No Makefile or targets found in %s" root))))
+
+(require 'ansi-color)
+
+(defun my/ansi-colorize-compilation-buffer ()
+  (let ((inhibit-read-only t))
+    (ansi-color-apply-on-region compilation-filter-start (point-max))))
+
+(add-hook 'compilation-filter-hook 'my/ansi-colorize-compilation-buffer)
+
 (pretty-hydra-define ig-hydra-compile 
   (:idle 0.3
          :color teal
@@ -387,9 +485,13 @@ This is a macro so I don't have to quote the hydra name."
          :quit-key ("q" "<escape>")
          :inherit (ig-base/heads)
          :separator " ")
-    ("Compile"
-    (("c" projectile-compile-project)
-     ("f" counsel-flycheck))))
+  ("Compile"
+   (("c" ig/make "make")
+    ("t" ig/make-test "make test")
+    ("r" ig/make-run "make run")
+    ("C" ig/make-clean "make clean")
+    ("m" ig/make-select-target "make target")
+    ("f" counsel-flycheck "flycheck"))))
 
 ;; Search ----------------------------------------------------------------------
 (pretty-hydra-define ig-hydra-search 

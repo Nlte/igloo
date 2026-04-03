@@ -25,9 +25,10 @@
   (evil-collection-init))
 
 (use-package evil-org
-  :ensure t
+  :straight t
   :after org
-  :hook (org-mode . (lambda () evil-org-mode))
+  :defer t
+  :hook (org-mode . evil-org-mode)
   :config
   (require 'evil-org-agenda)
   (evil-org-agenda-set-keys))

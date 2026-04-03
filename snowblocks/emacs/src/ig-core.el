@@ -139,7 +139,9 @@ Use this for files that change often, like cache files. Must end with a slash.")
 (setq inhibit-compacting-font-caches t)
 
 ;; Increase how much is read from processes in a single chunk (default is 4kb).
-(setq read-process-output-max (* 64 1024))  ; 64kb
+;; 1MB is a common value that avoids slow external process I/O while keeping
+;; memory usage reasonable.
+(setq read-process-output-max (* 1024 1024))  ; 1mb
 
 ;; Disable bell sound
 (setq ring-bell-function 'ignore)
@@ -152,20 +154,8 @@ Use this for files that change often, like cache files. Must end with a slash.")
 
 ;; Package management
 
-;; MelpaPackages
-;; Select the folder to store packages
-(setq package-user-dir (expand-file-name "elpa" user-emacs-directory)
-      package-archives
-      '(("gnu"   . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")))
-;; -MelpaPackages
-
-
-;; ConfigurePackageManager
-(unless (bound-and-true-p package--initialized)
-  (setq package-enable-at-startup nil)          ; To prevent initializing twice
-  (package-initialize))
-
+;; We use straight.el for package management, so we don't initialize package.el.
+;; early-init.el sets package-enable-at-startup to nil to prevent auto-loading.
 
 ;; Bootstrap straight.el
 (defvar bootstrap-version)

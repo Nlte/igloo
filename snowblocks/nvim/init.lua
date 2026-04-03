@@ -1,3 +1,6 @@
+-- startup
+vim.opt.shortmess:append("I")
+
 -- Leader
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -5,175 +8,258 @@ vim.g.maplocalleader = ' '
 -- Install lazy.nvim
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git','clone','--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable',
-    lazypath,
-  })
+    vim.fn.system({
+        'git','clone','--filter=blob:none',
+        'https://github.com/folke/lazy.nvim.git',
+        '--branch=stable',
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
 -- Plugins
 require('lazy').setup({
 
-  {'numToStr/Comment.nvim', opts = {}},
-  {'folke/which-key.nvim', opts = {}},
-  {'gbprod/nord.nvim'},
+    {'numToStr/Comment.nvim', opts = {}},
+    {'folke/which-key.nvim', opts = {}},
+    {'gbprod/nord.nvim'},
 
-  {
-    "NeogitOrg/neogit",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-      "sindrets/diffview.nvim",
-      "ibhagwan/fzf-lua",
-    },
-    config = true
-  },
-
-  -- Autocompletion
-  {
-    "hrsh7th/nvim-cmp",
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-    },
-    config = function()
-
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-              luasnip.lsp_expand(args.body)
-          end,
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "nvim-telescope/telescope.nvim",
+            "sindrets/diffview.nvim",
+            "ibhagwan/fzf-lua",
         },
+        config = true
+    },
 
-        mapping = cmp.mapping.preset.insert({
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<Tab>"] = cmp.mapping.select_next_item(),
-          ["<S-Tab>"] = cmp.mapping.select_prev_item(),
-        }),
+    -- Autocompletion
+    {
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "L3MON4D3/LuaSnip",
+            "saadparwaiz1/cmp_luasnip",
+        },
+        config = function()
 
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "buffer" },
-          { name = "path" },
-        }),
-      })
-    end
-  },
+            local cmp = require("cmp")
+            local luasnip = require("luasnip")
 
-  -- LSP
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
-    config = function()
+            cmp.setup({
+                snippet = {
+                    expand = function(args)
+                        luasnip.lsp_expand(args.body)
+                    end,
+                },
 
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+                mapping = cmp.mapping.preset.insert({
+                    ["<C-Space>"] = cmp.mapping.complete(),
+                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
+                    ["<Tab>"] = cmp.mapping.select_next_item(),
+                    ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+                }),
 
-      -- Keymaps when LSP attaches
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local opts = {buffer = args.buf}
-
-          vim.keymap.set("n","gd",vim.lsp.buf.definition,opts)
-          vim.keymap.set("n","gD",vim.lsp.buf.declaration,opts)
-          vim.keymap.set("n","gi",vim.lsp.buf.implementation,opts)
-          vim.keymap.set("n","gr",vim.lsp.buf.references,opts)
-          vim.keymap.set("n","K",vim.lsp.buf.hover,opts)
-          vim.keymap.set("n", "gl", vim.diagnostic.open_float)
-
-          vim.keymap.set("n","<leader>rn",vim.lsp.buf.rename,opts)
-          vim.keymap.set("n","<leader>ca",vim.lsp.buf.code_action,opts)
-          vim.keymap.set("n", "<leader>e", vim.diagnostic.setloclist)
-          vim.keymap.set("n","[d",vim.diagnostic.goto_prev,opts)
-          vim.keymap.set("n","]d",vim.diagnostic.goto_next,opts)
-
-          vim.api.nvim_create_autocmd("FileType", {
-              pattern = { "qf", "loclist" },
-              callback = function()
-                vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
-              end,
+                sources = cmp.config.sources({
+                    { name = "nvim_lsp" },
+                    { name = "buffer" },
+                    { name = "path" },
+                }),
             })
-        end,
-      })
+        end
+    },
 
-        vim.diagnostic.config({
-          virtual_text = false, -- cleaner, no inline spam
-          signs = true,
-          underline = true,
-          update_in_insert = false,
-          severity_sort = true,
-        
-          float = {
-            border = "rounded",
-            source = "if_many",
-          },
+    -- LSP
+    {
+        "neovim/nvim-lspconfig",
+        dependencies = { "hrsh7th/cmp-nvim-lsp" },
+        config = function()
+
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            -- Keymaps when LSP attaches
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(args)
+                    local opts = {buffer = args.buf}
+
+                    vim.keymap.set("n","gd",vim.lsp.buf.definition,opts)
+                    vim.keymap.set("n","gD",vim.lsp.buf.declaration,opts)
+                    vim.keymap.set("n","gi",vim.lsp.buf.implementation,opts)
+                    vim.keymap.set("n","gr",vim.lsp.buf.references,opts)
+                    vim.keymap.set("n","K",vim.lsp.buf.hover,opts)
+                    vim.keymap.set("n", "gl", vim.diagnostic.open_float)
+
+                    vim.keymap.set("n","<leader>lr", vim.lsp.buf.rename,opts, { desc = "LSP Rename"})
+                    vim.keymap.set("n","<leader>la",vim.lsp.buf.code_action,opts)
+                    vim.keymap.set("n", "<leader>le", vim.diagnostic.setloclist)
+                    vim.keymap.set("n","[d",vim.diagnostic.goto_prev,opts)
+                    vim.keymap.set("n","]d",vim.diagnostic.goto_next,opts)
+
+                    vim.api.nvim_create_autocmd("FileType", {
+                        pattern = { "qf", "loclist" },
+                        callback = function()
+                            vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true, silent = true })
+                        end,
+                    })
+                end,
+            })
+
+            vim.diagnostic.config({
+                virtual_text = false, -- cleaner, no inline spam
+                signs = true,
+                underline = true,
+                update_in_insert = false,
+                severity_sort = true,
+
+                float = {
+                    border = "rounded",
+                    source = "if_many",
+                },
+            })
+
+            vim.api.nvim_create_autocmd("CursorHold", {
+                callback = function()
+                    vim.diagnostic.open_float(nil, { focusable = false })
+                end,
+            })
+
+            -- Server configs
+            vim.lsp.config("clangd", {
+                capabilities = capabilities
+            })
+
+            vim.lsp.config("lua_ls", {
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = {"vim"}
+                        }
+                    }
+                }
+            })
+
+            -- Enable servers
+            vim.lsp.enable("clangd")
+
+        end
+    },
+
+    {
+        'gelguy/wilder.nvim',
+        config = function()
+            local wilder = require('wilder')
+
+            wilder.setup({ modes = {':','/','?'} })
+            wilder.set_option('use_python_remote_plugin', 0)
+
+            wilder.set_option('pipeline',{
+                wilder.branch(
+                    wilder.cmdline_pipeline(),
+                    wilder.search_pipeline()
+                )
+            })
+
+            wilder.set_option('renderer',
+            wilder.popupmenu_renderer(
+                wilder.popupmenu_border_theme({
+                    highlighter = wilder.basic_highlighter(),
+                    border = '',
+                    min_width = '100%',
+                    min_height = '20%',
+                    reverse = 0,
+                })
+            )
+        )
+    end
+},
+
+{
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = function()
+        require("toggleterm").setup({
+            size = function(term)
+                if term.direction == "horizontal" then return 15
+                elseif term.direction == "vertical" then return vim.o.columns * 0.4
+                end
+            end,
+            open_mapping = [[<c-'>]], -- Shortcut to toggle
+            hide_numbers = true,
+            shade_terminals = true,
+            direction = 'horizontal', -- Opens at the bottom
+            close_on_exit = false,     -- Keeps the output visible after make finishes
         })
+    end
+},
 
-        vim.api.nvim_create_autocmd("CursorHold", {
-          callback = function()
-            vim.diagnostic.open_float(nil, { focusable = false })
+-- Debugger
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      local dap = require("dap")
+      local dapui = require("dapui")
+
+      require("nvim-dap-virtual-text").setup({})
+      dapui.setup()
+
+      -- 1. GDB Adapter Configuration (Ubuntu native)
+      dap.adapters.gdb = {
+        type = "executable",
+        command = "gdb",
+        args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+      }
+
+      -- 2. C Configuration
+      dap.configurations.c = {
+        {
+          name = "Launch FIX Test",
+          type = "gdb",
+          request = "launch",
+          program = function()
+            -- Automatically suggests the current directory's 'test_runner'
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
           end,
-        })
+          cwd = "${workspaceFolder}",
+          stopAtBeginningOfMainSubprogram = false,
+        },
+      }
 
-      -- Server configs
-      vim.lsp.config("clangd", {
-        capabilities = capabilities
-      })
+      -- 3. Automatic UI Toggle
+      dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+      dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+      dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
 
-      vim.lsp.config("lua_ls", {
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = {"vim"}
-            }
-          }
-        }
-      })
-
-      -- Enable servers
-      vim.lsp.enable("clangd")
-
+      -- 4. Keybindings (The RAD Workflow)
+      local keymap = vim.keymap.set
+      keymap('n', '<F5>', dap.continue, { desc = "Debug: Start/Continue" })
+      keymap('n', '<F10>', dap.step_over, { desc = "Debug: Step Over" })
+      keymap('n', '<F11>', dap.step_into, { desc = "Debug: Step Into" })
+      keymap('n', '<F12>', dap.step_out, { desc = "Debug: Step Out" })
+      keymap('n', '<leader>db', dap.toggle_breakpoint, { desc = "Debug: Toggle Breakpoint" })
+      keymap('n', '<leader>dr', function() dap.repl.open() end, { desc = "Debug: Open REPL" })
+      keymap('n', '<leader>du', function() dapui.toggle() end, { desc = "Debug: Toggle UI" })
     end
   },
 
-  {
-    'gelguy/wilder.nvim',
+  -- Ace Windows
+{
+    "https://gitlab.com/yorickpeterse/nvim-window",
     config = function()
-      local wilder = require('wilder')
-
-      wilder.setup({ modes = {':','/','?'} })
-      wilder.set_option('use_python_remote_plugin', 0)
-
-      wilder.set_option('pipeline',{
-        wilder.branch(
-          wilder.cmdline_pipeline(),
-          wilder.search_pipeline()
-        )
-      })
-
-      wilder.set_option('renderer',
-        wilder.popupmenu_renderer(
-          wilder.popupmenu_border_theme({
-            highlighter = wilder.basic_highlighter(),
-            border = '',
-            min_width = '100%',
-            min_height = '20%',
-            reverse = 0,
-          })
-        )
-      )
+        vim.keymap.set('n', '<leader>a', function()
+            require('nvim-window').pick()
+        end, { desc = "Jump to window" })
     end
-  }
+},
 
 },{})
 
@@ -204,10 +290,10 @@ vim.o.termguicolors = true
 vim.opt.formatoptions:remove({"r","o"})
 
 vim.api.nvim_create_autocmd("FileType",{
-  pattern="*",
-  callback=function()
-    vim.opt_local.formatoptions:remove({"r","o"})
-  end
+    pattern="*",
+    callback=function()
+        vim.opt_local.formatoptions:remove({"r","o"})
+    end
 })
 
 -- Keymaps
@@ -226,8 +312,12 @@ vim.keymap.set("n","<leader>wk","<C-w>k",{desc="Window up"})
 vim.keymap.set("n","<leader>wl","<C-w>l",{desc="Window right"})
 
 -- Buffers
-vim.keymap.set("n","<leader>bd",vim.cmd.bdelete,{desc="Delete buffer"})
-vim.keymap.set("n","<leader>bb",":FzfLua buffers<CR>",{desc="List buffers"})
+vim.keymap.set("n", "<leader>bd", function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.cmd("bprevious") -- Switch to another buffer first
+    vim.cmd("bdelete " .. bufnr) -- Delete the original buffer
+end, { desc = "Delete buffer (keep split)" })
+vim.keymap.set("n", "<leader>bB", ":FzfLua buffers<CR>", { desc="List buffers" })
 
 -- Find
 vim.keymap.set("n","<leader>ff",":FzfLua files<CR>", {desc="Find file"})
@@ -245,54 +335,14 @@ vim.keymap.set("n", "<leader>gg", ":Neogit<CR>", {desc="Open Neogit"})
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight',{clear=true})
 
 vim.api.nvim_create_autocmd('TextYankPost',{
-  callback=function()
-    vim.highlight.on_yank()
-  end,
-  group=highlight_group,
-  pattern='*',
+    callback=function()
+        vim.highlight.on_yank()
+    end,
+    group=highlight_group,
+    pattern='*',
 })
 
 -- Compilation
--- Floating terminal runner for Makefile commands
-
-local last_cmd = nil
-local function run_cmd(cmd)
-  last_cmd = cmd
-  local height = math.floor(vim.o.lines * 0.3)
-  
-  -- 1. Find the terminal window if it exists
-  local win = term_buf and vim.fn.bufwinid(term_buf) or -1
-
-  if win ~= -1 and vim.api.nvim_win_is_valid(win) then
-    -- If we are NOT in the terminal window, jump to it
-    if vim.api.nvim_get_current_win() ~= win then
-      vim.api.nvim_set_current_win(win)
-    end
-  else
-    -- If window doesn't exist, create it from the bottom of the WHOLE screen
-    vim.cmd("botright " .. height .. "split")
-  end
-
-  -- 2. Create the new buffer FIRST before deleting the old one
-  -- This prevents the window from closing/resizing when the old buffer vanishes
-  local new_buf = vim.api.nvim_create_buf(false, true)
-  
-  if term_buf and vim.api.nvim_buf_is_valid(term_buf) then
-    vim.api.nvim_buf_delete(term_buf, { force = true })
-  end
-  
-  term_buf = new_buf
-  vim.api.nvim_win_set_buf(0, term_buf)
-
-  -- 3. Options & Launch
-  vim.wo.number = false
-  vim.wo.relativenumber = false
-  vim.wo.signcolumn = "no"
-  vim.wo.winfixheight = true
-  
-  vim.fn.termopen(cmd)
-  vim.cmd("startinsert")
-end
 
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { desc = "Exit terminal mode" })
 
@@ -301,32 +351,58 @@ vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]])
 vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]])
 vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]])
 vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]])
+-- Compile
+local toggleterm = require("toggleterm")
+
+local function run_build_cmd(cmd)
+    -- This sends the command to terminal ID 1 (your build terminal)
+    -- go_back = false keeps focus in the terminal so you can scroll errors
+    toggleterm.exec(cmd, 1)
+end
 
 -- Compile
+
+local function run_current_test_file()
+    -- 1. Get the current file name (e.g., test_arena.c)
+    local filename = vim.fn.expand("%:t") 
+    
+    -- 2. Check if we are actually in a test file
+    if not string.match(filename, "^test_.*%.c$") then
+        print("Not a test file!")
+        return
+    end
+
+    -- 3. Strip the .c to get the binary name (e.g., test_arena)
+    local bin_name = vim.fn.expand("%:t:r")
+    
+    -- 4. Construct the path to the build artifact
+    -- In your Makefile, tests go into $(BUILD_DIR)/test_name
+    local target = "build/" .. bin_name
+
+    -- 5. Run the command: make the specific binary, then execute it
+    run_build_cmd("make " .. target .. " && ./" .. target)
+end
+
+--- ToggleTerm Make config ------------------------------------------------
 vim.keymap.set("n", "<leader>cc", function()
-  run_cmd("make")
+    run_build_cmd("make")
 end, { desc = "Compile project" })
 
 vim.keymap.set("n", "<leader>cC", function()
-  run_cmd("make clean")
+    run_build_cmd("make clean")
 end, { desc = "Clean project" })
 
 -- Compile + Run
 vim.keymap.set("n", "<leader>cr", function()
-  run_cmd("make run")
+    run_build_cmd("make run")
 end, { desc = "Compile and run" })
 
 -- Run tests
-vim.keymap.set("n", "<leader>ct", function()
-  run_cmd("make test")
+vim.keymap.set("n", "<leader>cT", function()
+    run_build_cmd("make test")
 end, { desc = "Run tests" })
 
--- Repeat last command
-vim.keymap.set("n", "<leader>cl", function()
-  if last_cmd then
-    run_cmd(last_cmd)
-  end
-end, { desc = "Repeat last build command" })
+vim.keymap.set("n", "<leader>ct", run_current_test_file, { desc = "Run current test file" })
 
 
 -- Colorscheme

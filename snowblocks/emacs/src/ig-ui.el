@@ -4,25 +4,22 @@
 
 ;;; Code:
 
-
-(require 'ig-theme)
-(load-theme 'ig t)
-
-;; (require 'ig-nord-theme)
-;; (load-theme 'ig-nord t)
-
-(require 'ig-modeline)
-(ig-modeline)
+;; Note: Theme and modeline are initialized in ig-theme module before UI deferral.
+;; This module configures additional UI packages and features.
 
 (use-package all-the-icons
   :if (display-graphic-p)
-  :straight t)
+  :straight t
+  :defer t)
 
 (use-package nerd-fonts
-  :straight (:host github :repo "twlz0ne/nerd-fonts.el"))
+  :straight (:host github :repo "twlz0ne/nerd-fonts.el")
+  :defer t)
 
 (use-package neotree
-  :straight t)
+  :straight t
+  :defer t
+  :commands (neotree-toggle neotree-show))
 
 
 ;; SVG lib ---------------------------------------------------------------------
@@ -48,10 +45,12 @@
                              :stroke 0 :margin 0)) :ascent 'center)))
 
 (use-package svg-lib
-  :straight t)
+  :straight t
+  :defer t)
 
 (use-package svg-tag-mode 
   :straight (:host github :repo "rougier/svg-tag-mode")
+  :defer t
   :init (add-hook 'org-mode-hook 'svg-tag-mode)
   :config
   (setq svg-tag-tags

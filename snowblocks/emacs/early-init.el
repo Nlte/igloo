@@ -8,6 +8,8 @@
 ;; UnsetPES
 ;; Prevent package.el to load packages prior to init.el loading
 (setq package-enable-at-startup nil)
+;; Also ensure package.el directories exist to prevent errors later
+(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
 ;; -UnsetPES
 
 ;; UnsetFNHA
