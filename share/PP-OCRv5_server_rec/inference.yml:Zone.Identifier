@@ -1,0 +1,4 @@
+[ZoneTransfer]
+ZoneId=3
+ReferrerUrl=https://huggingface.co/PaddlePaddle/PP-OCRv5_server_rec/tree/main
+HostUrl=https://huggingface.co/api/resolve-cache/models/PaddlePaddle/PP-OCRv5_server_rec/b26c3587fda8da3c8ec0ce357214b4d661ff1558/inference.yml?download=true&etag=%22f5156e77296f540e963bdf4f89be90153234a90e%22
